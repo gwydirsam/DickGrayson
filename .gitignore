@@ -19,3 +19,11 @@
 *.exe
 *.out
 *.app
+
+#Compiled Python
+*.pyc
+
+/build/
+/debug/
+/share/project-spec/auto/
+/share/project-spec/project4-spec-notes.tex

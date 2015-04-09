@@ -7,6 +7,14 @@ export PATH=$HOME/local/$UNAME/usr/bin:$PATH
 # simple PS1
 export PS1="\u@\H \W \$ ";
 
+export EDITOR=vim         # for web devs
+#export EDITOR=emacs      # for RMS
+#export EDITOR=ed         # ED IS THE STANDARD TEXT EDITOR!
+#export EDITOR=nano       # for nubs
+#export EDITOR=sublime    # get out.
+#export EDITOR=notepad++  # before it will work, run rm -rf *
+export VISUAL=$EDITOR     # set $VISUAL to whatever you choose for $EDITOR
+
 if [ "$UNAME" = "SunOS" ]; then
     # Solaris
 
@@ -39,6 +47,5 @@ elif [ "$UNAME" = "Linux" ]; then
         # export CPATH=:$CPATH
         # export CPLUS_INCLUDE_PATH=:$CPLUS_INCLUDE_PATH
     fi
-
 fi
 

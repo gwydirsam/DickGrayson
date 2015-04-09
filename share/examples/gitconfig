@@ -108,7 +108,6 @@
   #editor = vim
   whitespace = trailing-space,space-before-tab,indent-with-non-tab
   excludesfile = ~/.gitignore
-	pager = more
 [advice]
   statusHints = false
 [diff]

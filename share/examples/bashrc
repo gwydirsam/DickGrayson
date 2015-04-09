@@ -1,0 +1,44 @@
+UNAME=`uname`
+HOSTNAME=`hostname`
+
+# add local install path, ~/local/OSNAME/...
+export PATH=$HOME/local/$UNAME/usr/bin:$PATH
+
+# simple PS1
+export PS1="\u@\H \W \$ ";
+
+if [ "$UNAME" = "SunOS" ]; then
+    # Solaris
+
+elif [ "$UNAME" = "Linux" ]; then
+    # Linux
+
+    if [ "$HOSTNAME" = "compute-linux1" ]; then
+        # Compute
+        # export CC=
+        # export CXX=
+
+        # include paths
+        # export CPATH=:$CPATH
+        # export CPLUS_INCLUDE_PATH=:$CPLUS_INCLUDE_PATH
+        # export LD_LIBRARY_PATH=:$LD_LIBRARY_PATH
+
+    elif [ "$HOSTNAME" = "build" ]; then
+        # build
+        export PATH=/usr/local/gcc4.9.2/bin:$PATH
+
+        alias gcc-4.9.2="/usr/local/gcc4.9.2/bin/gcc"
+        alias g++-4.9.2="/usr/local/gcc4.9.2/bin/g++"
+
+        export CC=gcc-4.9.2
+        export CXX=g++-4.9.2
+        export MANPATH=/usr/local/gcc4.9.2/share/man:$MANPATH
+        export LD_LIBRARY_PATH=/usr/local/gcc4.9.2/lib64:$LD_LIBRARY_PATH
+
+        # include paths
+        # export CPATH=:$CPATH
+        # export CPLUS_INCLUDE_PATH=:$CPLUS_INCLUDE_PATH
+    fi
+
+fi
+

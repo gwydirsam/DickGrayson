@@ -1,0 +1,8 @@
+[user]
+	name = FirstName LastName
+  # preferably an email you have listed on github.tamu.edu and github.com
+	email = my@email.com
+[github]
+  user = githubdotcomusername
+  password = githubdotcompassword
+  oauth-token = githuboauthtoken # google 'github oauth token' and create one

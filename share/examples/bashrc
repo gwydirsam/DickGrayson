@@ -35,17 +35,18 @@ elif [ "$UNAME" = "Linux" ]; then
         # build
         export PATH=/usr/local/gcc4.9.2/bin:$PATH
 
-        alias gcc-4.9.2="/usr/local/gcc4.9.2/bin/gcc"
-        alias g++-4.9.2="/usr/local/gcc4.9.2/bin/g++"
-
-        export CC=gcc-4.9.2
-        export CXX=g++-4.9.2
         export MANPATH=/usr/local/gcc4.9.2/share/man:$MANPATH
         export LD_LIBRARY_PATH=/usr/local/gcc4.9.2/lib64:$LD_LIBRARY_PATH
 
         # include paths
         # export CPATH=:$CPATH
         # export CPLUS_INCLUDE_PATH=:$CPLUS_INCLUDE_PATH
+
+        alias gcc-4.9.2="/usr/local/gcc4.9.2/bin/gcc -fdiagnostics-color=auto"
+        alias g++-4.9.2="/usr/local/gcc4.9.2/bin/g++ -fdiagnostics-color=auto"
+
+        export CC="gcc-4.9.2 -fdiagnostics-color=auto"
+        export CXX="g++-4.9.2 -fdiagnostics-color=auto"
     fi
 fi
 

@@ -24,7 +24,7 @@ for i in "${CONFIGS[@]}"; do
 
     # install bashrc
     echo "Installing .${i}"
-    mv "../examples/${i}" "${HOME}/.${i}"
+    cp "../examples/${i}" "${HOME}/.${i}"
 done
 
 echo "Done"

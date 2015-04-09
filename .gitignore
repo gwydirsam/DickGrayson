@@ -1,3 +1,45 @@
+## OSX
+.DS_Store
+# Thumbnails
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+## Windows
+# Windows image file caches
+Thumbs.db
+
+# Folder config file
+Desktop.ini
+
+## Tags
+# Ignore tags created by etags, ctags, gtags (GNU global) and cscope
+TAGS
+!TAGS/
+tags
+!tags/
+gtags.files
+GTAGS
+GRTAGS
+GPATH
+cscope.files
+cscope.out
+cscope.in.out
+cscope.po.out
+
+## Vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+## SASS
+.sass-cache
+
+## Githubs default C++ gitignore
 # Compiled Object files
 *.slo
 *.lo
@@ -15,7 +57,22 @@
 *.a
 *.lib
 
-# Executables
+## Executables
 *.exe
 *.out
 *.app
+
+## Python
+*.pyc
+
+## DickGrayson Specific
+/build/
+/debug/
+/share/project-spec/auto/
+/share/project-spec/project4-spec-notes.tex
+/share/project-spec/_region_.log
+/share/project-spec/_region_.prv/
+/share/project-spec/_region_.tex
+/share/project-spec/project4.log
+/share/project-spec/prv_project4.fmt
+/share/project-spec/prv_project4.log

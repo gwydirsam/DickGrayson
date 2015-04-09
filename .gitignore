@@ -38,6 +38,8 @@ Session.vim
 
 ## SASS
 .sass-cache
+
+## Githubs default C++ gitignore
 # Compiled Object files
 *.slo
 *.lo
@@ -55,15 +57,22 @@ Session.vim
 *.a
 *.lib
 
-# Executables
+## Executables
 *.exe
 *.out
 *.app
 
-#Compiled Python
+## Python
 *.pyc
 
+## DickGrayson Specific
 /build/
 /debug/
 /share/project-spec/auto/
 /share/project-spec/project4-spec-notes.tex
+/share/project-spec/_region_.log
+/share/project-spec/_region_.prv/
+/share/project-spec/_region_.tex
+/share/project-spec/project4.log
+/share/project-spec/prv_project4.fmt
+/share/project-spec/prv_project4.log

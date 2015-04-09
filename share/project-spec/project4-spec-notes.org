@@ -44,20 +44,35 @@ DEADLINE: <2015-05-11 Mon 10:30-12:30>
 - Use =build.tamu.edu=
   - =gcc-4.9.2= (add =share/examples/bashrc= to your =~/.bashrc=)
   - linux =x86_64=
-** Test Driven Development
-- [[https://code.google.com/p/googletest/][Google Test]]
+** Big Integers
+- We need to be able to store integers \geq 4096 bits
+- C++'s =uintmax_t= can only store integers \leq (2^64-1) so we need a way of storing these big integers
+*** [[https://gmplib.org][The GNU Multiple Precision Arithmetic Library]]
+** [[https://code.google.com/p/googletest/][Google Test]]
 - TDD Proof
-  - [[http://travis-ci.org][travis-ci]]
-    - Requires committing and *pushing* [fn:: Shouldn't be a problem except for Chris] failing tests (so =travis-ci= builds and runs them)
-    - Gives us time-stamped builds and test runs for *every* commit and pull-request
-** Git-Flow
-- [[https://github.com/nvie/gitflow][git flow]]
-  - Makes following the git-flow branching model stupidly easy
-  - Use feature/FEATURE_NAME branches for new additions
-    - keep these specific and small
-  - When a feature is done, create a pull request
-    - allows travis to test if your branch builds
-    - allows the rest of the group to discuss the feature
+  - travis-ci build logs
+** [[http://travis-ci.org][travis-ci]]
+- Requires committing and *pushing* [fn:: Shouldn't be a problem except for Chris] failing tests (so =travis-ci= builds and runs them)
+- Gives us time-stamped builds and test runs for *every* commit and pull-request
+** [[https://github.com/nvie/gitflow][git flow]]
+- Makes following the git-flow branching model stupidly easy
+- Use =feature/FEATURE_NAME= branches for new additions
+  - keep these specific and small
+- When a feature is done, create a pull request
+  - allows travis to test if your branch builds
+  - allows the rest of the group to discuss the feature
+
+\pagebreak
+
+* Deliverables
+
+** =munchkinsteg=
+- embed ciphertext into bmp
+- extract ciphertext from bmp
+- *MUST* support /at-least/ 1-LSB and 2-LSB, but may include other modes
+- report PSNR (peak signal to noise ratio) of stego-image
+** =toto=
+- implements /at-least/ 3 attacks on LSB image steganography systems
 
 \pagebreak
 
@@ -95,7 +110,7 @@ DEADLINE: <2015-05-11 Mon 10:30-12:30>
 
 \pagebreak
 
-* Rubric
+* Rubric                                                           :noexport:
 
 ** RSA Cryptosystem (15 pts)
 

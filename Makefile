@@ -43,40 +43,76 @@ BUILD_TYPE = Release
 
 .PHONY:	all help helpall compile release build debug \
 				check test clean clean-all clean-release clean-build clean-debug \
-				update update-makeall
+				update update-makeall reconfig
 
 all::
+	@echo ======================================
+	@echo Starting $(PROJECT_NAME) Build
+	@echo ""
+
+reconfig build release compile::
+	@echo ======================================
+	@echo Rebuilding CMake Cache
+	@echo ======================================
+	@$(MAKE) -C $(BUILD_DIR) rebuild_cache
+
+reconfig debug::
+	@echo ======================================
+	@echo Rebuilding CMake Cache
+	@echo ======================================
+	@$(MAKE) -C $(DEBUG_DIR) rebuild_cache
 
 update update-makeall::
+	@echo ======================================
+	@echo Stashing Unsaved Changes and Pulling
+	@echo ======================================
 	git stash save "stashed by make update $(DATETIME)"
 	git remote update
 	git pull
 update-makeall::
 	-$(MAKE) all
 	@echo ======================================
-	@echo Make Finished
 	@echo Remember to apply your stashed changes
+	@echo ======================================
 	@echo ""
 
 all release build debug compile::
-	mkdir -p $(BUILD_DIR) $(DEBUG_DIR)
+	@mkdir -p $(BUILD_DIR) $(DEBUG_DIR)
 
 all release build debug compile::
+	@echo ======================================
+	@echo Starting Release Build
+	@echo ======================================
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) -Dtest=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
 	@$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
+	@echo ======================================
+	@echo Release Build Finished
+	@echo ======================================
 
 all debug::
+	@echo ======================================
+	@echo Starting Debug Build
+	@echo ======================================
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) -Dtest=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
 	@$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
+	@echo ======================================
+	@echo Debug Build Finished
+	@echo ======================================
 
 check test::
-	@build/test/dickgrayson-test
+	@echo ======================================
+	@echo Starting Tests
+	@echo ======================================
+	-@build/test/dickgrayson-test
+	@echo ======================================
+	@echo Tests Finished
+	@echo ======================================
 
 clean-all clean clean-release clean-build::
-	@$(MAKE) -C $(BUILD_DIR) clean
+	$(MAKE) -C $(BUILD_DIR) clean
 
 clean-all clean-debug::
-	@$(MAKE) -C $(DEBUG_DIR) clean
+	$(MAKE) -C $(DEBUG_DIR) clean
 
 help helpall::
 	$(info )

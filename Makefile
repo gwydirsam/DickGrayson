@@ -76,14 +76,14 @@ update-makeall::
 	@echo ======================================
 	@echo ""
 
-all release build debug compile::
+all release build debug compile test::
 	@mkdir -p $(BUILD_DIR) $(DEBUG_DIR)
 
-all release build debug compile::
+all release build debug compile test::
 	@echo ======================================
 	@echo Starting Release Build
 	@echo ======================================
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) -Dtest=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
 	@$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
 	@echo ======================================
 	@echo Release Build Finished
@@ -93,7 +93,7 @@ all debug::
 	@echo ======================================
 	@echo Starting Debug Build
 	@echo ======================================
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) -Dtest=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
 	@$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
 	@echo ======================================
 	@echo Debug Build Finished
@@ -114,76 +114,61 @@ clean-all clean clean-release clean-build::
 clean-all clean-debug::
 	$(MAKE) -C $(DEBUG_DIR) clean
 
-help helpall::
+help help-all::
 	$(info )
 	$(info $(PROJECT_NAME) Help)
 	$(info ================)
-	$(info make help           - show brief help)
-	$(info make helpall        - show extended help)
+	$(info make help                   - show brief help)
+	$(info make help-all               - show extended help)
 	$(info )
 	$(info Build and Check)
 	$(info ===============)
-	$(info make                - build all targets, tests and all documentation)
-	$(info make all            - build all targets, tests and all documentation)
-	$(info make compile        - build all targets)
-	$(info make test           - build all targets and run test suite)
-helpall::
-	$(info make test-dirty     - run tests without building first)
-	$(info make compile-dirty  - build only stale Org ELisp files)
+	$(info make                        - defaults to make all)
+	$(info make all                    - build all targets, tests and all documentation)
+	$(info make build                  - build release build of all targets)
+	$(info make debug                  - build debug build of all targets)
+help-all::
+	$(info make dorothy                - build only dorothy)
+	$(info make toto                   - build only toto)
+	$(info make munchkincrypt          - build only munchkincrypt)
+	$(info make munchkinsteg           - build only munchkinsteg)
+help help-all::
+	$(info )
+	$(info Testing)
+	$(info ===============)
+	$(info make test                   - run test suite on release build)
+help-all::
+	$(info make test-build             - run test suite on release build)
+	$(info make test-debug             - run test suite on debug build)
+	$(info make test-dorothy           - run test suite)
+	$(info make test-toto              - run test suite)
+	$(info make test-munchkincrypt     - run test suite)
+	$(info make test-toto              - run test suite)
+help help-all::
 	$(info )
 	$(info Cleaning)
 	$(info ========)
-	$(info make clean          - remove compiled files in both $(BUILD_DIR) and $(DEBUG_DIR))
-	$(info make clean-all      - same as clean)
-	$(info make clean-build    - remove compiled files in $(BUILD_DIR))
-	$(info make clean-debug    - remove compiled files in $(DEBUG_DIR))
+	$(info make clean                  - remove compiled files in both build/ and debug/)
+help-all::
+	$(info make clean-all              - same as clean)
+	$(info make clean-build            - remove compiled files in build/)
+	$(info make clean-debug            - remove compiled files in debug/)
 	$(info )
 	$(info Configuration Check)
 	$(info ===================)
-help helpall::
-	$(info make config         - check main configuration)
-helpall::
-	$(info make config-version - check Org version)
-	$(info make config-test    - check test configuration)
-	$(info make config-exe     - check executables configuration)
-	$(info make config-cmd     - check command configuration)
-	$(info make config-all     - check all configuration)
+	$(info make reconfig               - rebuild cmake configuration)
+help help-all::
 	$(info )
 	$(info Documentation)
 	$(info =============)
-help helpall::
-	$(info make doc            - build all documentation)
-helpall::
-	$(info make docs           - ditto)
-help helpall::
-	$(info make info           - build Info documentation)
-helpall::
-	$(info make html           - build HTML documentation)
-	$(info make pdf            - build PDF documentation)
-	$(info make card           - build reference cards)
-	$(info make refcard        - ditto)
-help helpall::
-	$(info )
-	$(info Installation)
-	$(info ============)
-	$(info make install        - build and install Org)
-helpall::
-	$(info make install-etc    - build and install files in /etc)
-	$(info make install-lisp   - build and install Org Elisp files)
-	$(info make install-info   - build and install Info documentation)
+	$(info make doc                    - build all documentation)
+help-all::
+	$(info make man                    - build man documentation)
+	$(info make info                   - build Info documentation)
+help help-all::
 	$(info )
 	$(info Convenience)
 	$(info ===========)
-	$(info make up0            - pull from upstream)
-	$(info make up1            - pull from upstream, build and check)
-	$(info make up2            - pull from upstream, build, check and install)
-	$(info make update         - pull from upstream and build)
-	$(info make update2        - pull from upstream, build and install)
-	$(info make uncompiled     - combine cleanlisp and autoloads)
-	$(info make local.mk       - create new local.mk as template for adaptation)
-help helpall::
-	$(info )
-	$(info Full documentation on Worg)
-	$(info ==========================)
-	$(info http://orgmode.org/worg/dev/org-build-system.html)
+	$(info make update                 - stash, then pull from upstream and build)
+help help-all::
 	@echo ""

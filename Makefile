@@ -52,7 +52,10 @@ update update-makeall::
 	git pull
 update-makeall::
 	-$(MAKE) all
+	@echo ======================================
+	@echo Make Finished
 	@echo Remember to apply your stashed changes
+	@echo ""
 
 all release build debug::
 	mkdir -p $(BUILD_DIR) $(DEBUG_DIR)

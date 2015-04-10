@@ -128,10 +128,10 @@ help help-all::
 	$(info make build                  - build release build of all targets)
 	$(info make debug                  - build debug build of all targets)
 help-all::
-	$(info make dorothy                - build only dorothy)
-	$(info make toto                   - build only toto)
-	$(info make munchkincrypt          - build only munchkincrypt)
-	$(info make munchkinsteg           - build only munchkinsteg)
+	$(info make rsa-crypt              - build only rsa-crypt)
+	$(info make rsa-attack             - build only rsa-attack)
+	$(info make stego-crypt            - build only stego-crypt)
+	$(info make stego-attack           - build only stego-attack)
 help help-all::
 	$(info )
 	$(info Testing)
@@ -140,10 +140,10 @@ help help-all::
 help-all::
 	$(info make test-build             - run test suite on release build)
 	$(info make test-debug             - run test suite on debug build)
-	$(info make test-dorothy           - run test suite)
-	$(info make test-toto              - run test suite)
-	$(info make test-munchkincrypt     - run test suite)
-	$(info make test-toto              - run test suite)
+	$(info make test-rsa-crypt         - run rsa-crypt test)
+	$(info make test-rsa-attack        - run rsa-attack test)
+	$(info make test-stego-crypt       - run stego-crypt test)
+	$(info make test-stego-attack      - run stego-attack test)
 help help-all::
 	$(info )
 	$(info Cleaning)

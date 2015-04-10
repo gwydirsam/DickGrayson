@@ -29,13 +29,16 @@ endif()
 
 # locations
 set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
+set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
 set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
 
 # build source dir
-add_subdirectory(${SOURCE_DIR})
+add_subdirectory(${SOURCE_DIR} bin/)
+# build include dir
+add_subdirectory(${INCLUDE_DIR} lib/)
 
 # if testing, build gflags and tests
 if(test)
-  add_subdirectory(${TEST_DIR})
+  add_subdirectory(${TEST_DIR} test/)
 endif()
 

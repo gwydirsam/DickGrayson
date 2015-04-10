@@ -7,4 +7,4 @@ chmod +x /tmp/cmake-3.2.1-Linux-x86_64.sh
 
 mkdir -p $HOME/local/$(uname)
 
-./tmp/cmake-3.2.1-Linux-x86_64.sh --prefix=$HOME/local/$(uname) --exclude-subdir
+/tmp/cmake-3.2.1-Linux-x86_64.sh --prefix=$HOME/local/$(uname) --exclude-subdir

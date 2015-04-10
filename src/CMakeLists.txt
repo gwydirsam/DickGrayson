@@ -1,9 +1,18 @@
-# Build steps
-file(GLOB_RECURSE ${PROJECT_NAME}_SRC_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.cc)
+set(RSA_ATTACK dorothy)
+set(STEGO_ATTACK toto)
+set(RSA_CRYPT munchkincrypt)
+set(STEGO_CRYPT munchkinsteg)
 
-add_executable(${PROJECT_NAME} main.cc)
+set(MAIN_SRC main.cc)
 
-# add_library(${PROJECT_NAME} STATIC ${${PROJECT_NAME}_SRC_FILES})
-# add_library(${PROJECT_NAME}Shared SHARED ${${PROJECT_NAME}_SRC_FILES})
+add_executable(${RSA_ATTACK} ${RSA_ATTACK}/${MAIN_SRC})
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
+add_executable(${RSA_CRYPT} ${RSA_CRYPT}/${MAIN_SRC})
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
+add_executable(${STEGO_ATTACK} ${STEGO_ATTACK}/${MAIN_SRC})
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
+add_executable(${STEGO_CRYPT} ${STEGO_CRYPT}/${MAIN_SRC})
 include_directories(${PROJECT_SOURCE_DIR}/include)

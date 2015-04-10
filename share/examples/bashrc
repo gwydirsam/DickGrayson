@@ -15,9 +15,12 @@ export VISUAL=$EDITOR     # set $VISUAL to whatever you choose for $EDITOR
 export PAGER=less
 export LESS="-F -g -i -M -R -S -w -X -z-4"
 
+export PATH=$HOME/local/$UNAME/bin:$PATH
+export MANPATH=$HOME/local/$UNAME/share/man:$MANPATH
+
 if [[ ${UNAME} == "SunOS" ]]; then
     # Solaris
-    export PATH=$HOME/local/$UNAME/usr/bin:$PATH
+    export PATH=$PATH
     # export CC=
     # export CXX=
 
@@ -28,7 +31,7 @@ if [[ ${UNAME} == "SunOS" ]]; then
 
 elif [[ ${UNAME} == "Linux" ]]; then
     # Linux
-    export PATH=$HOME/local/$UNAME/usr/bin:$PATH
+    export PATH=$PATH
     # export CC=
     # export CXX=
 
@@ -39,7 +42,7 @@ elif [[ ${UNAME} == "Linux" ]]; then
 
     if [[ ${HOSTNAME} == "compute-linux1" ]]; then
         # Compute
-        export PATH=$HOME/local/$UNAME/usr/bin:$PATH
+        export PATH=$PATH
         export CC=
         export CXX=
 

@@ -1,0 +1,32 @@
+#+TITLE: openssl
+#+DATE: <2015-04-10 Fri>
+#+AUTHOR: Sam Gwydir
+#+EMAIL: sam@samgwydir.com
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t c:nil
+#+OPTIONS: creator:comment d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t
+#+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:t
+#+OPTIONS: todo:t |:t
+#+CREATOR: Emacs 24.5.1 (Org mode 8.2.10)
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+OPTIONS: texht:t
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS:
+#+LATEX_HEADER:
+#+LATEX_HEADER_EXTRA:
+
+* Generate an RSA keypair with k bit private key (privatekey is in pem format)
+=openssl genrsa -out privateKey.pem k=
+** Extract public key from RSA keypair
+=openssl rsa -pubout -in privateKey.pem -out publicKey.pem=
+** View pem file
+=openssl rsa -text -in privateKey.pem=
+
+* Check the MD5 hash of the public key (using privateKey.key)
+=openssl rsa -noout -modulus -in privateKey.key | openssl md5=
+
+* Check a private key *not sure what this means yet*
+=openssl rsa -in privateKey.key -check=

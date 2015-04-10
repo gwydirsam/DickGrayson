@@ -5,7 +5,7 @@ HOSTNAME := $(shell hostname)
 
 # set cores correctly
 ifeq ($(UNAME), 'Linux')
-	ifeq ($(HOSTNAME), 'build')
+		ifeq ($(HOSTNAME), 'build')
 		NUM_CORES = 8
 	endif
 else
@@ -39,34 +39,35 @@ BUILD_TYPE = Release
 
 #all: munchkincrypt munchkinsteg toto dorothy
 
-.DEFAULT: all
+.DEFAULT:	all
 
-.PHONY: all help helpall build debug test clean
-all:: release debug test
+.PHONY:	all help helpall configure release build debug \
+				check test clean update update-makeall
+
+all::
 
 update update-makeall::
 	git stash save "stashed by make update $(DATETIME)"
 	git remote update
 	git pull
-
 update-makeall::
 	$(MAKE) all
 
-release build debug configure::
+all release build debug::
 	mkdir -p $(BUILD_DIR) $(DEBUG_DIR)
 
-release build::
-	$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) -Dtest=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
-	$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
+all release build::
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) -Dtest=ON -DCMAKE_BUILD_TYPE=Release ..
+	@$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
 
-debug:: BUILD_TYPE = Debug
-	$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) -Dtest=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
-	$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
+all debug::
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) -Dtest=ON -DCMAKE_BUILD_TYPE=Debug ..
+	@$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
 
-check test::
-	sh build/test/dickgrayson-test
+all check test::
+	@sh build/test/dickgrayson-test
 
-clean:
+clean::
 
 help helpall::
 	$(info )
@@ -147,4 +148,3 @@ help helpall::
 	$(info ==========================)
 	$(info http://orgmode.org/worg/dev/org-build-system.html)
 	@echo ""
-

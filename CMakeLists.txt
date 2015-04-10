@@ -4,11 +4,15 @@ cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
 project(DickGrayson CXX)
 
 # binary names
-set(RSA_CRYPT munchkincrypt)
-set(RSA_ATTACK dorothy)
+# set(RSA_CRYPT munchkincrypt)
+set(RSA_CRYPT rsa-crypto)
+# set(RSA_ATTACK dorothy)
+set(RSA_ATTACK rsa-attack)
 
-set(STEGO_CRYPT munchkinsteg)
-set(STEGO_ATTACK toto)
+# set(STEGO_CRYPT munchkinsteg)
+set(STEGO_CRYPT stego-crypto)
+# set(STEGO_ATTACK toto)
+set(STEGO_ATTACK stego-attack)
 
 # library names
 set(IMAGE_LIB dgimg)

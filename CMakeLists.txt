@@ -3,7 +3,20 @@ cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
 
 project(DickGrayson CXX)
 
-option(DickGrayson_TESTS_ENABLED "Enable tests build" ON)
+# binary names
+set(RSA_CRYPT munchkincrypt)
+set(RSA_ATTACK dorothy)
+
+set(STEGO_CRYPT munchkinsteg)
+set(STEGO_ATTACK toto)
+
+# library names
+set(IMAGE_LIB dgimg)
+set(CRYPTO_LIB dgcrypto)
+set(TYPE_LIB dgtype)
+
+
+option(BUILD_TESTS "Enable tests build" ON)
 
 ## set some compiler flags
 #  note DEBUG is set for debug build
@@ -38,7 +51,7 @@ add_subdirectory(${SOURCE_DIR} bin/)
 add_subdirectory(${INCLUDE_DIR} lib/)
 
 # if testing, build gflags and tests
-if(test)
+if(BUILD_TESTS)
   add_subdirectory(${TEST_DIR} test/)
 endif()
 

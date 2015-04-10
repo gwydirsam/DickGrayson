@@ -1,7 +1,3 @@
-set(TYPE_LIB dgtype)
-set(IMAGE_LIB dgimg)
-set(CRYPTO_LIB dgcrypto)
-
 set(TYPE_LIB_FILES
   ${TYPE_LIB}/dgtype.cc)
 set(IMAGE_LIB_FILES

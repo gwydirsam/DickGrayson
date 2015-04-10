@@ -19,15 +19,6 @@ ExternalProject_Add(
 ExternalProject_Get_Property(gtest source_dir)
 ExternalProject_Get_Property(gtest binary_dir)
 
-# tests definition
-set(RSA_ATTACK dorothy)
-set(STEGO_ATTACK toto)
-set(RSA_CRYPT munchkincrypt)
-set(STEGO_CRYPT munchkinsteg)
-set(IMAGE_LIB dgimg)
-set(CRYPTO_LIB dgcrypto)
-set(TYPE_LIB dgtype)
-
 set(TARGET ${RSA_ATTACK})
 set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}_test.cc)

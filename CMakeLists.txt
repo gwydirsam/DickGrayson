@@ -5,12 +5,12 @@ project(DickGrayson CXX)
 
 # binary names
 # set(RSA_CRYPT munchkincrypt)
-set(RSA_CRYPT rsa-crypto)
+set(RSA_CRYPT rsa-crypt)
 # set(RSA_ATTACK dorothy)
 set(RSA_ATTACK rsa-attack)
 
 # set(STEGO_CRYPT munchkinsteg)
-set(STEGO_CRYPT stego-crypto)
+set(STEGO_CRYPT stego-crypt)
 # set(STEGO_ATTACK toto)
 set(STEGO_ATTACK stego-attack)
 

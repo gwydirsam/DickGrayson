@@ -37,8 +37,6 @@ DATETIME = $(shell date +%Y-%m-%d-%H:%M)
 
 BUILD_TYPE = Release
 
-#all: munchkincrypt munchkinsteg toto dorothy
-
 .DEFAULT:	all
 
 .PHONY:	all help helpall compile release build debug \

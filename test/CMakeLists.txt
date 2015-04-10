@@ -21,7 +21,7 @@ ExternalProject_Get_Property(gtest binary_dir)
 
 set(TARGET ${RSA_ATTACK})
 set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}_test.cc)
+set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
@@ -29,7 +29,7 @@ include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
-  #${TARGET}
+  ${TARGET}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
@@ -39,7 +39,7 @@ target_link_libraries(${GTEST_TARGET} pthread)
 
 set(TARGET ${RSA_CRYPT})
 set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}_test.cc)
+set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
@@ -47,7 +47,7 @@ include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
-  #${TARGET}
+  ${TARGET}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
@@ -57,7 +57,7 @@ target_link_libraries(${GTEST_TARGET} pthread)
 
 set(TARGET ${STEGO_CRYPT})
 set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}_test.cc)
+set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
@@ -65,7 +65,7 @@ include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
-  #${TARGET}
+  ${TARGET}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
@@ -75,7 +75,7 @@ target_link_libraries(${GTEST_TARGET} pthread)
 
 set(TARGET ${STEGO_ATTACK})
 set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}_test.cc)
+set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
@@ -83,7 +83,7 @@ include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
-  #${TARGET}
+  ${TARGET}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
@@ -93,7 +93,7 @@ target_link_libraries(${GTEST_TARGET} pthread)
 
 set(TARGET ${IMAGE_LIB})
 set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}_test.cc)
+set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
@@ -111,7 +111,7 @@ target_link_libraries(${GTEST_TARGET} pthread)
 
 set(TARGET ${CRYPTO_LIB})
 set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}_test.cc)
+set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
@@ -129,7 +129,7 @@ target_link_libraries(${GTEST_TARGET} pthread)
 
 set(TARGET ${TYPE_LIB})
 set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}_test.cc)
+set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)

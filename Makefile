@@ -51,7 +51,7 @@ update update-makeall::
 	git remote update
 	git pull
 update-makeall::
-	$(MAKE) all
+	-$(MAKE) all
 	@echo Remember to apply your stashed changes
 
 all release build debug::

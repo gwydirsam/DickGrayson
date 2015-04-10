@@ -7,15 +7,15 @@ set(CRYPTO_LIB_FILES
 
 # RSA libs
 set(RSA_CRYPT_LIB_FILES
-  )
+  rsa-crypt-lib/rsa-crypt-lib.cc)
 set(RSA_ATTACK_LIB_FILES
-  )
+  rsa-attack-lib/rsa-attack-lib.cc)
 
 # Stego libs
 set(STEGO_CRYPT_LIB_FILES
-  )
+  stego-crypt-lib/stego-crypt-lib.cc)
 set(STEGO_ATTACK_LIB_FILES
-  )
+  stego-attack-lib/stego-attack-lib.cc)
 
 add_library(${TYPE_LIB} ${TYPE_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)
@@ -26,14 +26,14 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 add_library(${CRYPTO_LIB} ${CRYPTO_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_library(${RSA_CRYPT} ${RSA_CRYPT_LIB_FILES})
+add_library(${RSA_CRYPT_LIB} ${RSA_CRYPT_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_library(${RSA_ATTACK} ${RSA_ATTACK_LIB_FILES})
+add_library(${RSA_ATTACK_LIB} ${RSA_ATTACK_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_library(${STEGO_CRYPT} ${STEGO_CRYPT_LIB_FILES})
+add_library(${STEGO_CRYPT_LIB} ${STEGO_CRYPT_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_library(${STEGO_ATTACK} ${STEGO_ATTACK_LIB_FILES})
+add_library(${STEGO_ATTACK_LIB} ${STEGO_ATTACK_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)

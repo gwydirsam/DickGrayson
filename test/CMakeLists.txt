@@ -20,6 +20,7 @@ ExternalProject_Get_Property(gtest source_dir)
 ExternalProject_Get_Property(gtest binary_dir)
 
 set(TARGET ${RSA_ATTACK})
+set(TARGET_LIB ${TARGET}-lib)
 set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
@@ -29,7 +30,7 @@ include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
-  ${TARGET}
+  ${TARGET_LIB}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
@@ -38,6 +39,7 @@ target_link_libraries(${GTEST_TARGET}
 target_link_libraries(${GTEST_TARGET} pthread)
 
 set(TARGET ${RSA_CRYPT})
+set(TARGET_LIB ${TARGET}-lib)
 set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
@@ -47,7 +49,7 @@ include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
-  ${TARGET}
+  ${TARGET_LIB}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
@@ -56,6 +58,7 @@ target_link_libraries(${GTEST_TARGET}
 target_link_libraries(${GTEST_TARGET} pthread)
 
 set(TARGET ${STEGO_CRYPT})
+set(TARGET_LIB ${TARGET}-lib)
 set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
@@ -65,7 +68,7 @@ include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
-  ${TARGET}
+  ${TARGET_LIB}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
@@ -74,6 +77,7 @@ target_link_libraries(${GTEST_TARGET}
 target_link_libraries(${GTEST_TARGET} pthread)
 
 set(TARGET ${STEGO_ATTACK})
+set(TARGET_LIB ${TARGET}-lib)
 set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
@@ -83,7 +87,7 @@ include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
-  ${TARGET}
+  ${TARGET_LIB}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}

@@ -41,8 +41,9 @@ BUILD_TYPE = Release
 
 .DEFAULT:	all
 
-.PHONY:	all help helpall configure release build debug \
-				check test clean update update-makeall
+.PHONY:	all help helpall compile release build debug \
+				check test clean clean-all clean-release clean-build clean-debug \
+				update update-makeall
 
 all::
 
@@ -57,37 +58,38 @@ update-makeall::
 	@echo Remember to apply your stashed changes
 	@echo ""
 
-all release build debug::
+all release build debug compile::
 	mkdir -p $(BUILD_DIR) $(DEBUG_DIR)
 
-all release build::
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) -Dtest=ON -DCMAKE_BUILD_TYPE=Release ..
+all release build debug compile::
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) -Dtest=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
 	@$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
 
 all debug::
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) -Dtest=ON -DCMAKE_BUILD_TYPE=Debug ..
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) -Dtest=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
 	@$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
 
-all check test::
-	@sh build/test/dickgrayson-test
+check test::
+	@build/test/dickgrayson-test
 
-clean::
+clean-all clean clean-release clean-build::
+	@$(MAKE) -C $(BUILD_DIR) clean
+
+clean-all clean-debug::
+	@$(MAKE) -C $(DEBUG_DIR) clean
 
 help helpall::
 	$(info )
 	$(info $(PROJECT_NAME) Help)
-	$(info ====================)
+	$(info ================)
 	$(info make help           - show brief help)
-	$(info make targets        - ditto)
 	$(info make helpall        - show extended help)
 	$(info )
 	$(info Build and Check)
 	$(info ===============)
-	$(info make                - build Org ELisp and all documentation)
-	$(info make all            - ditto)
-	$(info make compile        - build Org ELisp files)
-	$(info make single         - build Org ELisp files, single Emacs per source)
-	$(info make autoloads      - create org-loaddefs.el to load Org in-place)
+	$(info make                - build all targets, tests and all documentation)
+	$(info make all            - build all targets, tests and all documentation)
+	$(info make compile        - build all targets)
 	$(info make test           - build Org ELisp files and run test suite)
 helpall::
 	$(info make test-dirty     - check without building first)

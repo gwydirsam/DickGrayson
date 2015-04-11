@@ -21,6 +21,8 @@ else
 endif
 
 CMAKE := $(shell which cmake)
+CMAKE_GENERATOR ?= "Unix Makefiles"
+#CMAKE_GENERATOR ?= Ninja
 
 PROJECT_DIR := $(CURDIR)
 BUILD_DIR := $(PROJECT_DIR)/build
@@ -37,11 +39,13 @@ DATETIME = $(shell date +%Y-%m-%d-%H:%M)
 
 BUILD_TYPE = Release
 
+TEST_BINS := $(wildcard $(BUILD_DIR)/test/*-test)
+
 .DEFAULT:	all
 
 .PHONY:	all help helpall compile release build debug \
 				check test clean clean-all clean-release clean-build clean-debug \
-				update update-makeall reconfig
+				update update-makeall reconfig clean-build-dirs $(TEST_BINS) test-all
 
 all::
 	@echo ======================================
@@ -81,8 +85,12 @@ all release build debug compile test::
 	@echo ======================================
 	@echo Starting Release Build
 	@echo ======================================
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) -G $(CMAKE_GENERATOR) -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release ..
+ifeq ($(CMAKE_GENERATOR), Ninja)
+	@ninja -C $(BUILD_DIR) gtest && ninja -C $(BUILD_DIR) all
+else
 	@$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
+endif
 	@echo ======================================
 	@echo Release Build Finished
 	@echo ======================================
@@ -91,8 +99,12 @@ all debug::
 	@echo ======================================
 	@echo Starting Debug Build
 	@echo ======================================
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
-	@$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) -G $(CMAKE_GENERATOR) -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug ..
+ifeq ($(CMAKE_GENERATOR), Ninja)
+	@ninja -C $(DEBUG_DIR) gtest && ninja -C $(DEBUG_DIR) all
+else
+	@$(MAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
+endif
 	@echo ======================================
 	@echo Debug Build Finished
 	@echo ======================================
@@ -101,9 +113,17 @@ check test::
 	@echo ======================================
 	@echo Starting Tests
 	@echo ======================================
-	-@build/test/dickgrayson-test
+check test:: $(TEST_BINS)
+$(TEST_BINS)::
+	@$@ --gtest_color=yes
+check test::
 	@echo ======================================
-	@echo Tests Finished
+	@echo Finished Tests
+	@echo ======================================
+
+all::
+	@echo ""
+	@echo Finished $(PROJECT_NAME) Build
 	@echo ======================================
 
 clean-all clean clean-release clean-build::
@@ -111,6 +131,9 @@ clean-all clean clean-release clean-build::
 
 clean-all clean-debug::
 	$(MAKE) -C $(DEBUG_DIR) clean
+
+clean-build-dirs::
+	rm -rf $(DEBUG_DIR) $(BUILD_DIR)
 
 help help-all::
 	$(info )
@@ -121,8 +144,8 @@ help help-all::
 	$(info )
 	$(info Build and Check)
 	$(info ===============)
-	$(info make                        - defaults to make all)
-	$(info make all                    - build all targets, tests and all documentation)
+	$(info make                        - defaults to make build)
+	$(info make all                    - build all targets (debug and release), tests and all documentation)
 	$(info make build                  - build release build of all targets)
 	$(info make debug                  - build debug build of all targets)
 help-all::
@@ -151,6 +174,7 @@ help-all::
 	$(info make clean-all              - same as clean)
 	$(info make clean-build            - remove compiled files in build/)
 	$(info make clean-debug            - remove compiled files in debug/)
+	$(info make clean-build-dirs       - remove debug and build completely)
 	$(info )
 	$(info Configuration Check)
 	$(info ===================)

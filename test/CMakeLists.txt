@@ -5,8 +5,11 @@ include(ExternalProject)
 
 ExternalProject_Add(
   gtest
-  SVN_REPOSITORY http://googletest.googlecode.com/svn/tags/release-1.7.0
-  TIMEOUT 10
+  # SVN_REPOSITORY http://googletest.googlecode.com/svn/tags/release-1.7.0
+  GIT_REPOSITORY https://github.com/gwydirsam/googletest.git 
+  GIT_TAG release-1.7.0
+  TLS_VERIFY OFF
+  TIMEOUT 15
   # Disable install step
   INSTALL_COMMAND ""
   # Wrap download, configure and build steps in a script to log output

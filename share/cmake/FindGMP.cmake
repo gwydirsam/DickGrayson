@@ -8,9 +8,9 @@ if (GMP_INCLUDE_DIR AND GMP_LIBRARIES)
   set(GMP_FIND_QUIETLY TRUE)
 endif (GMP_INCLUDE_DIR AND GMP_LIBRARIES)
 
-find_path(GMP_INCLUDE_DIR NAMES gmp.h PATHS /usr/include /usr/local/include )
-find_library(GMP_LIBRARIES NAMES gmp libgmp /usr/lib /usr/local/lib )
-find_library(GMPXX_LIBRARIES NAMES gmpxx libgmpxx /usr/lib /usr/local/lib )
+find_path(GMP_INCLUDE_DIR NAMES gmp.h PATHS /usr/include /usr/local/include $ENV{HOME}/local/$ENV{UNAME}/include)
+find_library(GMP_LIBRARIES NAMES gmp libgmp /usr/lib /usr/local/lib $ENV{HOME}/local/$ENV{UNAME}/lib )
+find_library(GMPXX_LIBRARIES NAMES gmpxx libgmpxx /usr/lib /usr/local/lib $ENV{HOME}/local/$ENV{UNAME}/lib )
 MESSAGE(STATUS "GMP libs: " ${GMP_LIBRARIES} " " ${GMPXX_LIBRARIES} )
 
 include(FindPackageHandleStandardArgs)

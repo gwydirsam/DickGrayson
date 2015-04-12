@@ -23,6 +23,8 @@ set(IMAGE_LIB dgimg)
 set(CRYPTO_LIB dgcrypto)
 set(TYPE_LIB dgtype)
 
+include(share/cmake/InstallGMP.cmake)
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/share/cmake)
 
 find_package(GMP REQUIRED)

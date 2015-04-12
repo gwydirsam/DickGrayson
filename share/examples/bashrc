@@ -65,7 +65,7 @@ elif [[ ${UNAME} == "Linux" ]]; then
         alias gcc-4.9.2="/usr/local/gcc4.9.2/bin/gcc -fdiagnostics-color=auto"
         alias g++-4.9.2="/usr/local/gcc4.9.2/bin/g++ -fdiagnostics-color=auto"
 
-        export CC="gcc-4.9.2 -fdiagnostics-color=auto"
-        export CXX="g++-4.9.2 -fdiagnostics-color=auto"
+        export CC="/usr/local/gcc4.9.2/bin/gcc -fdiagnostics-color=auto"
+        export CXX="/usr/local/gcc4.9.2/bin/g++ -fdiagnostics-color=auto"
     fi
 fi

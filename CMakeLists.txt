@@ -1,7 +1,7 @@
 # version 2.8.7 is on travis
 cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
 
-project(DickGrayson CXX)
+project(DickGrayson C CXX)
 
 # binary names
 # set(RSA_CRYPT munchkincrypt)
@@ -23,6 +23,13 @@ set(IMAGE_LIB dgimg)
 set(CRYPTO_LIB dgcrypto)
 set(TYPE_LIB dgtype)
 
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/share/cmake)
+
+find_package(GMP REQUIRED)
+if(GMP_FOUND)
+  include_directories(${GMP_INCLUDE_DIR})
+  list(APPEND PROJECT_GLOBAL_LIBS ${GMP_LIBRARIES} ${GMPXX_LIBRARIES})
+endif()
 
 option(BUILD_TESTS "Enable tests build" ON)
 

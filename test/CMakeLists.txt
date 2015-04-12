@@ -22,6 +22,7 @@ ExternalProject_Add(
 ExternalProject_Get_Property(gtest source_dir)
 ExternalProject_Get_Property(gtest binary_dir)
 
+# add_custom_target(${RSA_ATTACK}-TEST ${RSA_ATTACK}-lib)
 set(TARGET ${RSA_ATTACK})
 set(TARGET_LIB ${TARGET}-lib)
 set(GTEST_TARGET ${TARGET}-test)

@@ -13,6 +13,7 @@ install:
   - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq gcc-4.9 g++-4.9; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
   - export LD_LIBRARY_PATH=/home/travis/local/lib:$LD_LIBRARY_PATH
+  - export CPLUS_INCLUDE_PATH=/home/travis/local/include:$CPLUS_INCLUDE_PATH
   ## update cmake version
   - sudo apt-get install -y cmake
   # - sudo apt-get install -yqq libgmpxx4ldbl libgmp-dev libgmp10 libgmp10-doc libgmp3-dev

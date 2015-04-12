@@ -1,3 +1,4 @@
+# FindGMP.cmake
 # Try to find the GMP librairies
 #  GMP_FOUND - system has GMP lib
 #  GMP_INCLUDE_DIR - the GMP include directory

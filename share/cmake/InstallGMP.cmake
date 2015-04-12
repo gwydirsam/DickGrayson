@@ -4,7 +4,8 @@ set(MODULE_NAME gmp)
 # gmp definition
 include(ExternalProject)
 
-set(${MODULE_NAME}_CONFIGURE "./configure --prefix=$ENV{HOME}/local/$ENV{UNAME} --enable-fat --enable-cxx" )
+set(${MODULE_NAME}_INSTALL_DIR "$ENV{HOME}/local/$ENV{UNAME}")
+set(${MODULE_NAME}_CONFIGURE "./configure --enable-fat --enable-cxx" )
 set(${MODULE_NAME}_BUILD "make && make check")
 set(${MODULE_NAME}_INSTALL "make install")
 
@@ -17,6 +18,7 @@ ExternalProject_Add(
   # SOURCE_DIR ${${MODULE_NAME}_INSTALL}
   CONFIGURE_COMMAND ${${MODULE_NAME}_CONFIGURE}
   BUILD_COMMAND ${${MODULE_NAME}_BUILD}
+  INSTALL_DIR ${${MODULE_NAME}_INSTALL_DIR}
   INSTALL_COMMAND ${${MODULE_NAME}_INSTALL}
   # Wrap download, configure and build steps in a script to log output
   LOG_DOWNLOAD ON

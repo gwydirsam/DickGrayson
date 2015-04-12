@@ -11,6 +11,8 @@ ExternalProject_Add(
   TLS_VERIFY OFF
   TIMEOUT 15
   # Disable install step
+  UPDATE_COMMAND ""
+  PATCH_COMMAND ""
   INSTALL_COMMAND ""
   # Wrap download, configure and build steps in a script to log output
   LOG_DOWNLOAD ON
@@ -50,7 +52,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest gmp)
+add_dependencies(${GTEST_TARGET} gmp gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
@@ -69,7 +71,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest gmp)
+add_dependencies(${GTEST_TARGET} gmp gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
@@ -88,7 +90,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest gmp)
+add_dependencies(${GTEST_TARGET} gmp gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
@@ -106,7 +108,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest gmp)
+add_dependencies(${GTEST_TARGET} gmp gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET}
@@ -124,7 +126,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest gmp)
+add_dependencies(${GTEST_TARGET} gmp gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET}
@@ -142,7 +144,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest gmp)
+add_dependencies(${GTEST_TARGET} gmp gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET}

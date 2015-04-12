@@ -2,11 +2,6 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
-# ﻿  PATHS ${GMP_PREFIX}/include /usr/include /usr/local/include)
-# message(${GMP_INCLUDE_DIR})
-
-# find_library(GMP_LIBRARY gmp 
-# ﻿  PATHS ${GMP_PREFIX}/lib /usr/lib /usr/local/lib)
 
 if (GMP_INCLUDE_DIR AND GMP_LIBRARIES)
   # Already in cache, be silent

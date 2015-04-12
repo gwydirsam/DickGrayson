@@ -4,27 +4,30 @@ set(MODULE_NAME gmp)
 # gmp definition
 include(ExternalProject)
 
-set(${MODULE_NAME}_INSTALL_DIR "$ENV{HOME}/local/$ENV{UNAME}")
-set(${MODULE_NAME}_CONFIGURE "./configure --enable-fat --enable-cxx" )
-set(${MODULE_NAME}_BUILD "make && make check")
-set(${MODULE_NAME}_INSTALL "make install")
+#set(${MODULE_NAME}_SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/${MODULE_NAME})
+set(${MODULE_NAME}_INSTALL_DIR $ENV{HOME}/local/$ENV{UNAME})
+set(${MODULE_NAME}_CONFIGURE <SOURCE_DIR>/configure --prefix=${${MODULE_NAME}_INSTALL_DIR} --enable-fat --enable-cxx )
+#set(${MODULE_NAME}_CONFIGURE ./${${MODULE_NAME}_SOURCE_DIR}/configure --enable-fat --enable-cxx )
+set(${MODULE_NAME}_BUILD make -C <SOURCE_DIR>)
+set(${MODULE_NAME}_INSTALL make -C <SOURCE_DIR> install)
 
 ExternalProject_Add(
   ${MODULE_NAME}
   URL "ftp://ftp.gmplib.org/pub/gmp/gmp-6.0.0a.tar.bz2"
   TLS_VERIFY OFF
   TIMEOUT 15
-  # SOURCE_DIR ${CMAKE_SOURCE_DIR}/ext/openssl
-  # SOURCE_DIR ${${MODULE_NAME}_INSTALL}
-  CONFIGURE_COMMAND ${${MODULE_NAME}_CONFIGURE}
-  BUILD_COMMAND ${${MODULE_NAME}_BUILD}
-  INSTALL_DIR ${${MODULE_NAME}_INSTALL_DIR}
-  INSTALL_COMMAND ${${MODULE_NAME}_INSTALL}
+  #SOURCE_DIR ${${MODULE_NAME}_SOURCE_DIR}
+  CONFIGURE_COMMAND <SOURCE_DIR>/configure
+	--prefix=${${MODULE_NAME}_INSTALL_DIR} --enable-fat --enable-cxx
+  BUILD_COMMAND $(MAKE)
+  #INSTALL_DIR ${${MODULE_NAME}_INSTALL_DIR}
+  TEST_COMMAND $(MAKE) check
+  INSTALL_COMMAND $(MAKE) install
   # Wrap download, configure and build steps in a script to log output
   LOG_DOWNLOAD ON
   LOG_CONFIGURE ON
   LOG_BUILD ON
-  PREFIX "${MODULE_NAME}"
+  PREFIX ${MODULE_NAME}
   )
 
 ExternalProject_Get_Property(${MODULE_NAME} source_dir)

@@ -31,7 +31,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest)
+add_dependencies(${GTEST_TARGET} gmp gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
@@ -50,7 +50,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest)
+add_dependencies(${GTEST_TARGET} gtest gmp)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
@@ -69,7 +69,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest)
+add_dependencies(${GTEST_TARGET} gtest gmp)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
@@ -88,7 +88,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest)
+add_dependencies(${GTEST_TARGET} gtest gmp)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
@@ -106,7 +106,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest)
+add_dependencies(${GTEST_TARGET} gtest gmp)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET}
@@ -124,7 +124,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest)
+add_dependencies(${GTEST_TARGET} gtest gmp)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET}
@@ -142,7 +142,7 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gtest)
+add_dependencies(${GTEST_TARGET} gtest gmp)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET}

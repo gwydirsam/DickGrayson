@@ -1,4 +1,4 @@
-UNAME=$(uname)
+export UNAME=$(uname)
 HOSTNAME=$(hostname)
 
 # simple PS1

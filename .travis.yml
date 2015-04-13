@@ -5,10 +5,10 @@ sudo: false
 addons:
   apt:
     sources:
-    - deadsnakes
+    # - deadsnakes
     - ubuntu-toolchain-r-test
     packages:
-    - cmake
+    # - cmake
     - gcc-4.9
     - g++-4.9
 env:

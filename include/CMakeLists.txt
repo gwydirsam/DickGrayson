@@ -19,28 +19,28 @@ set(STEGO_ATTACK_LIB_FILES
 
 add_library(${TYPE_LIB} ${TYPE_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-add_dependencies(${TYPE_LIB} gmp)
+# add_dependencies(${TYPE_LIB} gmp)
 
 add_library(${IMAGE_LIB} ${IMAGE_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-add_dependencies(${IMAGE_LIB} gmp)
+# add_dependencies(${IMAGE_LIB} gmp)
 
 add_library(${CRYPTO_LIB} ${CRYPTO_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-add_dependencies(${CRYPTO_LIB} gmp)
+# add_dependencies(${CRYPTO_LIB} gmp)
 
 add_library(${RSA_CRYPT_LIB} ${RSA_CRYPT_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-add_dependencies(${RSA_CRYPT_LIB} gmp)
+# add_dependencies(${RSA_CRYPT_LIB} gmp)
 
 add_library(${RSA_ATTACK_LIB} ${RSA_ATTACK_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-add_dependencies(${RSA_ATTACK_LIB} gmp)
+# add_dependencies(${RSA_ATTACK_LIB} gmp)
 
 add_library(${STEGO_CRYPT_LIB} ${STEGO_CRYPT_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-add_dependencies(${STEGO_CRYPT_LIB} gmp)
+# add_dependencies(${STEGO_CRYPT_LIB} gmp)
 
 add_library(${STEGO_ATTACK_LIB} ${STEGO_ATTACK_LIB_FILES})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-add_dependencies(${STEGO_ATTACK_LIB} gmp)
+# add_dependencies(${STEGO_ATTACK_LIB} gmp)

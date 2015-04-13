@@ -33,7 +33,8 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gmp gtest)
+add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
@@ -52,7 +53,8 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gmp gtest)
+add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
@@ -71,7 +73,8 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gmp gtest)
+add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
@@ -80,7 +83,8 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
-target_link_libraries(${GTEST_TARGET} pthread)
+# add_dependencies(${GTEST_TARGET} gmp gtest)
+add_dependencies(${GTEST_TARGET} gtest)
 
 set(TARGET ${STEGO_ATTACK})
 set(TARGET_LIB ${TARGET}-lib)
@@ -90,7 +94,8 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gmp gtest)
+add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
@@ -108,7 +113,8 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gmp gtest)
+add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET}
@@ -126,7 +132,8 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gmp gtest)
+add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET}
@@ -144,7 +151,8 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
-add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gmp gtest)
+add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET}

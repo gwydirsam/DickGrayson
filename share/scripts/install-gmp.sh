@@ -8,7 +8,7 @@ INSTALL_PREFIX=${HOME}/local/$(uname)
 
 wget ${URL} -O ${TMP_DIR}/`basename $URL`
 
-tar -C ${TMP_DIR} -xjf `basename $URL`
+tar -C ${TMP_DIR} -xjf ${TMP_DIR}/`basename $URL`
 
 mkdir -p ${INSTALL_PREFIX}
 

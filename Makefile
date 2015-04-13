@@ -93,7 +93,7 @@ install-deps::
 	@echo Finished Installing Dependencies
 	@echo ======================================
 
-reconfig build release compile::
+reconfig::
 	@echo ======================================
 	@echo Rebuilding CMake Cache
 	@echo ======================================
@@ -103,7 +103,7 @@ else
 	@$(MAKE) -C $(BUILD_DIR) rebuild_cache
 endif
 
-reconfig debug::
+reconfig::
 	@echo ======================================
 	@echo Rebuilding CMake Cache
 	@echo ======================================

@@ -48,12 +48,34 @@ DEBUG_TEST_BINS := $(wildcard $(DEBUG_DIR)/test/*-test)
 				check test clean clean-all clean-release clean-build clean-debug \
 				update update-makeall reconfig clean-build-dirs $(RELEASE_TEST_BINS) \
 				test-all test-build test-debug $(DEBUG_TEST_BINS) \
-				install-better-defaults install-cmake install-gmp
+				install-better-defaults install-cmake install-gmp xcode xcode-all \
+				xcode-debug xcode-build ninja ninja-all ninja-debug ninja-build
 
 all::
 	@echo ======================================
 	@echo Starting $(PROJECT_NAME) Build
 	@echo ""
+
+xcode-all xcode xcode-build::
+	@mkdir -p xcode-build
+	@export CC=/usr/bin/clang
+	@export CXX=/usr/bin/clang++
+	@$(CMAKE) -E chdir xcode-build $(CMAKE) -GXcode -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release ..
+
+xcode-all xcode-debug::
+	@export CC=/usr/bin/clang
+	@export CXX=/usr/bin/clang++
+	@mkdir -p xcode-debug
+	@$(CMAKE) -E chdir xcode-debug $(CMAKE) -GXcode -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug ..
+
+ninja-all ninja ninja-build::
+	@mkdir -p ninja-build
+	@$(CMAKE) -E chdir ninja-build $(CMAKE) -GNinja -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release ..
+
+ninja-all ninja-debug::
+	@mkdir -p ninja-debug
+	@$(CMAKE) -E chdir ninja-debug $(CMAKE) -GNinja -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug ..
+
 
 install-better-defaults::
 	@echo ======================================
@@ -158,14 +180,27 @@ endif
 	@echo Debug Build Finished
 	@echo ======================================
 
-test-all check test test-build:: build
+test-all test test-build:: build
 	@echo ======================================
 	@echo Starting Release Tests
 	@echo ======================================
-test-all check test test-build:: $(RELEASE_TEST_BINS)
-$(RELEASE_TEST_BINS)::
-	@$@ --gtest_color=yes
-test-all check test test-build::
+
+test-all test test-build test-rsa-crypt::
+	$(BUILD_DIR)/test/rsa-crypt-test --gtest_color=yes
+test-all test test-build test-rsa-attack::
+	$(BUILD_DIR)/test/rsa-attack-test --gtest_color=yes
+test-all test test-build test-stego-crypt::
+	$(BUILD_DIR)/test/stego-crypt-test --gtest_color=yes
+test-all test test-build test-stego-attack::
+	$(BUILD_DIR)/test/stego-attack-test --gtest_color=yes
+test-all test test-build test-dgcrypto::
+	$(BUILD_DIR)/test/dgcrypto-test --gtest_color=yes
+test-all test test-build test-dgtype::
+	$(BUILD_DIR)/test/dgtype-test --gtest_color=yes
+test-all test test-build test-dgimg::
+	$(BUILD_DIR)/test/dgimg-test --gtest_color=yes
+
+test-all test test-build::
 	@echo ======================================
 	@echo Finished Release Tests
 	@echo ======================================
@@ -174,9 +209,22 @@ test-all test-debug:: debug
 	@echo ======================================
 	@echo Starting Debug Tests
 	@echo ======================================
-test-all test-debug:: $(DEBUG_TEST_BINS)
-$(DEBUG_TEST_BINS)::
-	@$@ --gtest_color=yes
+
+test-all test-debug test-rsa-crypt::
+	$(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
+test-all test-debug test-rsa-attack::
+	$(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
+test-all test-debug test-stego-crypt::
+	$(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
+test-all test-debug test-stego-attack::
+	$(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
+test-all test-debug test-dgcrypto::
+	$(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
+test-all test-debug test-dgtype::
+	$(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
+test-all test-debug test-dgimg::
+	$(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+
 test-all test-debug::
 	@echo ======================================
 	@echo Finished Debug Tests
@@ -211,7 +259,7 @@ help help-all::
 	$(info make help                    - show brief help)
 	$(info make help-all                - show extended help)
 	$(info )
-	$(info Build and Check)
+	$(info Build and Test)
 	$(info ===============)
 	$(info make                         - defaults to make build)
 	$(info make all                     - build all targets (debug and release), tests and all docs)
@@ -234,6 +282,9 @@ help-all::
 	$(info make test-rsa-attack         - run rsa-attack test)
 	$(info make test-stego-crypt        - run stego-crypt test)
 	$(info make test-stego-attack       - run stego-attack test)
+	$(info make test-dgcrypto           - run dgcrypto test)
+	$(info make test-dgtype             - run dgtype test)
+	$(info make test-dgimg              - run dgimg test)
 help help-all::
 	$(info )
 	$(info Cleaning)
@@ -261,8 +312,10 @@ help help-all::
 	$(info Convenience)
 	$(info ===========)
 	$(info make update                  - stash, then pull from upstream and build)
+	$(info make install-deps            - install cmake and GNU MP library)
 help-all::
 	$(info make install-cmake           - install cmake)
-	$(info make install-better-defaults - install better defaults)
+	$(info make install-gmp             - install GNU MP library)
+	$(info make install-better-defaults - install bash and git configurations)
 help help-all::
 	@echo ""

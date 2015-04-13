@@ -76,3 +76,8 @@ Session.vim
 /share/project-spec/project4.log
 /share/project-spec/prv_project4.fmt
 /share/project-spec/prv_project4.log
+/xcode/
+/ninja-build/
+/ninja-debug/
+/xcode-build/
+/xcode-debug/

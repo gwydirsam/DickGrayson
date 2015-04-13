@@ -24,8 +24,10 @@ cd ${TMP_DIR}/`basename $URL a.tar.bz2`
 # build
 make || exit $?
 
+if ! [[ `whomai` == "travis" ]]; then
 # check
 make check || exit $?
+fi
 
 # install
 make install || exit $?

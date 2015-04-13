@@ -81,3 +81,5 @@ Session.vim
 /ninja-debug/
 /xcode-build/
 /xcode-debug/
+/share/notes/auto/
+/share/notes/bmp.tex

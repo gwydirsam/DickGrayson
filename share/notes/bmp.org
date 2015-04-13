@@ -1,0 +1,24 @@
+#+TITLE: bitmap (.bmp) spec notes
+#+DATE: <2015-04-13 Fri>
+#+AUTHOR: Sam Gwydir
+#+EMAIL: sam@samgwydir.com
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t c:nil
+#+OPTIONS: creator:comment d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t
+#+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:t
+#+OPTIONS: todo:t |:t
+#+CREATOR: Emacs 24.5.1 (Org mode 8.2.10)
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+OPTIONS: texht:t
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS:
+#+LATEX_HEADER:
+#+LATEX_HEADER_EXTRA:
+
+* Links
+- [[http://en.wikipedia.org/wiki/BMP_file_format][Wikipedia: BMP file format]]
+- [[http://www.kalytta.com/bitmap.h][C++ BMP class]]
+- - 

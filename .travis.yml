@@ -2,6 +2,10 @@ language: cpp
 compiler:
   - gcc
   #- clang
+env:
+  - BUILD_TYPE=debug TEST_TYPE=test-debug
+  - BUILD_TYPE=build TEST_TYPE=test-build
+  - BUILD_TYPE=all TEST_TYPE=test-all
 install:
   ## reset and clean
   # - git reset --hard HEAD
@@ -29,8 +33,8 @@ script:
   # - ./build.sh
   - make clean-build-dirs
   - make install-deps
-  - make all
-  - make test-all
+  - make $BUILD_TYPE
+  - make $TEST_TYPE
   # - $CXX src/rsa-crypt/main.cc
   # - $CXX src/rsa-attack/main.cc
   # - $CXX src/stego-crypt/main.cc

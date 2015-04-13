@@ -47,29 +47,50 @@ DEBUG_TEST_BINS := $(wildcard $(DEBUG_DIR)/test/*-test)
 .PHONY:	all help helpall compile release build debug \
 				check test clean clean-all clean-release clean-build clean-debug \
 				update update-makeall reconfig clean-build-dirs $(RELEASE_TEST_BINS) \
-				test-all test-build test-debug $(DEBUG_TEST_BINS)
+				test-all test-build test-debug $(DEBUG_TEST_BINS) \
+				install-better-defaults install-cmake install-gmp
 
 all::
 	@echo ======================================
 	@echo Starting $(PROJECT_NAME) Build
 	@echo ""
 
-install-cmake::
-	@echo ======================================
-	@echo Start Installing CMake
-	@echo ======================================
-	@(cd share/scripts; sh install-cmake.sh)
-	@echo ======================================
-	@echo Done Installing CMake
-	@echo ======================================
-
 install-better-defaults::
 	@echo ======================================
 	@echo Start Installing Better Defaults
 	@echo ======================================
-	@(cd share/scripts; sh better-defaults.sh)
+	@(cd share/scripts; bash better-defaults.sh)
 	@echo ======================================
 	@echo Done Installing Better Defaults
+	@echo ======================================
+
+install-deps::
+	@echo ======================================
+	@echo Start Installing Dependencies
+	@echo ======================================
+
+install-deps install-cmake::
+	@echo ======================================
+	@echo Start Installing CMake
+	@echo ======================================
+	@(cd share/scripts; bash install-cmake.sh)
+	@echo ======================================
+	@echo Done Installing CMake
+	@echo ======================================
+
+
+install-deps install-gmp::
+	@echo ======================================
+	@echo Start Installing GNU MP
+	@echo ======================================
+	@(cd share/scripts; bash install-gmp.sh)
+	@echo ======================================
+	@echo Done Installing GNUMP
+	@echo ======================================
+
+install-deps::
+	@echo ======================================
+	@echo Finished Installing Dependencies
 	@echo ======================================
 
 reconfig build release compile::

@@ -1,7 +1,7 @@
 # version 2.8.7 is on travis
 cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
 
-project(DickGrayson C CXX)
+project(DickGrayson)
 
 # binary names
 # set(RSA_CRYPT munchkincrypt)
@@ -25,6 +25,11 @@ set(TYPE_LIB dgtype)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/share/cmake)
 
+find_package(Threads REQUIRED)
+if(CMAKE_USE_PTHREADS_INIT)
+  list(APPEND PROJECT_GLOBAL_LIBS ${CMAKE_THREAD_LIBS_INIT})
+endif()
+
 find_package(GMP REQUIRED)
 if(GMP_FOUND)
   include_directories(${GMP_INCLUDE_DIR})
@@ -38,7 +43,7 @@ option(BUILD_TESTS "Enable tests build" ON)
 #       NDEBUG is set for release build
 if(${CMAKE_COMPILER_IS_GNUCXX})
   # gcc/g++ flags
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread")
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -DNDEBUG")
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -Wall -Wextra -DDEBUG")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")

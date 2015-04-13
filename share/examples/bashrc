@@ -1,4 +1,4 @@
-UNAME=$(uname)
+export UNAME=$(uname)
 HOSTNAME=$(hostname)
 
 # simple PS1
@@ -57,6 +57,8 @@ elif [[ ${UNAME} == "Linux" ]]; then
 
         export MANPATH=/usr/local/gcc4.9.2/share/man:$MANPATH
         export LD_LIBRARY_PATH=/usr/local/gcc4.9.2/lib64:$LD_LIBRARY_PATH
+        export LD_LIBRARY_PATH=$HOME/local/$UNAME/lib:$LD_LIBRARY_PATH
+        export CPLUS_INCLUDE_PATH=$HOME/local/$UNAME/include:$CPLUS_INCLUDE_PATH
 
         # include paths
         # export CPATH=:$CPATH

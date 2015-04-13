@@ -10,7 +10,8 @@ ExternalProject_Add(
   GIT_TAG release-1.7.0
   TLS_VERIFY OFF
   TIMEOUT 15
-  # Disable install step
+  UPDATE_COMMAND ""
+  PATCH_COMMAND ""
   INSTALL_COMMAND ""
   # Wrap download, configure and build steps in a script to log output
   LOG_DOWNLOAD ON
@@ -31,10 +32,12 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
+# add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
+  ${PROJECT_GLOBAL_LIBS}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
@@ -50,10 +53,12 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
+# add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
+  ${PROJECT_GLOBAL_LIBS}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
@@ -69,16 +74,19 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
+# add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
+  ${PROJECT_GLOBAL_LIBS}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
-target_link_libraries(${GTEST_TARGET} pthread)
+# add_dependencies(${GTEST_TARGET} gmp gtest)
+add_dependencies(${GTEST_TARGET} gtest)
 
 set(TARGET ${STEGO_ATTACK})
 set(TARGET_LIB ${TARGET}-lib)
@@ -88,10 +96,12 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
+# add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET_LIB}
+  ${PROJECT_GLOBAL_LIBS}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
@@ -106,10 +116,12 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
+# add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET}
+  ${PROJECT_GLOBAL_LIBS}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
@@ -124,10 +136,12 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
+# add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET}
+  ${PROJECT_GLOBAL_LIBS}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
@@ -142,10 +156,12 @@ set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 
+# add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
   ${TARGET}
+  ${PROJECT_GLOBAL_LIBS}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}

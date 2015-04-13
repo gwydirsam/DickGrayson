@@ -16,5 +16,6 @@ chmod +x ${TMP_DIR}/`basename $URL`
 
 cd ${TMP_DIR}
 
-${TMP_DIR}/`basename $URL` --prefix=${INSTALL_PREFIX} --exclude-subdir
+${TMP_DIR}/`basename $URL` --prefix=${INSTALL_PREFIX} --exclude-subdir || exit $?
 
+exit $?

@@ -19,14 +19,15 @@ cd ${TMP_DIR}/`basename $URL a.tar.bz2`
 
 # configure
 ./configure \
-    --prefix=${INSTALL_PREFIX} --enable-fat --enable-cxx
+    --prefix=${INSTALL_PREFIX} --enable-fat --enable-cxx || exit$?
 
 # build
-make all
+make || exit $?
 
 # check
-make check
+make check || exit $?
 
 # install
-make install
+make install || exit $?
 
+exit $?

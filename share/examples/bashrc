@@ -64,10 +64,16 @@ elif [[ ${UNAME} == "Linux" ]]; then
         # export CPATH=:$CPATH
         # export CPLUS_INCLUDE_PATH=:$CPLUS_INCLUDE_PATH
 
+        if [ $(which ccache) ]; then
+            export CC="ccache /usr/local/gcc4.9.2/bin/gcc -fdiagnostics-color=auto"
+            export CXX="ccache /usr/local/gcc4.9.2/bin/g++ -fdiagnostics-color=auto"
+        else
+            export CC="/usr/local/gcc4.9.2/bin/gcc -fdiagnostics-color=auto"
+            export CXX="/usr/local/gcc4.9.2/bin/g++ -fdiagnostics-color=auto"
+        fi
+
         alias gcc-4.9.2="/usr/local/gcc4.9.2/bin/gcc -fdiagnostics-color=auto"
         alias g++-4.9.2="/usr/local/gcc4.9.2/bin/g++ -fdiagnostics-color=auto"
 
-        export CC="/usr/local/gcc4.9.2/bin/gcc -fdiagnostics-color=auto"
-        export CXX="/usr/local/gcc4.9.2/bin/g++ -fdiagnostics-color=auto"
     fi
 fi

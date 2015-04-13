@@ -47,4 +47,5 @@ notifications:
 cache:
   directories:
     - $HOME/.ccache
+    - $HOME/.tmp
     - $HOME/local/$UNAME

@@ -1,7 +1,10 @@
 #include <gtest/gtest.h>
 
-TEST(cryptoStub, oneEqualsone) {
-  int one = 1;
-  EXPECT_EQ(1, one);
+#include <dgcrypto/dgcrypto.hh>
+
+TEST(DGCryptoPrime, CreatePrimeKBits) {
+  // create a prime with 16u (unsigned int 16) bits
+  DGPrime sixteen(16u);
+  EXPECT_GT(8u, sixteen.bits());
 }
 

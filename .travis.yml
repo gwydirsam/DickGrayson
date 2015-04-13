@@ -32,6 +32,7 @@ install:
 script:
   - make install-deps
   # - make $BUILD_TYPE
+  - make clean-$BUILD_TYPE
   - make $TEST_TYPE
 notifications:
   webhooks:

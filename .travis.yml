@@ -1,7 +1,17 @@
 language: cpp
+sudo: false
 compiler:
   - gcc
   #- clang
+addons:
+  apt:
+    sources:
+    - deadsnakes
+    - ubuntu-toolchain-r-test
+    packages:
+    - cmake
+    - gcc-4.9
+    - g++-4.9
 env:
   - BUILD_TYPE=debug TEST_TYPE=test-debug
   - BUILD_TYPE=build TEST_TYPE=test-build
@@ -17,18 +27,18 @@ install:
   # - git reset --hard HEAD
   # - git clean -fdx
   ## install gcc-4.8 (needed for C++11)
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo add-apt-repository ppa:kalakris/cmake -y
-  - sudo apt-get update -qq
-  - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq gcc-4.9 g++-4.9; fi
-  - if [ "$CXX" = "g++" ]; then export CXX="ccache g++-4.9 -fdiagnostics-color=auto" CC="ccache gcc-4.9 -fdiagnostics-color=auto"; fi
+  # - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  # - sudo add-apt-repository ppa:kalakris/cmake -y
+  # - sudo apt-get update -qq
+  # - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq gcc-4.9 g++-4.9; fi
+   - if [ "$CXX" = "g++" ]; then export CXX="ccache g++-4.9 -fdiagnostics-color=auto" CC="ccache gcc-4.9 -fdiagnostics-color=auto"; fi
   - mkdir -p $HOME/local/`uname`/
   - export UNAME=`uname`
   - export PATH=$HOME/local/$UNAME/bin:$PATH
   - export LD_LIBRARY_PATH=$HOME/local/$UNAME/lib:$LD_LIBRARY_PATH
   - export CPLUS_INCLUDE_PATH=$HOME/local/$UNAME/include:$CPLUS_INCLUDE_PATH
   ## update cmake version
-  - sudo apt-get install -y cmake
+  # - sudo apt-get install -y cmake
   # - sudo apt-get install -yqq libgmpxx4ldbl libgmp-dev libgmp10 libgmp10-doc libgmp3-dev
   ##
   # - sudo apt-get install -y build-essential

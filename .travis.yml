@@ -11,7 +11,7 @@ install:
   - sudo add-apt-repository ppa:kalakris/cmake -y
   - sudo apt-get update -qq
   - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq gcc-4.9 g++-4.9; fi
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9 -fdiagnostics-color=auto" CC="gcc-4.9 -fdiagnostics-color=auto"; fi
+  - if [ "$CXX" = "g++" ]; then export CXX="ccache g++-4.9 -fdiagnostics-color=auto" CC="ccache gcc-4.9 -fdiagnostics-color=auto"; fi
   - mkdir -p $HOME/local/`uname`/
   - export UNAME=`uname`
   - export PATH=$HOME/local/$UNAME/bin:$PATH
@@ -39,3 +39,7 @@ notifications:
     urls: https://webhooks.gitter.im/e/1eef7e496a6902ff54c7
     on_success: change
     on_failure: always
+cache:
+  directories:
+    - $HOME/.ccache
+    - $HOME/local/$UNAME

@@ -8,20 +8,20 @@ INSTALL_PREFIX=${HOME}/local/$(uname)
 
 wget ${URL} -O ${TMP_DIR}/`basename $URL`
 
-tar -xjf ${TMP_DIR}/`basename $URL`
+tar -C ${TMP_DIR} -xjf `basename $URL`
 
 mkdir -p ${INSTALL_PREFIX}
 
 # configure
-${TMP_DIR}/`basename $URL a.tar.bz2`/configure \
+${TMP_DIR}/`basename $URL tar.bz2`/configure \
           --prefix=${INSTALL_PREFIX} --enable-fat --enable-cxx
 
 # build
-make -C ${TMP_DIR}/`basename $URL a.tar.bz2`
+make -C ${TMP_DIR}/`basename $URL tar.bz2`
 
 # check
-make -C ${TMP_DIR}/`basename $URL a.tar.bz2` check
+make -C ${TMP_DIR}/`basename $URL tar.bz2` check
 
 # install
-make -C ${TMP_DIR}/`basename $URL a.tar.bz2` install
+make -C ${TMP_DIR}/`basename $URL tar.bz2` install
 

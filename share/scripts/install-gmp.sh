@@ -17,11 +17,11 @@ ${TMP_DIR}/`basename $URL tar.bz2`/configure \
           --prefix=${INSTALL_PREFIX} --enable-fat --enable-cxx
 
 # build
-make -C ${TMP_DIR}/`basename $URL tar.bz2`
+make -C ${TMP_DIR}/`basename $URL a.tar.bz2`
 
 # check
-make -C ${TMP_DIR}/`basename $URL tar.bz2` check
+make -C ${TMP_DIR}/`basename $URL a.tar.bz2` check
 
 # install
-make -C ${TMP_DIR}/`basename $URL tar.bz2` install
+make -C ${TMP_DIR}/`basename $URL a.tar.bz2` install
 

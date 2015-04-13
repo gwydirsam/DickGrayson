@@ -11,11 +11,12 @@ install:
   - sudo add-apt-repository ppa:kalakris/cmake -y
   - sudo apt-get update -qq
   - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq gcc-4.9 g++-4.9; fi
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9 -fdiagnostics-color=auto" CC="gcc-4.9 -fdiagnostics-color=auto"; fi
   - mkdir -p $HOME/local/`uname`/
-  - export QUIET_MAKE=TRUE
-  - export LD_LIBRARY_PATH=/home/travis/local/Linux/lib:$LD_LIBRARY_PATH
-  - export CPLUS_INCLUDE_PATH=/home/travis/local/Linux/include:$CPLUS_INCLUDE_PATH
+  - export UNAME=`uname`
+  - export PATH=$HOME/local/$UNAME/bin:$PATH
+  - export LD_LIBRARY_PATH=$HOME/local/$UNAME/lib:$LD_LIBRARY_PATH
+  - export CPLUS_INCLUDE_PATH=$HOME/local/$UNAME/include:$CPLUS_INCLUDE_PATH
   ## update cmake version
   - sudo apt-get install -y cmake
   # - sudo apt-get install -yqq libgmpxx4ldbl libgmp-dev libgmp10 libgmp10-doc libgmp3-dev
@@ -26,7 +27,7 @@ install:
 script:
   # - rm -rf build debug
   # - ./build.sh
-  # - make clean-build-dirs
+  - make clean-build-dirs
   - make install-deps
   - make all
   # - $CXX src/rsa-crypt/main.cc

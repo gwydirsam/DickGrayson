@@ -49,7 +49,7 @@ DEBUG_TEST_BINS := $(wildcard $(DEBUG_DIR)/test/*-test)
 				update update-makeall reconfig clean-build-dirs $(RELEASE_TEST_BINS) \
 				test-all test-build test-debug $(DEBUG_TEST_BINS) \
 				install-better-defaults install-cmake install-gmp xcode xcode-all \
-				xcode-debug xcode-build ninja ninja-all ninja-debug ninja-build
+				xcode-debug xcode-build ninja ninja-all ninja-debug ninja-build test-gmp
 
 all::
 	@echo ======================================
@@ -233,6 +233,8 @@ test-all test-debug test-dgtype::
 	$(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
 test-all test-debug test-dgimg::
 	$(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+test-all test-debug test-gmp::
+	$(DEBUG_DIR)/test/gmp-test --gtest_color=yes
 
 test-all test-debug::
 	@echo ======================================
@@ -294,6 +296,7 @@ help-all::
 	$(info make test-dgcrypto           - run dgcrypto test)
 	$(info make test-dgtype             - run dgtype test)
 	$(info make test-dgimg              - run dgimg test)
+	$(info make test-gmp                - run gmp library test)
 help help-all::
 	$(info )
 	$(info Cleaning)

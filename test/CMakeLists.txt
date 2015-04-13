@@ -168,3 +168,23 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
+
+set(TARGET gmp)
+set(GTEST_TARGET ${TARGET}-test)
+set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
+
+add_executable(${GTEST_TARGET} ${TESTS_FILES})
+include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+
+# add_dependencies(${GTEST_TARGET} gmp gtest)
+add_dependencies(${GTEST_TARGET} gtest)
+
+target_link_libraries(${GTEST_TARGET}
+  ${TARGET}
+  ${PROJECT_GLOBAL_LIBS}
+  # TODO OP should work but with something around ENABLE_EXPORTS
+  #  gtest gtest_main
+  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
+  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+
+target_link_libraries(${GTEST_TARGET} pthread)

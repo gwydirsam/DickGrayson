@@ -169,7 +169,7 @@ target_link_libraries(${GTEST_TARGET}
 
 target_link_libraries(${GTEST_TARGET} pthread)
 
-set(TARGET gmp)
+set(TARGET libgnump)
 set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
@@ -180,7 +180,6 @@ include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
-  ${TARGET}
   ${PROJECT_GLOBAL_LIBS}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main

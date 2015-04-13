@@ -1,6 +1,7 @@
 language: cpp
 compiler:
   - gcc
+sudo: false
 addons:
   apt:
     sources:

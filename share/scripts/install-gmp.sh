@@ -6,22 +6,28 @@ URL=ftp://ftp.gmplib.org/pub/gmp/gmp-6.0.0a.tar.bz2
 TMP_DIR=${HOME}/.tmp
 INSTALL_PREFIX=${HOME}/local/$(uname)
 
-wget ${URL} -O ${TMP_DIR}/`basename $URL`
+if ! [ -f "${TMP_DIR}/`basename $URL`" ]; then
+    wget ${URL} -O ${TMP_DIR}/`basename $URL`
+fi
 
-tar -C ${TMP_DIR} -xjf ${TMP_DIR}/`basename $URL`
+if ! [ -d "${TMP_DIR}/`basename $URL a.tar.bz2`" ]; then
+    tar -C ${TMP_DIR} -xjf ${TMP_DIR}/`basename $URL`
+fi
 
 mkdir -p ${INSTALL_PREFIX}
 
+cd ${TMP_DIR}/`basename $URL a.tar.bz2`
+
 # configure
-${TMP_DIR}/`basename $URL tar.bz2`/configure \
-          --prefix=${INSTALL_PREFIX} --enable-fat --enable-cxx
+./configure \
+    --prefix=${INSTALL_PREFIX} --enable-fat --enable-cxx
 
 # build
-make -C ${TMP_DIR}/`basename $URL a.tar.bz2`
+make all
 
 # check
-make -C ${TMP_DIR}/`basename $URL a.tar.bz2` check
+make check
 
 # install
-make -C ${TMP_DIR}/`basename $URL a.tar.bz2` install
+make install
 

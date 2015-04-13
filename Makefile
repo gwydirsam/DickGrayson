@@ -86,6 +86,15 @@ install-better-defaults::
 	@echo Done Installing Better Defaults
 	@echo ======================================
 
+install-ccache::
+	@echo ======================================
+	@echo Start Installing Better Defaults
+	@echo ======================================
+	@(cd share/scripts; bash install-ccache.sh)
+	@echo ======================================
+	@echo Done Installing Better Defaults
+	@echo ======================================
+
 install-deps::
 	@echo ======================================
 	@echo Start Installing Dependencies
@@ -317,5 +326,6 @@ help-all::
 	$(info make install-cmake           - install cmake)
 	$(info make install-gmp             - install GNU MP library)
 	$(info make install-better-defaults - install bash and git configurations)
+	$(info make install-ccache          - install ccache (highly reccomended))
 help help-all::
 	@echo ""

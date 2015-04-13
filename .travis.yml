@@ -30,6 +30,7 @@ script:
   - make clean-build-dirs
   - make install-deps
   - make all
+  - make test-all
   # - $CXX src/rsa-crypt/main.cc
   # - $CXX src/rsa-attack/main.cc
   # - $CXX src/stego-crypt/main.cc

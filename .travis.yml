@@ -14,7 +14,7 @@ addons:
 env:
   - BUILD_TYPE=debug TEST_TYPE=test-debug
   - BUILD_TYPE=build TEST_TYPE=test-build
-  - BUILD_TYPE=all TEST_TYPE=test-all
+  # - BUILD_TYPE=all TEST_TYPE=test-all
 cache:
   apt: true
   directories:

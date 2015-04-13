@@ -6,6 +6,11 @@ env:
   - BUILD_TYPE=debug TEST_TYPE=test-debug
   - BUILD_TYPE=build TEST_TYPE=test-build
   - BUILD_TYPE=all TEST_TYPE=test-all
+cache:
+  directories:
+    - $HOME/.ccache
+    - $HOME/.tmp
+    - $HOME/local/$UNAME
 install:
   ## reset and clean
   # - git reset --hard HEAD
@@ -44,8 +49,3 @@ notifications:
     urls: https://webhooks.gitter.im/e/1eef7e496a6902ff54c7
     on_success: change
     on_failure: always
-cache:
-  directories:
-    - $HOME/.ccache
-    - $HOME/.tmp
-    - $HOME/local/$UNAME

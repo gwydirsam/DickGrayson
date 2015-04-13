@@ -233,8 +233,8 @@ test-all test-debug test-dgtype::
 	$(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
 test-all test-debug test-dgimg::
 	$(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
-test-all test-debug test-gmp::
-	$(DEBUG_DIR)/test/gmp-test --gtest_color=yes
+test-all test-debug test-libgnump::
+	$(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
 test-all test-debug::
 	@echo ======================================
@@ -296,7 +296,7 @@ help-all::
 	$(info make test-dgcrypto           - run dgcrypto test)
 	$(info make test-dgtype             - run dgtype test)
 	$(info make test-dgimg              - run dgimg test)
-	$(info make test-gmp                - run gmp library test)
+	$(info make test-libgnump                - run gmp library test)
 help help-all::
 	$(info )
 	$(info Cleaning)

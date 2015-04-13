@@ -25,6 +25,7 @@ script:
   # - rm -rf build debug
   # - ./build.sh
   # - make clean-build-dirs
+  - make install-deps
   - make all
   # - $CXX src/rsa-crypt/main.cc
   # - $CXX src/rsa-attack/main.cc

@@ -6,7 +6,7 @@
 
 typedef std::string bmp_t;
 
-bmp_t open_bmp(const string& fname) {
+bmp_t open_bmp(const std::string& fname) {
   return bmp_t();
 }
 

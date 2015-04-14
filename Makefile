@@ -9,7 +9,7 @@ ifeq ($(UNAME), 'Linux')
 		NUM_CORES = 8
 	endif
 else
-	NUM_CORES = 8
+	NUM_CORES = 2
 endif
 
 ifeq ($(UNAME), 'Darwin')

@@ -38,7 +38,7 @@ TEST(DGCryptoPrime, isPrime3) {
   // create a prime with 2 bits
   dgrprime tree(3);
 
-  // EXPECT_EQ(3, tree.value());
+  EXPECT_EQ(3, tree.value());
 
   EXPECT_TRUE(dgrprime::is_prime(3_mpz));
 }

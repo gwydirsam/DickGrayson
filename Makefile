@@ -184,6 +184,7 @@ ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(DEBUG_DIR) gtest && ninja -C $(DEBUG_DIR) all
 else
 	@$(MAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
+	@$(MAKE) -C $(DEBUG_DIR) coveralls
 endif
 	@echo ======================================
 	@echo Debug Build Finished

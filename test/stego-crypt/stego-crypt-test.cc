@@ -10,7 +10,7 @@ TEST(StegStub, oneEqualsone) {
   EXPECT_EQ(1, one);
 }
 
-TEST(BMPTests, BmpValidation) {
+TEST(BmpTests, BmpValidation) {
   std::ifstream ifs("test/stego-crypt/test.bmp", std::ios::binary);
   std::ostringstream ost;
   ost << ifs.rdbuf();

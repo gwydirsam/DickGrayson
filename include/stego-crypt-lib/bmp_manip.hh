@@ -18,11 +18,19 @@ bmp_t open_bmp(const std::string& fname) {
 
 // returns the offset at which the pixel array begins (The data after the BMP header info)
 unsigned bmp_image_offset(const bmp_t& bmp) {
-  return 0;
+  return bmp[0xa];
 }
 
 unsigned bmp_bits_per_pixel(const bmp_t& bmp) {
-  return (unsigned)bmp[28];
+  return (unsigned)bmp[0x1c];
+}
+
+unsigned bmp_width(const bmp_t& bmp) {
+  return 0;
+}
+
+unsigned bmp_height(const bmp_t& bmp) {
+  return 0;
 }
 
 // we only support Windows BMP

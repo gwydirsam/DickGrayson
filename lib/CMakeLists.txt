@@ -1,4 +1,11 @@
-include_directories(${INCLUDE_DIR})
+include_directories(
+  ${TYPE_LIB}
+  ${IMAGE_LIB}
+  ${CRYPTO_LIB}
+  ${RSA_CRYPT_LIB}
+  ${RSA_ATTACK_LIB}
+  ${STEGO_CRYPT_LIB}
+  ${STEGO_ATTACK_LIB})
 
 ## project internal libraries
 # files
@@ -14,10 +21,11 @@ set(CRYPTO_LIB_FILES
 add_library(${TYPE_LIB} ${TYPE_LIB_FILES})
 add_library(${IMAGE_LIB} ${IMAGE_LIB_FILES})
 add_library(${CRYPTO_LIB} ${CRYPTO_LIB_FILES})
-list(APPEND PROJECT_GLOBAL_LIBS
-  ${TYPE_LIB}
-  ${IMAGE_LIB}
-  ${CRYPTO_LIB})
+target_link_libraries(${CRYPTO_LIB} ${PROJECT_GLOBAL_LIBS})
+# list(APPEND PROJECT_GLOBAL_LIBS
+#   ${TYPE_LIB}
+#   ${IMAGE_LIB}
+#   ${CRYPTO_LIB})
 
 
 ### Binary Libraries

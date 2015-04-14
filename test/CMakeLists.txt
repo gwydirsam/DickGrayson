@@ -29,7 +29,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
+# include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -50,8 +51,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
+# include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -72,8 +73,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
+# include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -95,8 +96,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
+# include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -116,8 +117,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
+# include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -137,8 +138,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
+# include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -158,8 +159,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
+# include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -179,15 +180,14 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
+# include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
-  ${GMP_LIBRARIES}
-  ${GMPXX_LIBRARIES}
+  ${PROJECT_GLOBAL_LIBS}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}

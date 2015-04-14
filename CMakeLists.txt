@@ -63,10 +63,9 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # OS X clang flags (use libc++)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -stdlib=libc++")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -nostdinc++ -I/usr/local/opt/llvm36/lib/llvm-3.6/include/c++/v1 -Wall -Wextra -DNDEBUG")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -DNDEBUG")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 --coverage -Wall -Wextra -DDEBUG")
     set(CMAKE_EXE_LINKER_FLAGS_DEBUG "--coverage")
-    link_directories(/usr/local/opt/llvm36/lib/llvm-3.6/lib)
   else()
     # linux clang flags (use libstdc++)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -stdlib=libstdc++")
@@ -76,12 +75,12 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 endif()
 
 # build source dir
-add_subdirectory(${SOURCE_DIR} bin/)
+add_subdirectory(${SOURCE_DIR})
 # build include dir
-add_subdirectory(${INCLUDE_DIR} lib/)
+add_subdirectory(${INCLUDE_DIR})
 
 # if testing, build gflags and tests
 if(BUILD_TESTS)
-  add_subdirectory(${TEST_DIR} test/)
+  add_subdirectory(${TEST_DIR})
 endif()
 

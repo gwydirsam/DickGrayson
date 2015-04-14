@@ -13,6 +13,5 @@ mpz_class RandomPrime::generate_prime(mp_bitcnt_t k) {
   this->value_ = gmp_rand_alg_.get_z_bits(k);
   return this->value_;
 }
-
 }
 }

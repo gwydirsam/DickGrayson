@@ -50,9 +50,9 @@ class RandomInteger {
   // stream extraction
   friend std::ostream& operator<<(std::ostream& os,
                                   const RandomInteger& random_integer);
-
   // stream insertion
-  friend std::istream& operator>>(std::istream& is, RandomInteger& random_integer);
+  friend std::istream& operator>>(std::istream& is,
+                                  RandomInteger& random_integer);
 };
 }
 }

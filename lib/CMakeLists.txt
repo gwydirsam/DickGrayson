@@ -14,6 +14,11 @@ set(CRYPTO_LIB_FILES
 add_library(${TYPE_LIB} ${TYPE_LIB_FILES})
 add_library(${IMAGE_LIB} ${IMAGE_LIB_FILES})
 add_library(${CRYPTO_LIB} ${CRYPTO_LIB_FILES})
+list(APPEND PROJECT_GLOBAL_LIBS
+  ${TYPE_LIB}
+  ${IMAGE_LIB}
+  ${CRYPTO_LIB})
+
 
 ### Binary Libraries
 ## RSA libs

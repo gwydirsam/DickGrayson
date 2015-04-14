@@ -186,7 +186,8 @@ include_directories(${source_dir}/include ${INCLUDE_DIR})
 add_dependencies(${GTEST_TARGET} gtest)
 
 target_link_libraries(${GTEST_TARGET}
-  ${PROJECT_GLOBAL_LIBS}
+  ${GMP_LIBRARIES}
+  ${GMPXX_LIBRARIES}
   # TODO OP should work but with something around ENABLE_EXPORTS
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}

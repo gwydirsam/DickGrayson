@@ -3,7 +3,10 @@ cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
 
 project(DickGrayson)
 
-# binary names
+# tests are on by default
+option(BUILD_TESTS "Enable tests build" ON)
+
+## binary names
 # set(RSA_CRYPT munchkincrypt)
 set(RSA_CRYPT rsa-crypt)
 set(RSA_CRYPT_LIB rsa-crypt-lib)
@@ -18,25 +21,34 @@ set(STEGO_CRYPT_LIB stego-crypt-lib)
 set(STEGO_ATTACK stego-attack)
 set(STEGO_ATTACK_LIB stego-attack-lib)
 
-# library names
+## library names
 set(IMAGE_LIB dgimg)
 set(CRYPTO_LIB dgcrypto)
 set(TYPE_LIB dgtype)
 
+## locations
+set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/bin)
+set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/lib)
+set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
+
+include_directories(${INCLUDE_DIR})
+
+# tell cmake to look in share/cmake for modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/share/cmake)
 
+## find libraries
+# find pthread
 find_package(Threads REQUIRED)
 if(CMAKE_USE_PTHREADS_INIT)
   list(APPEND PROJECT_GLOBAL_LIBS ${CMAKE_THREAD_LIBS_INIT})
 endif()
 
+# find gmp
 find_package(GMP REQUIRED)
 if(GMP_FOUND)
   include_directories(${GMP_INCLUDE_DIR})
   list(APPEND PROJECT_GLOBAL_LIBS ${GMP_LIBRARIES} ${GMPXX_LIBRARIES})
 endif()
-
-option(BUILD_TESTS "Enable tests build" ON)
 
 ## set some compiler flags
 #  note DEBUG is set for debug build
@@ -46,12 +58,14 @@ if(${CMAKE_COMPILER_IS_GNUCXX})
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread")
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -DNDEBUG")
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 --coverage -Wall -Wextra -DDEBUG")
+  set(CMAKE_EXE_LINKER_FLAGS_DEBUG "--coverage")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # OS X clang flags (use libc++)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -stdlib=libc++")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -nostdinc++ -I/usr/local/opt/llvm36/lib/llvm-3.6/include/c++/v1 -Wall -Wextra -DNDEBUG")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 --coverage -Wall -Wextra -DDEBUG")
+    set(CMAKE_EXE_LINKER_FLAGS_DEBUG "--coverage")
     link_directories(/usr/local/opt/llvm36/lib/llvm-3.6/lib)
   else()
     # linux clang flags (use libstdc++)
@@ -60,11 +74,6 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 --coverage -Wall -Wextra -DDEBUG")
   endif()
 endif()
-
-# locations
-set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/bin")
-set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/lib")
-set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
 
 # build source dir
 add_subdirectory(${SOURCE_DIR} bin/)

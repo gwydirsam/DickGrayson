@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <gmpxx.h>
+
 #include <dgcrypto/dgcrypto.hh>
 
 TEST(DGCryptoPrime, Prime2b) {

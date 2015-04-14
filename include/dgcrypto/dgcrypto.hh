@@ -1,3 +1,3 @@
 #pragma once
 
-#include "dgprime.hh"
+#include "dgrandomprime.hh"

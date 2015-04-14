@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <sstream>
 #include "stego-crypt-lib/bmp_manip.h"
 
 TEST(StegStub, oneEqualsone) {
@@ -10,8 +11,9 @@ TEST(StegStub, oneEqualsone) {
 }
 
 TEST(BMPTests, BMPValidation) {
-  std::ifstream ifs("test.png", std::ios::binary);
-  std::string bmp;
-  ifs >> bmp;
+  std::ifstream ifs("test/stego-crypt/test.bmp");
+  std::ostringstream ost;
+  ost << ifs.rdbuf();
+  std::string bmp(ost.str());
   EXPECT_EQ(true, is_bmp_valid(bmp));
 }

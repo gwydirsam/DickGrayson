@@ -22,7 +22,7 @@ unsigned bmp_image_offset(const bmp_t& bmp) {
 }
 
 unsigned bmp_bits_per_pixel(const bmp_t& bmp) {
-  return 0;
+  return (unsigned)bmp[28];
 }
 
 // we only support Windows BMP

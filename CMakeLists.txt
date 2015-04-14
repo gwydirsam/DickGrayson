@@ -6,6 +6,9 @@ project(DickGrayson)
 # tests are on by default
 option(BUILD_TESTS "Enable tests build" ON)
 
+# coverage is on when tests are on
+option(COVERALLS "Generate coveralls data" ${BUILD_TESTS})
+
 ## binary names
 # set(RSA_CRYPT munchkincrypt)
 set(RSA_CRYPT rsa-crypt)
@@ -35,6 +38,10 @@ include_directories(${INCLUDE_DIR})
 
 # tell cmake to look in share/cmake for modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/share/cmake)
+
+if(COVERALLS)
+    include(Coveralls)
+endif()
 
 ## find libraries
 # find pthread

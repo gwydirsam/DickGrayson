@@ -4,7 +4,13 @@
 #include <string>
 #include <iostream>
 
-bool is_bmp_valid(const std::string& bmp) {
+typedef std::string bmp_t;
+
+bmp_t open_bmp(const string& fname) {
+  return bmp_t();
+}
+
+bool is_bmp_valid(const bmp_t& bmp) {
   std::string validation = bmp.substr(0, 2);
   return validation == "BM";
 }

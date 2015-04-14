@@ -20,14 +20,14 @@ env:
   - BUILD_TYPE=debug TEST_TYPE=test-dgtype
   - BUILD_TYPE=debug TEST_TYPE=test-dgimg
   - BUILD_TYPE=debug TEST_TYPE=test-libgnump
-  - BUILD_TYPE=build TEST_TYPE=test-rsa-crypt
-  - BUILD_TYPE=build TEST_TYPE=test-rsa-attack
-  - BUILD_TYPE=build TEST_TYPE=test-stego-crypt
-  - BUILD_TYPE=build TEST_TYPE=test-stego-attack
-  - BUILD_TYPE=build TEST_TYPE=test-dgcrypto
-  - BUILD_TYPE=build TEST_TYPE=test-dgtype
-  - BUILD_TYPE=build TEST_TYPE=test-dgimg
-  - BUILD_TYPE=build TEST_TYPE=test-libgnump
+  # - BUILD_TYPE=build TEST_TYPE=test-rsa-crypt
+  # - BUILD_TYPE=build TEST_TYPE=test-rsa-attack
+  # - BUILD_TYPE=build TEST_TYPE=test-stego-crypt
+  # - BUILD_TYPE=build TEST_TYPE=test-stego-attack
+  # - BUILD_TYPE=build TEST_TYPE=test-dgcrypto
+  # - BUILD_TYPE=build TEST_TYPE=test-dgtype
+  # - BUILD_TYPE=build TEST_TYPE=test-dgimg
+  # - BUILD_TYPE=build TEST_TYPE=test-libgnump
 cache:
   apt: true
   directories:

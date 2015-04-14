@@ -28,6 +28,12 @@ TEST(BmpTests, BitsPerPixel) {
   EXPECT_EQ(8, bmp_bits_per_pixel(bmp));
 }
 
+TEST(BmpTests, Dimensions) {
+  bmp_t bmp = open_bmp("test/stego-crypt/test.bmp");
+  EXPECT_EQ(512, bmp_width(bmp));
+  EXPECT_EQ(512, bmp_height(bmp));
+}
+
 TEST(BmpTests, ImageOffset) {
   bmp_t bmp = open_bmp("test/stego-crypt/test.bmp");
   unsigned offset = bmp_image_offset(bmp);

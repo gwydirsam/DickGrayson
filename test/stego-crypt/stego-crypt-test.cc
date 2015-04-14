@@ -11,7 +11,7 @@ TEST(StegStub, oneEqualsone) {
 }
 
 TEST(BMPTests, BMPValidation) {
-  std::ifstream ifs("test/stego-crypt/test.bmp");
+  std::ifstream ifs("test/stego-crypt/test.bmp", std::ios::binary);
   std::ostringstream ost;
   ost << ifs.rdbuf();
   std::string bmp(ost.str());

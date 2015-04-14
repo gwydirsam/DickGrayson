@@ -61,8 +61,8 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 endif()
 
 # locations
-set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
-set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
+set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/bin")
+set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/lib")
 set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
 
 # build source dir

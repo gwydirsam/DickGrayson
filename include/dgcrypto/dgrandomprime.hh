@@ -15,7 +15,7 @@ class RandomPrime : public RandomInteger {
  public:
   // disable default constructor
   RandomPrime() = delete;
-  RandomPrime(mp_bitcnt_t k) : RandomInteger(k) {
+  RandomPrime(mp_bitcnt_t k) : RandomInteger{k} {
     // the first prime number is 10b (2 in decimal), which means k must be geq 2
     assert(bits_ >= 2);
     // set value

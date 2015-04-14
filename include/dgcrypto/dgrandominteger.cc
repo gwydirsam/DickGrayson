@@ -47,7 +47,7 @@ inline bool operator>=(const DG::Crypto::RandomInteger& lhs,
 }
 inline bool operator==(const DG::Crypto::RandomInteger& lhs,
                        const DG::Crypto::RandomInteger& rhs) {
-  return ((lhs.value() == lhs.value()) && (lhs.bits() == rhs.bits()));
+  return ((lhs.value() == rhs.value()) && (lhs.bits() == rhs.bits()));
 }
 inline bool operator!=(const DG::Crypto::RandomInteger& lhs,
                        const DG::Crypto::RandomInteger& rhs) {

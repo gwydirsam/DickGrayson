@@ -23,14 +23,13 @@ ExternalProject_Add(
 ExternalProject_Get_Property(gtest source_dir)
 ExternalProject_Get_Property(gtest binary_dir)
 
-# add_custom_target(${RSA_ATTACK}-TEST ${RSA_ATTACK}-lib)
 set(TARGET ${RSA_ATTACK})
 set(TARGET_LIB ${TARGET}-lib)
 set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -51,7 +50,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -72,7 +72,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -94,7 +95,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -114,7 +116,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -134,7 +137,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -154,7 +158,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -174,7 +179,8 @@ set(GTEST_TARGET ${TARGET}-test)
 set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
-include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
+include_directories(${source_dir}/include ${INCLUDE_DIR})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)

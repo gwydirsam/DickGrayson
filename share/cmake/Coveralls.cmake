@@ -57,7 +57,7 @@ function(coveralls_setup _COVERAGE_SRCS _COVERALLS_UPLOAD)
 		set(COVERAGE_SRCS "${COVERAGE_SRCS}*${COVERAGE_SRC}")
 	endforeach()
 
-	#message("Coverage sources: ${COVERAGE_SRCS}")
+	message("Coverage sources: ${COVERAGE_SRCS}")
 	set(COVERALLS_FILE ${PROJECT_BINARY_DIR}/coveralls.json)
 
 	add_custom_target(coveralls_generate

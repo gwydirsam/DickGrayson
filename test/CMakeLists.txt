@@ -44,6 +44,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
+add_test(${GTEST_TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
 
 set(TARGET ${RSA_CRYPT})
 set(TARGET_LIB ${TARGET}-lib)
@@ -66,6 +67,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
+add_test(${GTEST_TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
 
 set(TARGET ${STEGO_CRYPT})
 set(TARGET_LIB ${TARGET}-lib)
@@ -86,6 +88,9 @@ target_link_libraries(${GTEST_TARGET}
   #  gtest gtest_main
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+
+target_link_libraries(${GTEST_TARGET} pthread)
+add_test(${GTEST_TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -111,6 +116,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
+add_test(${GTEST_TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
 
 set(TARGET ${IMAGE_LIB})
 set(GTEST_TARGET ${TARGET}-test)
@@ -132,6 +138,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
+add_test(${GTEST_TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
 
 set(TARGET ${CRYPTO_LIB})
 set(GTEST_TARGET ${TARGET}-test)
@@ -153,6 +160,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
+add_test(${GTEST_TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
 
 set(TARGET ${TYPE_LIB})
 set(GTEST_TARGET ${TARGET}-test)
@@ -174,6 +182,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
+add_test(${GTEST_TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
 
 set(TARGET libgnump)
 set(GTEST_TARGET ${TARGET}-test)
@@ -194,3 +203,4 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
+add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})

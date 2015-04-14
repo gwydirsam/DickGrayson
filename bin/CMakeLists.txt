@@ -73,6 +73,7 @@ set_property(TARGET ${STEGO_CRYPT} PROPERTY CXX_STANDARD_REQUIRED ON)
 if (COVERALLS)
   list(APPEND COVERAGE_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/${STEGO_CRYPT}/${MAIN_SRC})
   # set(COVERAGE_SRCS ${STEGO_CRYPT}/${MAIN_SRC})
+  include(${PROJECT_SOURCE_DIR}/lib/coveralls_list.cmake)
 
   # Create the coveralls target.
   coveralls_setup(

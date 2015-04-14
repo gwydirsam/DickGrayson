@@ -17,3 +17,8 @@ TEST(BmpTests, BmpValidation) {
   std::string bmp(ost.str());
   EXPECT_EQ(true, is_bmp_valid(bmp));
 }
+
+TEST(BmpTests, BmpOpen) {
+  bmp_t bmp = open_bmp("test/stego-crypt/test.bmp");
+  EXPECT_EQ(true, is_bmp_valid(bmp));
+}

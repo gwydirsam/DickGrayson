@@ -5,7 +5,7 @@ set(IMAGE_LIB_FILES
   ${IMAGE_LIB}/dgimg.cc
   )
 set(CRYPTO_LIB_FILES
-  ${CRYPTO_LIB}/dgcrypto.cc
+  ${CRYPTO_LIB}/dgrandominteger.cc
   ${CRYPTO_LIB}/dgrandomprime.cc
   )
 

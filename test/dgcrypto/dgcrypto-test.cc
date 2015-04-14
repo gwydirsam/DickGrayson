@@ -4,23 +4,23 @@
 
 TEST(DGCryptoPrime, Prime2b) {
   // create a prime with 8 bits
-  dgrprime sixteen(2);
+  dgrprime two(2);
 
-  EXPECT_EQ(2u, sixteen.bits());
+  EXPECT_EQ(2u, two.bits());
 }
 
 TEST(DGCryptoPrime, Prime4b) {
   // create a prime with 8 bits
-  dgrprime sixteen(4);
+  dgrprime four(4);
 
-  EXPECT_EQ(4u, sixteen.bits());
+  EXPECT_EQ(4u, four.bits());
 }
 
 TEST(DGCryptoPrime, Prime8b) {
   // create a prime with 8 bits
-  dgrprime sixteen(8);
+  dgrprime eight(8);
 
-  EXPECT_EQ(8u, sixteen.bits());
+  EXPECT_EQ(8u, eight.bits());
 }
 
 TEST(DGCryptoPrime, Prime16b) {
@@ -39,7 +39,7 @@ TEST(DGCryptoPrime, isPrime3) {
 
   EXPECT_EQ(3u, tree.value());
 
-  EXPECT_TRUE(dgrprime::is_prime(3));
+  EXPECT_TRUE(dgrprime::is_prime(3_mpz));
 }
 
 TEST(DGCryptoPrime, isPrime11) {

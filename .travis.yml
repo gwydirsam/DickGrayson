@@ -12,9 +12,22 @@ addons:
     - gcc-4.9
     - g++-4.9
 env:
-  - BUILD_TYPE=debug TEST_TYPE=test-debug
-  - BUILD_TYPE=build TEST_TYPE=test-build
-  # - BUILD_TYPE=all TEST_TYPE=test-all
+  - BUILD_TYPE=debug TEST_TYPE=test-rsa-crypt
+  - BUILD_TYPE=debug TEST_TYPE=test-rsa-attack
+  - BUILD_TYPE=debug TEST_TYPE=test-stego-crypt
+  - BUILD_TYPE=debug TEST_TYPE=test-stego-attack
+  - BUILD_TYPE=debug TEST_TYPE=test-dgcrypto
+  - BUILD_TYPE=debug TEST_TYPE=test-dgtype
+  - BUILD_TYPE=debug TEST_TYPE=test-dgimg
+  - BUILD_TYPE=debug TEST_TYPE=test-libgnump
+  - BUILD_TYPE=build TEST_TYPE=test-rsa-crypt
+  - BUILD_TYPE=build TEST_TYPE=test-rsa-attack
+  - BUILD_TYPE=build TEST_TYPE=test-stego-crypt
+  - BUILD_TYPE=build TEST_TYPE=test-stego-attack
+  - BUILD_TYPE=build TEST_TYPE=test-dgcrypto
+  - BUILD_TYPE=build TEST_TYPE=test-dgtype
+  - BUILD_TYPE=build TEST_TYPE=test-dgimg
+  - BUILD_TYPE=build TEST_TYPE=test-libgnump
 cache:
   apt: true
   directories:

@@ -39,8 +39,10 @@ include_directories(${INCLUDE_DIR})
 # tell cmake to look in share/cmake for modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/share/cmake)
 
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 if(COVERALLS)
   include(Coveralls)
+endif()
 endif()
 
 ## find libraries

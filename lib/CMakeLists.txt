@@ -23,11 +23,6 @@ add_library(${TYPE_LIB} ${TYPE_LIB_FILES})
 add_library(${IMAGE_LIB} ${IMAGE_LIB_FILES})
 add_library(${CRYPTO_LIB} ${CRYPTO_LIB_FILES})
 target_link_libraries(${CRYPTO_LIB} ${PROJECT_GLOBAL_LIBS})
-# list(APPEND PROJECT_GLOBAL_LIBS
-#   ${TYPE_LIB}
-#   ${IMAGE_LIB}
-#   ${CRYPTO_LIB})
-
 
 ### Binary Libraries
 ## RSA libs

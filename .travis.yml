@@ -35,6 +35,8 @@ cache:
     - $HOME/.tmp
     - $HOME/local/$UNAME
 install:
+  - echo `whoami`
+  - echo `uname`
   - export CXX="ccache g++-4.9 -fdiagnostics-color=auto"
   - export CC="ccache gcc-4.9 -fdiagnostics-color=auto"
   - mkdir -p $HOME/local/`uname`/

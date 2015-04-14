@@ -18,6 +18,17 @@ set(CRYPTO_LIB_FILES
   ${CRYPTO_LIB}/dgrandominteger.cc
   ${CRYPTO_LIB}/dgrandomprime.cc)
 
+if (COVERALLS)
+  list(APPEND COVERAGE_SRCS
+    ${TYPE_LIB_FILES}
+    ${IMAGE_LIB_FILES}
+    ${CRYPTO_LIB_FILES}
+    ${RSA_CRYPT_LIB_FILES}
+    ${RSA_ATTACK_LIB_FILES}
+    ${STEGO_CRYPT_LIB_FILES}
+    ${STEGO_ATTACK_LIB_FILES})
+endif()
+
 add_library(${TYPE_LIB} ${TYPE_LIB_FILES})
 add_library(${IMAGE_LIB} ${IMAGE_LIB_FILES})
 add_library(${CRYPTO_LIB} ${CRYPTO_LIB_FILES})

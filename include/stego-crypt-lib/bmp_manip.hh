@@ -5,8 +5,24 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <cstring>
 
 typedef std::string bmp_t;
+
+
+static int bytes_to_int(const std::string& bytes) {
+  char* dword = new char[4];
+  memcpy(dword, bytes.c_str(), 4);
+  int ret;
+  if (bytes.length() == 2) {
+    short temp = *(short*)dword;
+    ret = temp;
+  } else {
+    ret = *(int*)dword;
+  }
+  delete dword;
+  return ret;
+}
 
 bmp_t open_bmp(const std::string& fname) {
   std::ifstream ifs(fname, std::ios::binary);
@@ -18,22 +34,29 @@ bmp_t open_bmp(const std::string& fname) {
 
 // returns the offset at which the pixel array begins (The data after the BMP header info)
 unsigned bmp_image_offset(const bmp_t& bmp) {
-  return bmp[0xa];
+  std::string bytes = bmp.substr(0xa, 4);
+  int offset = bytes_to_int(bytes);
+  return offset;
 }
 
 unsigned bmp_bits_per_pixel(const bmp_t& bmp) {
-  return (unsigned)bmp[0x1c];
+  std::string bytes = bmp.substr(0x1c, 2);
+  int bpp = bytes_to_int(bytes);
+  return bpp;
 }
 
-unsigned bmp_width(const bmp_t& bmp) {
-  return 0;
+int bmp_width(const bmp_t& bmp) {
+  std::string bytes = bmp.substr(0x12, 4);
+  int w = bytes_to_int(bytes);
+  return w;
 }
 
-unsigned bmp_height(const bmp_t& bmp) {
-  return 0;
+int bmp_height(const bmp_t& bmp) {
+  std::string bytes = bmp.substr(0x16, 4);
+  int h = bytes_to_int(bytes);
+  return h;
 }
 
-// we only support Windows BMP
 bool is_bmp_valid(const bmp_t& bmp) {
   std::string validation = bmp.substr(0, 2);
   return validation == "BM";

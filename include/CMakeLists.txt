@@ -1,15 +1,21 @@
 set(TYPE_LIB_FILES
-  ${TYPE_LIB}/dgtype.cc)
+  ${TYPE_LIB}/dgtype.cc
+  )
 set(IMAGE_LIB_FILES
-  ${IMAGE_LIB}/dgimg.cc)
+  ${IMAGE_LIB}/dgimg.cc
+  )
 set(CRYPTO_LIB_FILES
-  ${CRYPTO_LIB}/dgcrypto.cc)
+  ${CRYPTO_LIB}/dgcrypto.cc
+  ${CRYPTO_LIB}/dgrandomprime.cc
+  )
 
 # RSA libs
 set(RSA_CRYPT_LIB_FILES
-  rsa-crypt-lib/rsa-crypt-lib.cc)
+  rsa-crypt-lib/rsa-crypt-lib.cc
+  )
 set(RSA_ATTACK_LIB_FILES
-  rsa-attack-lib/rsa-attack-lib.cc)
+  rsa-attack-lib/rsa-attack-lib.cc
+  )
 
 # Stego libs
 set(STEGO_CRYPT_LIB_FILES

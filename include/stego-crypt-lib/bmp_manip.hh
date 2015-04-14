@@ -1,5 +1,5 @@
-#ifndef BMP_MANIP_H
-#define BMP_MANIP_H
+#ifndef BMP_MANIP_HH
+#define BMP_MANIP_HH
 
 #include <string>
 #include <iostream>
@@ -9,4 +9,4 @@ bool is_bmp_valid(const std::string& bmp) {
   return validation == "BM";
 }
 
-#endif // BMP_MANIP_H
+#endif // BMP_MANIP_HH

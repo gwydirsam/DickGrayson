@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
-#include "stego-crypt-lib/bmp_manip.hh"
+#include <stego-crypt-lib/stego-crypt-lib.hh>
 
 TEST(StegStub, oneEqualsone) {
   int one = 1;

@@ -10,7 +10,7 @@ TEST(StegStub, oneEqualsone) {
   EXPECT_EQ(1, one);
 }
 
-TEST(BmpTests, BmpValidation) {
+TEST(BmpTests, Validation) {
   std::ifstream ifs("test/stego-crypt/test.bmp", std::ios::binary);
   std::ostringstream ost;
   ost << ifs.rdbuf();
@@ -18,7 +18,19 @@ TEST(BmpTests, BmpValidation) {
   EXPECT_EQ(true, is_bmp_valid(bmp));
 }
 
-TEST(BmpTests, BmpOpen) {
+TEST(BmpTests, Open) {
   bmp_t bmp = open_bmp("test/stego-crypt/test.bmp");
   EXPECT_EQ(true, is_bmp_valid(bmp));
+}
+
+TEST(BmpTests, BitsPerPixel) {
+  bmp_t bmp = open_bmp("test/stego-crypt/test.bmp");
+  EXPECT_EQ(8, bmp_bits_per_pixel(bmp));
+}
+
+TEST(BmpTests, ImageOffset) {
+  bmp_t bmp = open_bmp("test/stego-crypt/test.bmp");
+  unsigned offset = bmp_image_offset(bmp);
+  // test.bmp is 8-bit and is 512*512
+  EXPECT_EQ(512*512, bmp.size() - offset);
 }

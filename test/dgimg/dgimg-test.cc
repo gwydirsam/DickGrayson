@@ -32,7 +32,6 @@ TEST(BmpData, Dimensions) {
 TEST(BmpData, ImageOffset) {
   dgbmpdata bmp("test/dgimg/test.bmp");
   unsigned offset = bmp.image_offset();
-  // test.bmp is 8-bit and is 512*512
   EXPECT_EQ(512*512, bmp.get_data().size() - offset);
 }
 
@@ -41,5 +40,5 @@ TEST(BmpData, MaskByte) {
   bmp.mask_byte(0, 0x0);
   EXPECT_EQ('B', bmp.get_data()[0]);
   bmp.mask_byte(0, 0xFF);
-  EXPECT_EQ(0xFF, bmp.get_data()[0]);
+  EXPECT_EQ('\xFF', bmp.get_data()[0]);
 }

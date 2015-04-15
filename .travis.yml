@@ -34,9 +34,9 @@ cache:
     - $HOME/.ccache
     - $HOME/.tmp
     - $HOME/local/$UNAME
-before_install:
-  - pip install --upgrade pip
-  - pip install cpp-coveralls
+# before_install:
+  # - pip install --upgrade pip
+  # - pip install cpp-coveralls
 install:
   - echo `whoami`
   - echo `uname`

@@ -124,6 +124,7 @@ add_subdirectory(${INCLUDE_DIR})
 
 # if testing, build gflags and tests
 if(BUILD_TESTS)
+  enable_testing()
   add_subdirectory(${TEST_DIR})
 endif()
 

@@ -1,5 +1,3 @@
-enable_testing()
-
 # gtest definition
 include(ExternalProject)
 
@@ -203,4 +201,5 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
-add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
+# add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
+add_test(${TARGET} ${GTEST_TARGET})

@@ -27,6 +27,11 @@ struct BMP_data {
   unsigned num_color_planes() const; // must be 1
   bool is_valid() const;
 
+  // masks a byte of data with the specified mask
+  // eg masking 1001001 with 0110110 sets the byte to 1111111
+  // it's equivalient to 1001001 | 0110110 (byte | mask)
+  void mask_byte(int index, unsigned mask);
+
   const std::string& get_data() { return data; }
 private:
   std::string data;

@@ -62,5 +62,9 @@ bool BMP_data::is_valid() const {
   std::string validation = data.substr(0, 2);
   return validation == "BM" && num_color_planes() == 1;
 }
+
+void BMP_data::mask_byte(int index, unsigned mask) {
+  return;
+}
 }
 }

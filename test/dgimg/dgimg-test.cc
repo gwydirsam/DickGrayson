@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <dgimg/dgimg.hh>
 
-TEST(BmpData, isValid) {
+TEST(BmpData, IsValid) {
   dgbmpdata bmp("test/dgimg/test.bmp");
   EXPECT_EQ(true, bmp.is_valid());
 }
@@ -34,4 +34,12 @@ TEST(BmpData, ImageOffset) {
   unsigned offset = bmp.image_offset();
   // test.bmp is 8-bit and is 512*512
   EXPECT_EQ(512*512, bmp.get_data().size() - offset);
+}
+
+TEST(BmpData, MaskByte) {
+  dgbmpdata bmp("test/dgimg/test.bmp");
+  bmp.mask_byte(0, 0x0);
+  EXPECT_EQ('B', bmp.get_data()[0]);
+  bmp.mask_byte(0, 0xFF);
+  EXPECT_EQ(0xFF, bmp.get_data()[0]);
 }

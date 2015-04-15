@@ -49,6 +49,8 @@ script:
   # - make all
   - make $TEST_TYPE
 after_success:
+  - cat build/coveralls.json || exit 0
+  - cat debug/coveralls.json || exit 0
 after_failure:
 after_script:
 notifications:

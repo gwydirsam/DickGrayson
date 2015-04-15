@@ -29,10 +29,12 @@ struct BMP_data {
 
   // masks a byte of data with the specified mask
   // setting bits to 1 if they are not already 1
-  // eg masking 1001001 with 0110110 sets the byte to 1111111
-  // it's equivalient to 1001001 | 0110110 (byte | mask)
+  // eg masking 11110000 with 00001111 sets the byte to 1111111
   void mask_set_byte(int index, unsigned mask);
 
+  // masks a byte of data with the specified mask
+  // setting bits to 0 if they are not already 0
+  // eg masking 11111111 with 00001111 sets the byte to 11110000
   void mask_unset_byte(int index, unsigned mask);
 
   const std::string& get_data() { return data; }

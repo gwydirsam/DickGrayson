@@ -71,6 +71,9 @@ void BMP_data::mask_set_byte(int index, unsigned mask) {
 }
 
 void BMP_data::mask_unset_byte(int index, unsigned mask) {
+  unsigned byte = data[index];
+  byte &= ~mask;
+  data[index] = byte;
   return;
 }
 }

@@ -1,44 +1,36 @@
 #include <gtest/gtest.h>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <sstream>
 #include <dgimg/dgimg.hh>
 
-static std::string bmp_file = "test/dgimg/test.bmp";
 
 TEST(imageStub, oneEqualsone) {
   int one = 1;
   EXPECT_EQ(1, one);
 }
 
-TEST(BmpTests, Validation) {
-  std::ifstream ifs(bmp_file);
-  std::ostringstream ost;
-  ost << ifs.rdbuf();
-  std::string bmp(ost.str());
-  EXPECT_EQ(true, is_bmp_valid(bmp));
+TEST(BmpData, isValid) {
+  dgbmpdata bmp("test/dgimg/test.bmp");
+  EXPECT_EQ(true, bmp.is_valid());
 }
 
-TEST(BmpTests, Open) {
-  bmp_t bmp = open_bmp(bmp_file);
-  EXPECT_EQ(true, is_bmp_valid(bmp));
+TEST(BmpData, Open) {
+  dgbmpdata bmp("test/dgimg/test.bmp");
+  EXPECT_EQ(true, bmp.is_valid());
 }
 
-TEST(BmpTests, BitsPerPixel) {
-  bmp_t bmp = open_bmp(bmp_file);
-  EXPECT_EQ(8, bmp_bits_per_pixel(bmp));
+TEST(BmpData, BitsPerPixel) {
+  dgbmpdata bmp("test/dgimg/test.bmp");
+  EXPECT_EQ(8, bmp.bits_per_pixel());
 }
 
-TEST(BmpTests, Dimensions) {
-  bmp_t bmp = open_bmp(bmp_file);
-  EXPECT_EQ(512, bmp_width(bmp));
-  EXPECT_EQ(512, bmp_height(bmp));
+TEST(BmpData, Dimensions) {
+  dgbmpdata bmp("test/dgimg/test.bmp");
+  EXPECT_EQ(512, bmp.width());
+  EXPECT_EQ(512, bmp.height());
 }
 
-TEST(BmpTests, ImageOffset) {
-  bmp_t bmp = open_bmp(bmp_file);
-  unsigned offset = bmp_image_offset(bmp);
+TEST(BmpData, ImageOffset) {
+  dgbmpdata bmp("test/dgimg/test.bmp");
+  unsigned offset = bmp.image_offset();
   // test.bmp is 8-bit and is 512*512
-  EXPECT_EQ(512*512, bmp.size() - offset);
+  EXPECT_EQ(512*512, bmp.get_data().size() - offset);
 }

@@ -46,8 +46,12 @@ env:
 
 ## install
 before_install:
-  - which -a g++-4.9
+  - which -a clang-3.6
+  - which -a clang++-3.6
   - which -a gcc-4.9
+  - which -a g++-4.9
+  - which -a gcov
+  - which -a lcov
   - echo `whoami`
   - echo `uname`
   - export UNAME=`uname`

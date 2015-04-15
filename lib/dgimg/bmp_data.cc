@@ -24,7 +24,7 @@ void BMP_data::open(const std::string& fname) {
 
 void BMP_data::write(const std::string& fname) {
   std::ofstream ofs(fname, std::ios::binary);
-  ofs << "";
+  ofs << data;
 }
 
 // returns the offset at which the pixel array begins (The data after the BMP header info)

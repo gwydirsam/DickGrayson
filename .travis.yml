@@ -33,7 +33,7 @@ cache:
   apt: true
   directories:
     - $HOME/.ccache
-    - $HOME/.tmp
+    # - $HOME/.tmp
     - $HOME/local/$UNAME
 before_install:
   - echo `whoami`

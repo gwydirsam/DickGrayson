@@ -22,6 +22,11 @@ void BMP_data::open(const std::string& fname) {
   data = bytes;
 }
 
+void BMP_data::write(const std::string& fname) {
+  std::ofstream ofs(fname, std::ios::binary);
+  ofs << "";
+}
+
 // returns the offset at which the pixel array begins (The data after the BMP header info)
 unsigned BMP_data::image_offset() const {
   std::string bytes = data.substr(0xa, 4);
@@ -47,9 +52,15 @@ int BMP_data::height() const {
   return h;
 }
 
+unsigned BMP_data::num_color_planes() const {
+  std::string bytes = data.substr(0x1a, 2);
+  int cp = bytes_to_int(bytes);
+  return cp;
+}
+
 bool BMP_data::is_valid() const {
   std::string validation = data.substr(0, 2);
-  return validation == "BM";
+  return validation == "BM" && num_color_planes() == 1;
 }
 }
 }

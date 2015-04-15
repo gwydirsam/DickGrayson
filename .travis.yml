@@ -26,7 +26,7 @@ addons:
 
 # run each of these tests in a seperate instance
 env:
-  - TEST_TYPE=test-all
+  - TEST_TYPE=all
   - TEST_TYPE=test-debug-rsa-crypt
   - TEST_TYPE=test-debug-rsa-attack
   - TEST_TYPE=test-debug-stego-crypt

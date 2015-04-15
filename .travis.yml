@@ -23,8 +23,7 @@ cache:
   apt: true
   directories:
     - $HOME/.ccache
-    # - $HOME/.tmp
-    - $HOME/local/$UNAME
+    - $HOME/local
 addons:
   apt:
     sources:

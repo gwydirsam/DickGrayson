@@ -7,6 +7,7 @@ compiler:
 cache:
   apt: true
   directories:
+    - $HOME/.tmp
     - $HOME/.cache
     - $HOME/.ccache
     - $HOME/local

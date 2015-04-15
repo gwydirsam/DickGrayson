@@ -210,7 +210,7 @@ test-all test test-build test-dgtype:: build
 	$(BUILD_DIR)/test/dgtype-test --gtest_color=yes
 test-all test test-build test-dgimg:: build
 	$(BUILD_DIR)/test/dgimg-test --gtest_color=yes
-test-all test test-build test-libgnump:: debug
+test-all test test-build test-libgnump:: build
 	$(BUILD_DIR)/test/libgnump-test --gtest_color=yes
 
 test-all test test-build:: build
@@ -272,9 +272,9 @@ cppcheck::
 
 valgrind-rsa-crypt::
 	valgrind $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
-valgrind-rsa-attack:: debug
+valgrind-rsa-attack::
 	valgrind $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
-valgrind-stego-crypt:: debug
+valgrind-stego-crypt::
 	valgrind $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
 valgrind-stego-attack::
 	valgrind $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes

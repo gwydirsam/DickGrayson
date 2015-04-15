@@ -190,6 +190,7 @@ endif
 	@echo Debug Build Finished
 	@echo ======================================
 
+test-all:: all
 test-all test test-build:: build
 	@echo ======================================
 	@echo Starting Release Tests
@@ -220,21 +221,21 @@ test-all test-debug:: debug
 	@echo Starting Debug Tests
 	@echo ======================================
 
-test-all test-debug test-rsa-crypt::
+test-all test-debug test-debug-rsa-crypt::
 	$(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
-test-all test-debug test-rsa-attack::
+test-all test-debug test-debug-rsa-attack::
 	$(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
-test-all test-debug test-stego-crypt::
+test-all test-debug test-debug-stego-crypt::
 	$(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
-test-all test-debug test-stego-attack::
+test-all test-debug test-debug-stego-attack::
 	$(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
-test-all test-debug test-dgcrypto::
+test-all test-debug test-debug-dgcrypto::
 	$(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
-test-all test-debug test-dgtype::
+test-all test-debug test-debug-dgtype::
 	$(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
-test-all test-debug test-dgimg::
+test-all test-debug test-debug-dgimg::
 	$(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
-test-all test-debug test-libgnump::
+test-all test-debug test-debug-libgnump::
 	$(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
 test-all test-debug::
@@ -264,6 +265,26 @@ endif
 clean-build-dirs::
 	rm -rf $(DEBUG_DIR) $(BUILD_DIR)
 
+cppcheck::
+	cppcheck -j4 --enable=all lib/ bin/
+
+valgrind-rsa-crypt::
+	valgrind $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
+valgrind-rsa-attack:: debug
+	valgrind $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
+valgrind-stego-crypt:: debug
+	valgrind $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
+valgrind-stego-attack::
+	valgrind $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
+valgrind-dgcrypto::
+	valgrind $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
+valgrind-dgtype::
+	valgrind $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
+valgrind-dgimg::
+	valgrind $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+valgrind-libgnump::
+	valgrind $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
+
 help help-all::
 	$(info )
 	$(info $(PROJECT_NAME) Help)
@@ -287,6 +308,7 @@ help help-all::
 	$(info Testing)
 	$(info ===============)
 	$(info make test                    - run test suite on release build)
+	$(info make test-all                - run test suite on release and debug build)
 help-all::
 	$(info make test-build              - run test suite on release build)
 	$(info make test-debug              - run test suite on debug build)
@@ -297,7 +319,15 @@ help-all::
 	$(info make test-dgcrypto           - run dgcrypto test)
 	$(info make test-dgtype             - run dgtype test)
 	$(info make test-dgimg              - run dgimg test)
-	$(info make test-libgnump                - run gmp library test)
+	$(info make test-libgnump           - run gmp library test)
+	$(info make test-debug-rsa-crypt    - run (debug build) rsa-crypt test)
+	$(info make test-debug-rsa-attack   - run (debug build) rsa-attack test)
+	$(info make test-debug-stego-crypt  - run (debug build) stego-crypt test)
+	$(info make test-debug-stego-attack - run (debug build) stego-attack test)
+	$(info make test-debug-dgcrypto     - run (debug build) dgcrypto test)
+	$(info make test-debug-dgtype       - run (debug build) dgtype test)
+	$(info make test-debug-dgimg        - run (debug build) dgimg test)
+	$(info make test-debug-libgnump     - run (debug build) gmp library test)
 help help-all::
 	$(info )
 	$(info Cleaning)

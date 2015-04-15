@@ -34,9 +34,6 @@ cache:
     - $HOME/.ccache
     - $HOME/.tmp
     - $HOME/local/$UNAME
-# before_install:
-  # - pip install --upgrade pip
-  # - pip install cpp-coveralls
 install:
   - echo `whoami`
   - echo `uname`
@@ -52,8 +49,6 @@ script:
   # - make $BUILD_TYPE
   - make all
   - make $TEST_TYPE
-after_success:
-  - coveralls --exclude test --exclude build --exclude debug --gcov-options
 notifications:
   webhooks:
     urls: https://webhooks.gitter.im/e/1eef7e496a6902ff54c7

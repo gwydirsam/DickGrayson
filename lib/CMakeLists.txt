@@ -5,7 +5,8 @@ include_directories(${INCLUDE_DIR})
 set(TYPE_LIB_FILES
   ${TYPE_LIB}/dgtype.cc)
 set(IMAGE_LIB_FILES
-  ${IMAGE_LIB}/dgimg.cc)
+  ${IMAGE_LIB}/bmp.cc
+  ${IMAGE_LIB}/bmp_data.cc)
 set(CRYPTO_LIB_FILES
   ${CRYPTO_LIB}/dginteger.cc
   ${CRYPTO_LIB}/dgrandominteger.cc

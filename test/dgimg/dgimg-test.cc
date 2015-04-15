@@ -42,3 +42,11 @@ TEST(BmpData, MaskSetByte) {
   bmp.mask_set_byte(0, 0xFF);
   EXPECT_EQ('\xFF', bmp.get_data()[0]);
 }
+
+TEST(BmpData, MaskUnsetByte) {
+  dgbmpdata bmp("test/dgimg/test.bmp");
+  bmp.mask_unset_byte(0, 0x0);
+  EXPECT_EQ('B', bmp.get_data()[0]);
+  bmp.mask_unset_byte(0, 0xFF);
+  EXPECT_EQ('\x00', bmp.get_data()[0]);;
+}

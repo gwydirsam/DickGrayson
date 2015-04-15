@@ -20,14 +20,12 @@ addons:
     - llvm-toolchain-precise-3.6
     - ubuntu-toolchain-r-test
     packages:
-    # - clang-3.6
+    - clang-3.6
     - gcc-4.9
     - g++-4.9
 
 # run each of these tests in a seperate instance
 env:
-  global:
-    - NUMJOBS=8
   matrix:
     - TEST_TYPE=all
     - TEST_TYPE=test-debug-rsa-crypt

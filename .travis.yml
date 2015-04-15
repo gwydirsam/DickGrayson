@@ -20,6 +20,7 @@ addons:
     - llvm-toolchain-precise-3.6
     - ubuntu-toolchain-r-test
     packages:
+    - llvm-3.6
     - clang-3.6
     - gcc-4.9
     - g++-4.9

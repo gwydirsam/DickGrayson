@@ -2,6 +2,7 @@
 language: cpp
 compiler:
   - gcc
+  - clang
 # cache apt packages, ccache and installed libraries
 cache:
   apt: true
@@ -16,8 +17,10 @@ sudo: false
 addons:
   apt:
     sources:
+    - llvm-toolchain-precise-3.6
     - ubuntu-toolchain-r-test
     packages:
+    - clang-3.6
     - gcc-4.9
     - g++-4.9
 
@@ -51,8 +54,10 @@ before_install:
   - export PATH=$HOME/local/$UNAME/bin:$PATH
   - export LD_LIBRARY_PATH=$HOME/local/$UNAME/lib:$LD_LIBRARY_PATH
   - export CPLUS_INCLUDE_PATH=$HOME/local/$UNAME/include:$CPLUS_INCLUDE_PATH
-  - export CXX="ccache g++-4.9 -fdiagnostics-color=auto"
-  - export CC="ccache gcc-4.9 -fdiagnostics-color=auto"
+  - if [ "$CC" == "gcc" ]; then export CC="ccache gcc-4.9 -fdiagnostics-color=auto"; fi
+  - if [ "$CXX" == "g++" ]; then export CXX="ccache g++-4.9 -fdiagnostics-color=auto"; fi
+  - if [ "$CC" == "clang" ]; then export CC="ccache clang-3.6 -fdiagnostics-color=auto"; fi
+  - if [ "$CXX" == "clang++" ]; then export CXX="ccache clang++-3.6 -fdiagnostics-color=auto"; fi
   - which -a g++-4.9
   - which -a gcc-4.9
 

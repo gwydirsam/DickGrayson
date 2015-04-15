@@ -1,5 +1,4 @@
-#ifndef BMP_DATA_HH
-#define BMP_DATA_HH
+#pragma once
 
 #include <cstdint>
 #include <vector>
@@ -46,5 +45,3 @@ private:
 }
 
 using dgbmpdata = DG::Image::BMP_data;
-
-#endif // BMP_DATA_HH

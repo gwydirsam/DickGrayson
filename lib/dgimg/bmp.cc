@@ -1,5 +1,5 @@
-#include "bmp.hh"
 #include <iostream>
+#include "bmp.hh"
 
 namespace DG {
 namespace Image {

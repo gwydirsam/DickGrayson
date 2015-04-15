@@ -1,5 +1,4 @@
-#ifndef BMP_HH
-#define BMP_HH
+#pragma once
 
 #include <string>
 #include "bmp_data.hh"
@@ -18,8 +17,6 @@ private:
 }
 }
 
-
-#endif // BMP_HH
 
 //// aliases
 // namespace alias

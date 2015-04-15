@@ -210,6 +210,8 @@ test-all test test-build test-dgtype:: build
 	$(BUILD_DIR)/test/dgtype-test --gtest_color=yes
 test-all test test-build test-dgimg:: build
 	$(BUILD_DIR)/test/dgimg-test --gtest_color=yes
+test-all test test-build test-libgnump:: debug
+	$(BUILD_DIR)/test/libgnump-test --gtest_color=yes
 
 test-all test test-build:: build
 	@echo ======================================

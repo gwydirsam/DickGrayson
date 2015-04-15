@@ -9,24 +9,33 @@ using namespace std;
 //   EXPECT_EQ(1, one);
 // }
 
-TEST(factorize, smallSemiPrime) {
-  mpz_class small_n = 1767;
-  vector<mpz_class> expected_outputs = {31, 57};
-  vector<mpz_class> actual = findFactors(small_n);
-  EXPECT_EQ(expected_outputs, actual);
-}
+ TEST(factorize, smallSemiPrime) {
+   mpz_class small_n = 1767;
+   vector<pair<mpz_class, mpz_class > > expected_outputs = {
+     pair<mpz_class, mpz_class >(31, 57)
+   };
+   EXPECT_EQ(expected_outputs, findFactors(small_n));
+ }
 
-TEST(factorize, bigSemiPrime) {
-  mpz_class big_n = 8884963;
-  vector<mpz_class> expected_outputs = {3319, 2677};
+ TEST(factorize, bigSemiPrime) {
+   mpz_class big_n = 8884963;
+   vector<pair<mpz_class, mpz_class > > expected_outputs = {
+     pair<mpz_class, mpz_class >(2677, 3319)
+   };
 
-  //output won't be the same
-  EXPECT_EQ(expected_outputs, findFactors(big_n));
-}
+   //output won't be the same
+   EXPECT_EQ(expected_outputs, findFactors(big_n));
+ }
 
 TEST(factorize, smallNormalNumber) {
   mpz_class norm_num = 108;
-  vector<mpz_class> expected_outputs = {2, 3, 4, 6, 9, 12, 18, 27, 36, 54};
+  vector<pair<mpz_class, mpz_class > > expected_outputs = {
+    pair<mpz_class, mpz_class >(2, 54),
+    pair<mpz_class, mpz_class >(3, 36),
+    pair<mpz_class, mpz_class >(4, 27),
+    pair<mpz_class, mpz_class >(6, 18),
+    pair<mpz_class, mpz_class >(9, 12)
+  };
 
   EXPECT_EQ(expected_outputs, findFactors(norm_num));
 }

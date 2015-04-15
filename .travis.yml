@@ -2,7 +2,6 @@
 language: cpp
 compiler:
   - gcc
-  # - clang
 # cache apt packages, ccache and installed libraries
 cache:
   apt: true
@@ -18,11 +17,8 @@ sudo: false
 addons:
   apt:
     sources:
-    - llvm-toolchain-precise-3.6
     - ubuntu-toolchain-r-test
     packages:
-    - llvm-3.6
-    - clang-3.6
     - gcc-4.9
     - g++-4.9
 

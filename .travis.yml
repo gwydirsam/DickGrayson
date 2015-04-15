@@ -19,22 +19,19 @@ env:
   - TEST_TYPE=test-dgimg
   - TEST_TYPE=test-libgnump
   - TEST_TYPE=test-all
-sudo: false
-addons:
-  apt:
-    sources:
-    # - deadsnakes
-    - ubuntu-toolchain-r-test
-    packages:
-    # - cmake
-    - gcc-4.9
-    - g++-4.9
 cache:
   apt: true
   directories:
     - $HOME/.ccache
     # - $HOME/.tmp
     - $HOME/local/$UNAME
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.9
+    - g++-4.9
 before_install:
   - echo `whoami`
   - echo `uname`
@@ -47,16 +44,17 @@ before_install:
 install:
   - mkdir -p $HOME/local/`uname`/
   - make install-deps
-# before_script:
+before_script:
 script:
   # - make $BUILD_TYPE
   # - make all
   - make $TEST_TYPE
-# after_success:
-# after_failure:
-# after_script:
+after_success:
+after_failure:
+after_script:
 notifications:
   webhooks:
     urls: https://webhooks.gitter.im/e/1eef7e496a6902ff54c7
     on_success: change
     on_failure: change
+sudo: false

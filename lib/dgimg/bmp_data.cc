@@ -63,10 +63,14 @@ bool BMP_data::is_valid() const {
   return validation == "BM" && num_color_planes() == 1;
 }
 
-void BMP_data::mask_byte(int index, unsigned mask) {
+void BMP_data::mask_set_byte(int index, unsigned mask) {
   unsigned byte = data[index];
   byte |= mask;
   data[index] = byte;
+  return;
+}
+
+void BMP_data::mask_unset_byte(int index, unsigned mask) {
   return;
 }
 }

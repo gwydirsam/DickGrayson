@@ -35,10 +35,10 @@ TEST(BmpData, ImageOffset) {
   EXPECT_EQ(512*512, bmp.get_data().size() - offset);
 }
 
-TEST(BmpData, MaskByte) {
+TEST(BmpData, MaskSetByte) {
   dgbmpdata bmp("test/dgimg/test.bmp");
-  bmp.mask_byte(0, 0x0);
+  bmp.mask_set_byte(0, 0x0);
   EXPECT_EQ('B', bmp.get_data()[0]);
-  bmp.mask_byte(0, 0xFF);
+  bmp.mask_set_byte(0, 0xFF);
   EXPECT_EQ('\xFF', bmp.get_data()[0]);
 }

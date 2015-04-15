@@ -78,8 +78,8 @@ after_failure:
 
 # after_script is run after after_success and failure
 after_script:
-  - cat build/coveralls.json || exit 0
-  - cat debug/coveralls.json || exit 0
+  - cat build/coveralls.json
+  - cat debug/coveralls.json
 
 # notify gitter
 notifications:

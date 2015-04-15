@@ -262,7 +262,7 @@ else
 	@$(MAKE) -C $(DEBUG_DIR) clean
 endif
 
-clean-build-dirs::
+clean-force clean-build-dirs::
 	rm -rf $(DEBUG_DIR) $(BUILD_DIR)
 
 cppcheck::
@@ -312,14 +312,14 @@ help help-all::
 help-all::
 	$(info make test-build              - run test suite on release build)
 	$(info make test-debug              - run test suite on debug build)
-	$(info make test-rsa-crypt          - run rsa-crypt test)
-	$(info make test-rsa-attack         - run rsa-attack test)
-	$(info make test-stego-crypt        - run stego-crypt test)
-	$(info make test-stego-attack       - run stego-attack test)
-	$(info make test-dgcrypto           - run dgcrypto test)
-	$(info make test-dgtype             - run dgtype test)
-	$(info make test-dgimg              - run dgimg test)
-	$(info make test-libgnump           - run gmp library test)
+	$(info make test-rsa-crypt          - run (release build) rsa-crypt test)
+	$(info make test-rsa-attack         - run (release build) rsa-attack test)
+	$(info make test-stego-crypt        - run (release build) stego-crypt test)
+	$(info make test-stego-attack       - run (release build) stego-attack test)
+	$(info make test-dgcrypto           - run (release build) dgcrypto test)
+	$(info make test-dgtype             - run (release build) dgtype test)
+	$(info make test-dgimg              - run (release build) dgimg test)
+	$(info make test-libgnump           - run (release build) gmp library test)
 	$(info make test-debug-rsa-crypt    - run (debug build) rsa-crypt test)
 	$(info make test-debug-rsa-attack   - run (debug build) rsa-attack test)
 	$(info make test-debug-stego-crypt  - run (debug build) stego-crypt test)
@@ -337,6 +337,7 @@ help-all::
 	$(info make clean-all               - same as clean)
 	$(info make clean-build             - remove compiled files in build/)
 	$(info make clean-debug             - remove compiled files in debug/)
+	$(info make clean-force             - remove debug and build completely)
 	$(info make clean-build-dirs        - remove debug and build completely)
 	$(info )
 	$(info Configuration Check)

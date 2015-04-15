@@ -1,12 +1,6 @@
 #include <gtest/gtest.h>
 #include <dgimg/dgimg.hh>
 
-
-TEST(imageStub, oneEqualsone) {
-  int one = 1;
-  EXPECT_EQ(1, one);
-}
-
 TEST(BmpData, isValid) {
   dgbmpdata bmp("test/dgimg/test.bmp");
   EXPECT_EQ(true, bmp.is_valid());

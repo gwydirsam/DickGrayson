@@ -26,6 +26,7 @@ addons:
 
 # run each of these tests in a seperate instance
 env:
+  - TEST_TYPE=test-all
   - TEST_TYPE=test-debug-rsa-crypt
   - TEST_TYPE=test-debug-rsa-attack
   - TEST_TYPE=test-debug-stego-crypt
@@ -42,7 +43,6 @@ env:
   - TEST_TYPE=test-dgtype
   - TEST_TYPE=test-dgimg
   - TEST_TYPE=test-libgnump
-  - TEST_TYPE=test-all
 
 ## install
 before_install:

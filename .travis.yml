@@ -46,6 +46,21 @@ env:
     - TEST_TYPE=test-libgnump
 matrix:
   fast_finish: true
+  allow_failures:
+    - TEST_TYPE=test-debug-rsa-crypt
+    - TEST_TYPE=test-debug-rsa-attack
+    - TEST_TYPE=test-debug-stego-crypt
+    - TEST_TYPE=test-debug-stego-attack
+    - TEST_TYPE=test-debug-dgcrypto
+    - TEST_TYPE=test-debug-dgtype
+    - TEST_TYPE=test-debug-dgimg
+    - TEST_TYPE=test-rsa-crypt
+    - TEST_TYPE=test-rsa-attack
+    - TEST_TYPE=test-stego-crypt
+    - TEST_TYPE=test-stego-attack
+    - TEST_TYPE=test-dgcrypto
+    - TEST_TYPE=test-dgtype
+    - TEST_TYPE=test-dgimg
 
 ## install
 before_install:

@@ -1,1 +1,3 @@
-#include "bmp_manip.hh"
+#pragma once
+#include "bmp_data.hh"
+#include "bmp.hh"

@@ -2,4 +2,5 @@
 
 #include <gmpxx.h>
 #include <vector>
-std::vector<mpz_class> findFactors(mpz_class n);
+#include <utility>
+std::vector<std::pair<mpz_class, mpz_class> > findFactors(mpz_class n);

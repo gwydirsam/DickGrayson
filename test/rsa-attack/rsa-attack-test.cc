@@ -1,5 +1,4 @@
 //#include <lib/d>
-//#include 
 #include <gtest/gtest.h>
 #include <gmpxx.h>
 #include "../../lib/rsa-attack-lib/rsa-attack-lib.h"
@@ -11,22 +10,23 @@ using namespace std;
 // }
 
 TEST(factorize, smallSemiPrime) {
-  mpz_class small_n = 1767_mpz;
+  mpz_class small_n = 1767;
   vector<mpz_class> expected_outputs = {31, 57};
   vector<mpz_class> actual = findFactors(small_n);
   EXPECT_EQ(expected_outputs, actual);
 }
 
 TEST(factorize, bigSemiPrime) {
-  mpz_class big_n = 8884963_mpz;
-  vector<mpz_class> expected_outputs = {3319_mpz, 2677_mpz};
+  mpz_class big_n = 8884963;
+  vector<mpz_class> expected_outputs = {3319, 2677};
 
+  //output won't be the same
   EXPECT_EQ(expected_outputs, findFactors(big_n));
 }
 
 TEST(factorize, smallNormalNumber) {
   mpz_class norm_num = 108;
-  vector<mpz_class> expected_outputs = {2_mpz, 3_mpz, 4_mpz, 6_mpz, 9_mpz, 12_mpz, 18_mpz, 27_mpz, 36_mpz, 54_mpz};
+  vector<mpz_class> expected_outputs = {2, 3, 4, 6, 9, 12, 18, 27, 36, 54};
 
   EXPECT_EQ(expected_outputs, findFactors(norm_num));
 }

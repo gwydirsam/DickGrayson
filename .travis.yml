@@ -12,46 +12,52 @@ addons:
     - gcc-4.9
     - g++-4.9
 env:
-  - BUILD_TYPE=debug TEST_TYPE=test-rsa-crypt
-  - BUILD_TYPE=debug TEST_TYPE=test-rsa-attack
-  - BUILD_TYPE=debug TEST_TYPE=test-stego-crypt
-  - BUILD_TYPE=debug TEST_TYPE=test-stego-attack
-  - BUILD_TYPE=debug TEST_TYPE=test-dgcrypto
-  - BUILD_TYPE=debug TEST_TYPE=test-dgtype
-  - BUILD_TYPE=debug TEST_TYPE=test-dgimg
-  - BUILD_TYPE=debug TEST_TYPE=test-libgnump
-  - BUILD_TYPE=build TEST_TYPE=test-rsa-crypt
-  - BUILD_TYPE=build TEST_TYPE=test-rsa-attack
-  - BUILD_TYPE=build TEST_TYPE=test-stego-crypt
-  - BUILD_TYPE=build TEST_TYPE=test-stego-attack
-  - BUILD_TYPE=build TEST_TYPE=test-dgcrypto
-  - BUILD_TYPE=build TEST_TYPE=test-dgtype
-  - BUILD_TYPE=build TEST_TYPE=test-dgimg
-  - BUILD_TYPE=build TEST_TYPE=test-libgnump
+  - TEST_TYPE=test-debug-rsa-crypt
+  - TEST_TYPE=test-debug-rsa-attack
+  - TEST_TYPE=test-debug-stego-crypt
+  - TEST_TYPE=test-debug-stego-attack
+  - TEST_TYPE=test-debug-dgcrypto
+  - TEST_TYPE=test-debug-dgtype
+  - TEST_TYPE=test-debug-dgimg
+  - TEST_TYPE=test-debug-libgnump
+  - TEST_TYPE=test-rsa-crypt
+  - TEST_TYPE=test-rsa-attack
+  - TEST_TYPE=test-stego-crypt
+  - TEST_TYPE=test-stego-attack
+  - TEST_TYPE=test-dgcrypto
+  - TEST_TYPE=test-dgtype
+  - TEST_TYPE=test-dgimg
+  - TEST_TYPE=test-libgnump
+  - TEST_TYPE=test-all
 cache:
   apt: true
   directories:
     - $HOME/.ccache
     - $HOME/.tmp
     - $HOME/local/$UNAME
-install:
+before_install:
   - echo `whoami`
   - echo `uname`
-  - export CXX="ccache g++-4.9 -fdiagnostics-color=auto"
-  - export CC="ccache gcc-4.9 -fdiagnostics-color=auto"
-  - mkdir -p $HOME/local/`uname`/
   - export UNAME=`uname`
   - export PATH=$HOME/local/$UNAME/bin:$PATH
   - export LD_LIBRARY_PATH=$HOME/local/$UNAME/lib:$LD_LIBRARY_PATH
   - export CPLUS_INCLUDE_PATH=$HOME/local/$UNAME/include:$CPLUS_INCLUDE_PATH
-script:
+  - export CXX="ccache g++-4.9 -fdiagnostics-color=auto"
+  - export CC="ccache gcc-4.9 -fdiagnostics-color=auto"
+install:
+  - mkdir -p $HOME/local/`uname`/
   - make install-deps
+# before_script:
+script:
   # - make $BUILD_TYPE
-  - make all
+  # - make all
   - make $TEST_TYPE
+# after_success:
+# after_failure:
+# after_script:
 notifications:
   webhooks:
     urls: https://webhooks.gitter.im/e/1eef7e496a6902ff54c7
     on_success: change
-    on_failure: always
+    on_failure: change
 sudo: false

@@ -11,6 +11,13 @@ TEST(BmpData, Open) {
   EXPECT_EQ(true, bmp.is_valid());
 }
 
+TEST(BmpData, Write) {
+  dgbmpdata bmp_original("test/dgimg/test.bmp");
+  bmp_original.write("test/dgimg/write_test.bmp");
+  dgbmpdata bmp_write_test("test/dgimg/write_test.bmp");
+  EXPECT_EQ(bmp_original.get_data(), bmp_write_test.get_data());
+}
+
 TEST(BmpData, BitsPerPixel) {
   dgbmpdata bmp("test/dgimg/test.bmp");
   EXPECT_EQ(8, bmp.bits_per_pixel());

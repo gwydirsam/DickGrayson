@@ -16,8 +16,7 @@ Desktop.ini
 ## Tags
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
 TAGS
-!TAGS/
-tags
+!TAGS/ tags
 !tags/
 gtags.files
 GTAGS
@@ -83,3 +82,5 @@ Session.vim
 /xcode-debug/
 /share/notes/auto/
 /share/notes/bmp.tex
+*.bmp
+

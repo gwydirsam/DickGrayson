@@ -25,7 +25,9 @@ std::istream& operator>>(std::istream& is, BMP_data& bmp) {
 
 // write
 std::ostream& operator<<(std::ostream& os, const BMP_data& bmp) {
+  /*
   os << bmp.byte_array;
+  */
   return os;
 }
 

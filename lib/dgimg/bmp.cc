@@ -39,11 +39,10 @@ unsigned BMP::get_pixel(int x, int y) const {
   int height = data.height();
   int num_subpixels = bpp / 8;
   int row_size = num_subpixels * width;
-  int mod = row_size % 4; // Rows of pixels are padded to a multiple of 4 bytes, get the number of padding bytes
+  int num_row_padding_bytes = row_size % 4;
 
   int pixel_offset = (x + y * height) * num_subpixels;
-  // account for row padding
-  pixel_offset += pixel_offset / (row_size + 1) * mod;
+  pixel_offset += pixel_offset / (row_size + 1) * num_row_padding_bytes;
 
   uint32_t pixel_value = 0;
   for (int i = 0; i < num_subpixels; ++i) {

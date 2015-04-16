@@ -14,6 +14,9 @@ mkdir -p ${INSTALL_PREFIX}
 
 if ! [[ $(uname) == "Darwin" ]]; then
 
+    # install lcovrc
+    cp ${SCRIPT_DIR}/../examples/lcovrc ${HOME}/.lcovrc
+
     if ! [ -f "${INSTALL_PREFIX}/bin/lcov" ]; then
 
         if ! [ -f "${TMP_DIR}/`basename $URL`" ]; then

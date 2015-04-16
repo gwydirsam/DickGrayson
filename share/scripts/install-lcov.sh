@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+PATCH_FILE=lcov-prefix.patch
+
 URL=http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
 DIR_NAME=lcov-1.11
 TMP_DIR=${HOME}/.tmp
@@ -22,6 +25,9 @@ if ! [[ $(uname) == "Darwin" ]]; then
         fi
 
         cd ${TMP_DIR}/${DIR_NAME}
+
+        # patch
+        patch -p1 < ${SCRIPT_DIR}/${PATCH_FILE}
 
         # build and install
         PREFIX=${INSTALL_PREFIX} make install || exit $?

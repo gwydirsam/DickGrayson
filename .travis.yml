@@ -84,6 +84,7 @@ install:
   - `which cmake` --version
   - `which lcov` --version
   - `which valgrind` --version
+  - `which gcc` --version
   - `which gcc-4.9` --version
   - `which gcov` --version
   - `which gcov-4.9` --version

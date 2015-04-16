@@ -195,16 +195,15 @@ ifeq ($(CMAKE_GENERATOR), Ninja)
 else
 	# @$(CMAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) --build .
-	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --directory . --zerocounters
-	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --directory . --capture --output-file coverage.info
-	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
-	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --list coverage.info
 endif
 	@echo ======================================
 	@echo Debug Build Finished
 	@echo ======================================
 
 coverage:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --directory . --capture --output-file coverage.info
+	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
+	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --list coverage.info
 	@$(CMAKE) -E chdir $(DEBUG_DIR) coveralls-lcov --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
 
 

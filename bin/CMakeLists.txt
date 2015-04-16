@@ -59,6 +59,6 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
       # If we should upload.
       ON                 
       # (Optional) Alternate project cmake module path.
-      "${PROJECT_SOURCE_DIR}/share/cmake/")
+      "${PROJECT_SOURCE_DIR}/share/cmake")
   endif()
 endif()

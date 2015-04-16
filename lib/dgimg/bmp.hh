@@ -21,6 +21,8 @@ public:
   // eg masking 11111111 with 00001111 sets the byte to 11110000
   void byte_unset_mask(int index, unsigned mask);
 
+  unsigned max_pixel_value() const;
+
   const BMP_data& get_data() const { return data; }
 
 private:

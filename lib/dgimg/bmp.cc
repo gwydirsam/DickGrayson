@@ -28,6 +28,10 @@ void BMP::byte_unset_mask(int index, unsigned mask) {
   return;
 }
 
+unsigned BMP::max_pixel_value() const {
+  return 0;
+}
+
 //// friend non-member operators
 std::ostream& operator<<(std::ostream& os, const DG::Image::BMP& bmp) {
   return os;

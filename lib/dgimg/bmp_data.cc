@@ -20,6 +20,7 @@ std::istream& operator>>(std::istream& is, BMP_data& bmp) {
   ost << is.rdbuf();
   std::string bytes(ost.str());
   bmp.byte_array = bytes;
+  bmp.pixel_array = bmp.byte_array.substr(bmp.image_offset(), bmp.pixel_array_size());
   return is;
 }
 
@@ -54,6 +55,12 @@ int BMP_data::height() const {
   std::string bytes = byte_array.substr(0x16, 4);
   int h = bytes_to_int(bytes);
   return h;
+}
+
+unsigned BMP_data::pixel_array_size() const {
+  std::string bytes = byte_array.substr(0x22, 4);
+  int pas = bytes_to_int(bytes);
+  return pas;
 }
 
 unsigned BMP_data::num_color_planes() const {

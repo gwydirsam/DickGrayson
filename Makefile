@@ -195,6 +195,7 @@ ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(DEBUG_DIR) gtest && ninja -C $(DEBUG_DIR) all
 else
 	@$(MAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
+	-@$(CMAKE) -E chdir $(BUILD_DIR) $(MAKE) coveralls
 	# @$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE)
 endif
 	@echo ======================================

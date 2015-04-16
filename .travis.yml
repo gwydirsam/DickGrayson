@@ -63,6 +63,7 @@ matrix:
 
 ## install
 before_install:
+  - bundle install
   - echo `whoami`
   - echo `uname`
   - export UNAME=`uname`
@@ -87,6 +88,7 @@ script:
 
 ## after
 after_success:
+  - coveralls-lcov --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
 after_failure:
 
 # after_script is run after after_success and failure

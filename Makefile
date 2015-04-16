@@ -178,10 +178,8 @@ all release build compile::
 ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(BUILD_DIR) gtest && ninja -C $(BUILD_DIR) all
 else
-	# @$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
+	# @$(CMAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) --build .
-	# cd $(BUILD_DIR)
-	# $(CMAKE) --build .
 endif
 	@echo ======================================
 	@echo Release Build Finished
@@ -195,14 +193,20 @@ all debug::
 ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(DEBUG_DIR) gtest && ninja -C $(DEBUG_DIR) all
 else
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) --build .
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) --build . --target coveralls
 	# @$(CMAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
-	# -@$(MAKE) -C $(DEBUG_DIR) coveralls
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) --build .
+	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --directory . --zerocounters
+	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --directory . --capture --output-file coverage.info
+	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
+	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --list coverage.info
 endif
 	@echo ======================================
 	@echo Debug Build Finished
 	@echo ======================================
+
+coverage::
+	@coveralls-lcov --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
+
 
 test-all:: all
 test-all test test-build:: build

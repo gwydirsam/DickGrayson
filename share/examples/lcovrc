@@ -81,11 +81,11 @@ genhtml_sort = 1
 
 # Include function coverage data display (can be disabled by the
 # --no-func-coverage option of genhtml)
-#genhtml_function_coverage = 1
+genhtml_function_coverage = 1
 
 # Include branch coverage data display (can be disabled by the
 # --no-branch-coverage option of genhtml)
-#genhtml_branch_coverage = 1
+genhtml_branch_coverage = 1
 
 # Specify the character set of all generated HTML pages
 genhtml_charset=UTF-8
@@ -94,7 +94,7 @@ genhtml_charset=UTF-8
 genhtml_desc_html=0
 
 # Location of the gcov tool (same as --gcov-info option of geninfo)
-# geninfo_gcov_tool = gcov
+geninfo_gcov_tool = gcov-4.9
 
 # Adjust test names to include operating system information if non-zero
 #geninfo_adjust_testname = 0

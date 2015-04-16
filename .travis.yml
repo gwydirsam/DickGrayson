@@ -88,7 +88,7 @@ script:
 
 ## after
 after_success:
-  - coveralls-lcov --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
+  - make coverage
 after_failure:
 
 # after_script is run after after_success and failure

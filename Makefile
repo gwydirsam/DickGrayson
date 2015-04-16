@@ -204,8 +204,8 @@ endif
 	@echo Debug Build Finished
 	@echo ======================================
 
-coverage::
-	@coveralls-lcov --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
+coverage:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) coveralls-lcov --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
 
 
 test-all:: all

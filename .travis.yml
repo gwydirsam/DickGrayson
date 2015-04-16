@@ -80,6 +80,11 @@ before_install:
 install:
   - mkdir -p $HOME/local/`uname`/
   - make install-deps
+  - `which cmake` --version
+  - `which lcov` --version
+  - `which valgrind` --version
+  - `which gcc` --version
+  - `which gcov` --version
 
 ## script
 before_script:

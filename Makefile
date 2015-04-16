@@ -289,21 +289,21 @@ cppcheck::
 	cppcheck -j4 --enable=all lib/ bin/
 
 valgrind-rsa-crypt valgrind-test-debug-rsa-crypt::
-	valgrind --tool=memcheck $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
 valgrind-rsa-attack valgrind-test-debug-rsa-attack::
-	valgrind --tool=memcheck $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
 valgrind-stego-crypt valgrind-test-debug-stego-crypt::
-	valgrind --tool=memcheck $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
 valgrind-stego-attack valgrind-test-debug-stego-attack::
-	valgrind --tool=memcheck $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
 valgrind-dgcrypto valgrind-test-debug-dgcrypto::
-	valgrind --tool=memcheck $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
 valgrind-dgtype valgrind-test-debug-dgtype::
-	valgrind --tool=memcheck $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
 valgrind-dgimg valgrind-test-debug-dgimg::
-	valgrind --tool=memcheck $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
 valgrind-libgnump valgrind-test-debug-libgnump::
-	valgrind --tool=memcheck $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
 help help-all::
 	$(info )

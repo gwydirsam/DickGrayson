@@ -27,15 +27,21 @@ void whatWentWrong(int flag, bool ioerror){
 int main(int argc, char* argv[]) {
   int fflag, aflag, ch;
   bool ioerror = false;
+
+  //std::vector<std::string>
+
   /* options descriptor */
   static struct option longopts[] = {
     { "attack",   required_argument,  NULL, 'a'},
-    { "filename", required_argument,  NULL, 'f'}
+    { "filename", required_argument,  NULL, 'f'},
+    { "help", no_argument,  NULL, 'h'},
+    {NULL, 0, NULL , 0}
   };
+
   int option_index = 0;
 
   fflag = aflag = 0;
-  while ((ch = getopt_long(argc, argv, "a:f:", longopts, &option_index)) != -1)
+  while ((ch = getopt_long(argc, argv, "ha:f:", longopts, &option_index)) != -1){
     switch (ch) {
     case 'a':
       aflag = 1;
@@ -47,7 +53,6 @@ int main(int argc, char* argv[]) {
       std::fstream f(fname, std::ios::in);
       if (!f.is_open())
         ioerror = true;
-
       else{
         std::string line = "";
         //this should pass to our fctn eventually
@@ -55,12 +60,17 @@ int main(int argc, char* argv[]) {
         while ( std::getline (f,line) ) {std::cout << line << '\n';}
       }
 
-    }
       break;
+    }
+    case 'h':
+    case '?':
     default:
+      usage();
+      exit(EXIT_FAILURE);
       break;
 
     }
+  }
   if(!fflag || !aflag){
     usage();
   }

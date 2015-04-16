@@ -11,7 +11,7 @@ mkdir -p ${INSTALL_PREFIX}
 
 if ! [[ $(uname) == "Darwin" ]]; then
 
-    if ! [ -f "${INSTALL_PREFIX}/include/gmpxx.h" ]; then
+    if ! [ -f "${INSTALL_PREFIX}/bin/lcov" ]; then
 
         if ! [ -f "${TMP_DIR}/`basename $URL`" ]; then
             wget ${URL} -O ${TMP_DIR}/`basename $URL`

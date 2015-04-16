@@ -2,6 +2,7 @@
 #include <fstream>
 #include <dgimg/dgimg.hh>
 
+//// helper functions which read and write BMP_data to/from file
 static dgbmpdata open_bmp(const std::string& fname) {
   std::ifstream ifs(fname, std::ios::binary);
   dgbmpdata bmp;
@@ -14,12 +15,12 @@ static void write_bmp(const dgbmpdata& bmp, const std::string& fname) {
   ofs << bmp.get_byte_array();
 }
 
-TEST(BmpData, IsValid) {
+TEST(BmpData, Open) {
   dgbmpdata bmp = open_bmp("test/dgimg/test.bmp");
   EXPECT_EQ(true, bmp.is_valid());
 }
 
-TEST(BmpData, Open) {
+TEST(BmpData, IsValid) {
   dgbmpdata bmp = open_bmp("test/dgimg/test.bmp");
   EXPECT_EQ(true, bmp.is_valid());
 }

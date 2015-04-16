@@ -51,6 +51,7 @@ int main(int argc, char* argv[]) {
       else{
         std::string line = "";
         //this should pass to our fctn eventually
+        //for now, test it's reading the right file
         while ( std::getline (f,line) ) {std::cout << line << '\n';}
       }
 

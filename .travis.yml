@@ -91,6 +91,7 @@ after_success:
   - make coverage
   - make upload-coverage
 after_failure:
+  - make valgrind-${TEST_TYPE}
 
 # after_script is run after after_success and failure
 after_script:

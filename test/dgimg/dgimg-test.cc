@@ -45,6 +45,11 @@ TEST(BmpData, Dimensions) {
   EXPECT_EQ(512, bmp.height());
 }
 
+TEST(BmpData, PixelArraySize) {
+  dgbmpdata bmp = open_bmp("test/dgimg/test.bmp");
+  EXPECT_EQ(512*512, bmp.pixel_array_size());
+}
+
 TEST(BmpData, ImageOffset) {
   dgbmpdata bmp = open_bmp("test/dgimg/test.bmp");
   unsigned offset = bmp.image_offset();
@@ -71,5 +76,9 @@ TEST(Bmp, ByteUnsetMask) {
 
 TEST(Bmp, MaxPixelValue) {
   dgbmp bmp("test/dgimg/test_max_xFF.bmp");
+  dgbmp bmp2("test/dgimg/test_black.bmp");
+  dgbmp bmp3("test/dgimg/test_24bit_max_xFFFFFF.bmp");
   EXPECT_EQ(0xFF, bmp.max_pixel_value());
+  EXPECT_EQ(0x0, bmp2.max_pixel_value());
+  EXPECT_EQ(0xFFFFFF, bmp3.max_pixel_value());
 }

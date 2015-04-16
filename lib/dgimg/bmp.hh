@@ -22,9 +22,13 @@ public:
   void byte_unset_mask(int index, unsigned mask);
 
   unsigned max_pixel_value() const;
+  double mean_squared_error(const BMP& other) const;
+  double peak_signal_noise_ratio(const BMP& other) const;
 
   const BMP_data& get_data() const { return data; }
   unsigned get_pixel(int x, int y) const;
+
+  int get_num_pixels() const { return data.width() * data.height(); }
 
 private:
   BMP_data data;

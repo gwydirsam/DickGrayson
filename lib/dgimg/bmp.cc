@@ -68,6 +68,28 @@ unsigned BMP::max_pixel_value() const {
   return max;
 }
 
+// source peak signal to noise ratio wiki
+double BMP::mean_squared_error(const BMP& other) const {
+  int width = data.width();
+  int height = data.height();
+  int squared_errors_sum = 0;
+  for (int i = 0; i < width; ++i) {
+    for (int j = 0; j < height; ++j) {
+      int squared_error = (get_pixel(i, j) - other.get_pixel(i, j)) << 1;
+      squared_errors_sum += squared_error;
+    }
+  }
+  return (double)squared_errors_sum / (get_num_pixels() * other.get_num_pixels());
+}
+
+// source peak signal to noise ratio wiki, returns psnr in decibels
+double BMP::peak_signal_noise_ratio(const BMP& other) const {
+  unsigned max_val = max_pixel_value();
+  double mse = mean_squared_error(other);
+  double psnr = 20 * log10(max_val) - 10 * log10(mse);
+  return psnr;
+}
+
 //// friend non-member operators
 std::ostream& operator<<(std::ostream& os, const DG::Image::BMP& bmp) {
   return os;

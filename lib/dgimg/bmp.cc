@@ -10,7 +10,7 @@ void BMP::open(const std::string& fname) {
 }
 
 void BMP::write(const std::string& fname) {
-  std::ofstream ofs(fname, std::ios::binary);
+  std::ofstream ofs(fname, std::ios::binary | std::ios::trunc);
   ofs << data;
 }
 

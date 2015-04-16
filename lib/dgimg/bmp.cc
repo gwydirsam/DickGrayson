@@ -15,16 +15,16 @@ void BMP::write(const std::string& fname) {
 }
 
 void BMP::byte_set_mask(int index, unsigned mask) {
-  unsigned byte = data.byte_array[index];
+  unsigned byte = data.byte_array[index + data.image_offset()];
   byte |= mask;
-  data.byte_array[index] = byte;
+  data.byte_array[index + data.image_offset()] = byte;
   return;
 }
 
 void BMP::byte_unset_mask(int index, unsigned mask) {
-  unsigned byte = data.byte_array[index];
+  unsigned byte = data.byte_array[index + data.image_offset()];
   byte &= ~mask;
-  data.byte_array[index] = byte;
+  data.byte_array[index + data.image_offset()] = byte;
   return;
 }
 

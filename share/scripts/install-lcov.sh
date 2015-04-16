@@ -23,11 +23,8 @@ if ! [[ $(uname) == "Darwin" ]]; then
 
         cd ${TMP_DIR}/${DIR_NAME}
 
-        # build
-        make || exit $?
-
-        # install
-        make install || exit $?
+        # build and install
+        PREFIX=${INSTALL_PREFIX} make install || exit $?
 
     fi
 else

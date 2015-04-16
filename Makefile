@@ -7,17 +7,17 @@ HOSTNAME := $(shell hostname)
 ifeq ($(UNAME), 'Linux')
 		ifeq ($(HOSTNAME), 'build')
 		NUM_CORES = 8
+	else
+		NUM_CORES = 2
 	endif
-else
-	NUM_CORES = 2
 endif
 
 ifeq ($(UNAME), 'Darwin')
 	ifeq ($(HOSTNAME), 'Tron.local')
 		NUM_CORES = 4
+	else
+		NUM_CORES = 4
 	endif
-else
-	NUM_CORES = 4
 endif
 
 CMAKE := $(shell which cmake)

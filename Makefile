@@ -206,7 +206,7 @@ debug coverage:: install-lcov debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
 	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --list coverage.info
 
-upload-coverage:: install-lcov debug
+upload-coverage:: debug install-lcov coverage
 	@$(CMAKE) -E chdir $(DEBUG_DIR) coveralls-lcov --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
 
 

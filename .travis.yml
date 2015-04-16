@@ -83,7 +83,7 @@ install:
 before_script:
 script:
   # - make $BUILD_TYPE
-  # - make all
+  - make all
   - make $TEST_TYPE
 
 ## after
@@ -93,6 +93,7 @@ after_failure:
 
 # after_script is run after after_success and failure
 after_script:
+  - cat debug/coverage.info
   - cat build/coveralls.json
   - cat debug/coveralls.json
 

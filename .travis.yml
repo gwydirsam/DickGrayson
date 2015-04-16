@@ -89,6 +89,7 @@ script:
 ## after
 after_success:
   - make coverage
+  - make upload-coverage
 after_failure:
 
 # after_script is run after after_success and failure

@@ -23,7 +23,7 @@ struct BMP_data {
   unsigned num_color_planes() const; // must be 1
   bool is_valid() const;
 
-  const std::string& get_data() { return byte_array; }
+  const std::string& get_byte_array() const { return byte_array; }
 private:
   std::string byte_array;
   int bytes_to_int(const std::string& bytes) const;

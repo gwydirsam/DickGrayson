@@ -179,7 +179,8 @@ ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(BUILD_DIR) gtest && ninja -C $(BUILD_DIR) all
 else
 	# @$(CMAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) --build .
+	# @$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) --build .
+	@$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
 endif
 	@echo ======================================
 	@echo Release Build Finished
@@ -193,8 +194,8 @@ all debug::
 ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(DEBUG_DIR) gtest && ninja -C $(DEBUG_DIR) all
 else
-	# @$(CMAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(CMAKE) --build .
+	@$(MAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
+	# @$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE) 
 endif
 	@echo ======================================
 	@echo Debug Build Finished

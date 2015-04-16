@@ -55,9 +55,3 @@ TEST(DGCryptoPrime, isPrime15484517) {
   EXPECT_TRUE(dgrprime::is_prime(15484517_mpz));
 }
 
-int main(int argc, char **argv) {
-  testing::InitGoogleTest(&argc, argv);
-  // always return 0 for coverage to work
-  return 0;
-}
-

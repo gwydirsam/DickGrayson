@@ -24,6 +24,11 @@ CMAKE := $(shell which cmake)
 CMAKE_GENERATOR ?= "Unix Makefiles"
 #CMAKE_GENERATOR ?= Ninja
 
+LCOV := $(shell which lcov)
+GCOV := $(shell which gcov)
+GENHTML := $(shell which genhtml)
+COVERALLS-LCOV := $(shell which coveralls-lcov)
+
 PROJECT_DIR := $(CURDIR)
 BUILD_DIR := $(PROJECT_DIR)/build
 DEBUG_DIR := $(PROJECT_DIR)/debug
@@ -200,10 +205,10 @@ endif
 
 coverage::
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE) -C $(DEBUG_DIR) coveralls
-	-@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --directory . --capture --output-file coverage.info
-	-@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
-	-@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --list coverage.info
-	-@$(CMAKE) -E chdir $(DEBUG_DIR) genhtml coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --directory . --capture --output-file coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --list coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(GENHTML) coverage.info
 
 upload-coverage:: debug install-lcov coverage
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) coveralls-lcov --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info

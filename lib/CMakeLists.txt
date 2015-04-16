@@ -34,4 +34,6 @@ set(STEGO_ATTACK_LIB_FILES
   stego-attack-lib/stego-attack-lib.cc)
 
 add_library(${STEGO_CRYPT_LIB} ${STEGO_CRYPT_LIB_FILES})
+target_link_libraries(${STEGO_CRYPT_LIB} ${IMAGE_LIB})
 add_library(${STEGO_ATTACK_LIB} ${STEGO_ATTACK_LIB_FILES})
+target_link_libraries(${STEGO_ATTACK_LIB} ${IMAGE_LIB})

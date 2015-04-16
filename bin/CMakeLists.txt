@@ -50,7 +50,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
   if (COVERALLS)
     set(COVERAGE_SRCS ${COVERAGE_SRCS} ${SOURCE_DIR}/${STEGO_CRYPT}/${MAIN_SRC})
     include(${PROJECT_SOURCE_DIR}/lib/coveralls_list.cmake)
-    # include(${PROJECT_SOURCE_DIR}/test/coveralls_list.cmake)
+    include(${PROJECT_SOURCE_DIR}/test/coveralls_list.cmake)
 
     # Create the coveralls target.
     coveralls_setup(

@@ -201,7 +201,7 @@ endif
 	@echo Debug Build Finished
 	@echo ======================================
 
-debug coverage:: install-lcov debug
+debug coverage:: install-lcov
 	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --directory . --capture --output-file coverage.info
 	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
 	@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --list coverage.info

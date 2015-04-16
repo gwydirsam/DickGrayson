@@ -92,14 +92,14 @@ script:
 after_success:
   - make coverage
   - make upload-coverage
+  - cat debug/coverage.info
+  - cat build/coveralls.json
+  - cat debug/coveralls.json
 after_failure:
   - make valgrind-${TEST_TYPE}
 
 # after_script is run after after_success and failure
 after_script:
-  - cat debug/coverage.info
-  - cat build/coveralls.json
-  - cat debug/coveralls.json
 
 # notify gitter
 notifications:

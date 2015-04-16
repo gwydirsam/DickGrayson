@@ -178,8 +178,6 @@ all release build compile::
 ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(BUILD_DIR) gtest && ninja -C $(BUILD_DIR) all
 else
-	# @$(CMAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
-	# @$(CMAKE) -E chdir $(BUILD_DIR) $(CMAKE) --build .
 	@$(MAKE) -C $(BUILD_DIR) -j $(NUM_CORES)
 endif
 	@echo ======================================
@@ -194,15 +192,14 @@ all debug::
 ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(DEBUG_DIR) gtest && ninja -C $(DEBUG_DIR) all
 else
-	@$(MAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
-	-@$(CMAKE) -E chdir $(BUILD_DIR) $(MAKE) coveralls
-	# @$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE)
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
 endif
 	@echo ======================================
 	@echo Debug Build Finished
 	@echo ======================================
 
 debug coverage:: install-lcov
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE) -C $(DEBUG_DIR) coveralls
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --directory . --capture --output-file coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --list coverage.info

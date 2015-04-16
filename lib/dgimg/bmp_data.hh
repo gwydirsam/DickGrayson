@@ -11,11 +11,8 @@
 
 namespace DG {
 namespace Image {
+struct BMP;
 struct BMP_data {
-  BMP_data(const std::string& fname) { open(fname); }
-
-  void open(const std::string& fname);
-  void write(const std::string& fname);
 
   unsigned image_offset() const;
   unsigned bits_per_pixel() const;
@@ -26,20 +23,14 @@ struct BMP_data {
   unsigned num_color_planes() const; // must be 1
   bool is_valid() const;
 
-  // masks a byte of data with the specified mask
-  // setting bits to 1 if they are not already 1
-  // eg masking 11110000 with 00001111 sets the byte to 1111111
-  void mask_set_byte(int index, unsigned mask);
-
-  // masks a byte of data with the specified mask
-  // setting bits to 0 if they are not already 0
-  // eg masking 11111111 with 00001111 sets the byte to 11110000
-  void mask_unset_byte(int index, unsigned mask);
-
-  const std::string& get_data() { return data; }
+  const std::string& get_data() { return byte_array; }
 private:
-  std::string data;
+  std::string byte_array;
   int bytes_to_int(const std::string& bytes) const;
+
+  friend std::ostream& operator<<(std::ostream& os, const BMP_data& bmp);
+  friend std::istream& operator>>(std::istream& is, BMP_data& bmp);
+  friend BMP;
 };
 }
 }

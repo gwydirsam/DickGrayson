@@ -86,18 +86,18 @@ install-better-defaults::
 	@echo Done Installing Better Defaults
 	@echo ======================================
 
-install-ccache::
+install-deps::
+	@echo ======================================
+	@echo Start Installing Dependencies
+	@echo ======================================
+
+install-deps install-ccache::
 	@echo ======================================
 	@echo Start Installing Better Defaults
 	@echo ======================================
 	@(cd share/scripts; bash install-ccache.sh)
 	@echo ======================================
 	@echo Done Installing Better Defaults
-	@echo ======================================
-
-install-deps::
-	@echo ======================================
-	@echo Start Installing Dependencies
 	@echo ======================================
 
 install-deps install-cmake::
@@ -117,6 +117,15 @@ install-deps install-gmp::
 	@(cd share/scripts; bash install-gmp.sh)
 	@echo ======================================
 	@echo Done Installing GNUMP
+	@echo ======================================
+
+install-deps install-lcov::
+	@echo ======================================
+	@echo Start Installing lcov
+	@echo ======================================
+	@(cd share/scripts; bash install-lcov.sh)
+	@echo ======================================
+	@echo Done Installing lcov
 	@echo ======================================
 
 install-deps::
@@ -184,7 +193,7 @@ ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(DEBUG_DIR) gtest && ninja -C $(DEBUG_DIR) all
 else
 	@$(MAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
-	@$(MAKE) -C $(DEBUG_DIR) coveralls
+	@# -@$(MAKE) -C $(DEBUG_DIR) coveralls
 endif
 	@echo ======================================
 	@echo Debug Build Finished
@@ -197,21 +206,21 @@ test-all test test-build:: build
 	@echo ======================================
 
 test-all test test-build test-rsa-crypt:: build
-	$(BUILD_DIR)/test/rsa-crypt-test --gtest_color=yes
+	-@$(BUILD_DIR)/test/rsa-crypt-test --gtest_color=yes
 test-all test test-build test-rsa-attack:: build
-	$(BUILD_DIR)/test/rsa-attack-test --gtest_color=yes
+	-@$(BUILD_DIR)/test/rsa-attack-test --gtest_color=yes
 test-all test test-build test-stego-crypt:: build
-	$(BUILD_DIR)/test/stego-crypt-test --gtest_color=yes
+	-@$(BUILD_DIR)/test/stego-crypt-test --gtest_color=yes
 test-all test test-build test-stego-attack:: build
-	$(BUILD_DIR)/test/stego-attack-test --gtest_color=yes
+	-@$(BUILD_DIR)/test/stego-attack-test --gtest_color=yes
 test-all test test-build test-dgcrypto:: build
-	$(BUILD_DIR)/test/dgcrypto-test --gtest_color=yes
+	-@$(BUILD_DIR)/test/dgcrypto-test --gtest_color=yes
 test-all test test-build test-dgtype:: build
-	$(BUILD_DIR)/test/dgtype-test --gtest_color=yes
+	-@$(BUILD_DIR)/test/dgtype-test --gtest_color=yes
 test-all test test-build test-dgimg:: build
-	$(BUILD_DIR)/test/dgimg-test --gtest_color=yes
+	-@$(BUILD_DIR)/test/dgimg-test --gtest_color=yes
 test-all test test-build test-libgnump:: build
-	$(BUILD_DIR)/test/libgnump-test --gtest_color=yes
+	-@$(BUILD_DIR)/test/libgnump-test --gtest_color=yes
 
 test-all test test-build:: build
 	@echo ======================================
@@ -224,21 +233,21 @@ test-all test-debug:: debug
 	@echo ======================================
 
 test-all test-debug test-debug-rsa-crypt:: debug
-	$(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
+	-@$(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
 test-all test-debug test-debug-rsa-attack:: debug
-	$(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
+	-@$(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
 test-all test-debug test-debug-stego-crypt:: debug
-	$(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
+	-@$(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
 test-all test-debug test-debug-stego-attack:: debug
-	$(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
+	-@$(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
 test-all test-debug test-debug-dgcrypto:: debug
-	$(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
+	-@$(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
 test-all test-debug test-debug-dgtype:: debug
-	$(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
+	-@$(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
 test-all test-debug test-debug-dgimg:: debug
-	$(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+	-@$(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
 test-all test-debug test-debug-libgnump:: debug
-	$(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
+	-@$(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
 test-all test-debug:: debug
 	@echo ======================================

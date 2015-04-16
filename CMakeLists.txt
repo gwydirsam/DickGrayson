@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
 
 project(DickGrayson)
 
+# create debug and release builds
+set(CMAKE_CONFIGURATION_TYPES Debug Release)
+
 # tests are on by default
 option(BUILD_TESTS "Enable tests build" ON)
 
@@ -124,6 +127,7 @@ add_subdirectory(${INCLUDE_DIR})
 
 # if testing, build gflags and tests
 if(BUILD_TESTS)
+  include(CTest)
   enable_testing()
   add_subdirectory(${TEST_DIR})
 endif()

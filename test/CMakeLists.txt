@@ -42,7 +42,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
-add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
+add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
 set(TARGET ${RSA_CRYPT})
 set(TARGET_LIB ${TARGET}-lib)
@@ -65,7 +65,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
-add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
+add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
 set(TARGET ${STEGO_CRYPT})
 set(TARGET_LIB ${TARGET}-lib)
@@ -88,7 +88,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
-add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
+add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
 # add_dependencies(${GTEST_TARGET} gmp gtest)
 add_dependencies(${GTEST_TARGET} gtest)
@@ -114,7 +114,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
-add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
+add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
 set(TARGET ${IMAGE_LIB})
 set(GTEST_TARGET ${TARGET}-test)
@@ -136,7 +136,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
-add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
+add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
 set(TARGET ${CRYPTO_LIB})
 set(GTEST_TARGET ${TARGET}-test)
@@ -158,7 +158,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
-add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
+add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
 set(TARGET ${TYPE_LIB})
 set(GTEST_TARGET ${TARGET}-test)
@@ -180,7 +180,7 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
-add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
+add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
 set(TARGET libgnump)
 set(GTEST_TARGET ${TARGET}-test)
@@ -201,5 +201,4 @@ target_link_libraries(${GTEST_TARGET}
   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 target_link_libraries(${GTEST_TARGET} pthread)
-# add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET})
-add_test(${TARGET} ${GTEST_TARGET})
+add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)

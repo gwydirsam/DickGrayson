@@ -96,10 +96,10 @@ after_success:
   - cat build/coveralls.json
   - cat debug/coveralls.json
 after_failure:
-  - make valgrind-${TEST_TYPE}
 
 # after_script is run after after_success and failure
 after_script:
+  - make valgrind-${TEST_TYPE}
 
 # notify gitter
 notifications:

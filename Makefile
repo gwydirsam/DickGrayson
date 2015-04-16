@@ -294,22 +294,32 @@ clean-force clean-build-dirs::
 cppcheck::
 	cppcheck -j4 --enable=all lib/ bin/
 
-valgrind-test-rsa-crypt valgrind-test-debug-rsa-crypt::
-	valgrind-test --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
-valgrind-test-rsa-attack valgrind-test-debug-rsa-attack::
-	valgrind-test --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
-valgrind-test-stego-crypt valgrind-test-debug-stego-crypt::
-	valgrind-test --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
-valgrind-test-stego-attack valgrind-test-debug-stego-attack::
-	valgrind-test --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
-valgrind-test-dgcrypto valgrind-test-debug-dgcrypto::
-	valgrind-test --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
-valgrind-test-dgtype valgrind-test-debug-dgtype::
-	valgrind-test --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
-valgrind-test-dgimg valgrind-test-debug-dgimg::
-	valgrind-test --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
-valgrind-test-libgnump valgrind-test-debug-libgnump::
-	valgrind-test --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
+valgrind-all:: debug
+	@echo ======================================
+	@echo Running Valgrind on debug binaries
+	@echo ======================================
+
+valgrind-all valgrind-test-rsa-crypt valgrind-test-debug-rsa-crypt::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
+valgrind-all valgrind-test-rsa-attack valgrind-test-debug-rsa-attack::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
+valgrind-all valgrind-test-stego-crypt valgrind-test-debug-stego-crypt::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
+valgrind-all valgrind-test-stego-attack valgrind-test-debug-stego-attack::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
+valgrind-all valgrind-test-dgcrypto valgrind-test-debug-dgcrypto::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
+valgrind-all valgrind-test-dgtype valgrind-test-debug-dgtype::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
+valgrind-all valgrind-test-dgimg valgrind-test-debug-dgimg::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+valgrind-all valgrind-test-libgnump valgrind-test-debug-libgnump::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
+
+valgrind-all::
+	@echo ======================================
+	@echo Finished Running Valgrind
+	@echo ======================================
 
 help help-all::
 	$(info )

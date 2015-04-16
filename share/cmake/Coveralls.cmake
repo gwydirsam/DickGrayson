@@ -57,7 +57,7 @@ function(coveralls_setup _COVERAGE_SRCS _COVERALLS_UPLOAD)
 		set(COVERAGE_SRCS "${COVERAGE_SRCS}*${COVERAGE_SRC}")
 	endforeach()
 
-	#message("Coverage sources: ${COVERAGE_SRCS}")
+	message("Coverage sources: ${COVERAGE_SRCS}")
 	set(COVERALLS_FILE ${PROJECT_BINARY_DIR}/coveralls.json)
 
 	add_custom_target(coveralls_generate
@@ -67,7 +67,7 @@ function(coveralls_setup _COVERAGE_SRCS _COVERALLS_UPLOAD)
 				-P "${_CMAKE_SCRIPT_PATH}/CoverallsClear.cmake"
 
 		# Run regress tests.
-		COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+		COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure --force-new-ctest-process
 
 		# Generate Gcov and translate it into coveralls JSON.
 		# We do this by executing an external CMake script.

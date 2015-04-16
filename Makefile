@@ -198,7 +198,7 @@ endif
 	@echo Debug Build Finished
 	@echo ======================================
 
-debug coverage:: install-lcov
+coverage:: install-lcov
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE) -C $(DEBUG_DIR) coveralls
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --directory . --capture --output-file coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) lcov --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
@@ -215,21 +215,21 @@ test-all test test-build:: build
 	@echo ======================================
 
 test-all test test-build test-rsa-crypt:: build
-	@$(BUILD_DIR)/test/rsa-crypt-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/rsa-crypt-test --gtest_color=yes
 test-all test test-build test-rsa-attack:: build
-	@$(BUILD_DIR)/test/rsa-attack-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/rsa-attack-test --gtest_color=yes
 test-all test test-build test-stego-crypt:: build
-	@$(BUILD_DIR)/test/stego-crypt-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/stego-crypt-test --gtest_color=yes
 test-all test test-build test-stego-attack:: build
-	@$(BUILD_DIR)/test/stego-attack-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/stego-attack-test --gtest_color=yes
 test-all test test-build test-dgcrypto:: build
-	@$(BUILD_DIR)/test/dgcrypto-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgcrypto-test --gtest_color=yes
 test-all test test-build test-dgtype:: build
-	@$(BUILD_DIR)/test/dgtype-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgtype-test --gtest_color=yes
 test-all test test-build test-dgimg:: build
-	@$(BUILD_DIR)/test/dgimg-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgimg-test --gtest_color=yes
 test-all test test-build test-libgnump:: build
-	@$(BUILD_DIR)/test/libgnump-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/libgnump-test --gtest_color=yes
 
 test-all test test-build:: build
 	@echo ======================================
@@ -242,21 +242,21 @@ test-all test-debug:: debug
 	@echo ======================================
 
 test-all test-debug test-debug-rsa-crypt:: debug
-	@$(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
 test-all test-debug test-debug-rsa-attack:: debug
-	@$(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
 test-all test-debug test-debug-stego-crypt:: debug
-	@$(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
 test-all test-debug test-debug-stego-attack:: debug
-	@$(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
 test-all test-debug test-debug-dgcrypto:: debug
-	@$(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
 test-all test-debug test-debug-dgtype:: debug
-	@$(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
 test-all test-debug test-debug-dgimg:: debug
-	@$(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
 test-all test-debug test-debug-libgnump:: debug
-	@$(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
 test-all test-debug:: debug
 	@echo ======================================
@@ -288,22 +288,22 @@ clean-force clean-build-dirs::
 cppcheck::
 	cppcheck -j4 --enable=all lib/ bin/
 
-valgrind-test-debug-rsa-crypt::
-	valgrind $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
-valgrind-test-debug-rsa-attack::
-	valgrind $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
-valgrind-test-debug-stego-crypt::
-	valgrind $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
-valgrind-test-debug-stego-attack::
-	valgrind $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
-valgrind-test-debug-dgcrypto::
-	valgrind $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
-valgrind-test-debug-dgtype::
-	valgrind $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
-valgrind-test-debug-dgimg::
-	valgrind $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
-valgrind-test-debug-libgnump::
-	valgrind $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
+valgrind-rsa-crypt valgrind-test-debug-rsa-crypt::
+	valgrind --tool=memcheck $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
+valgrind-rsa-attack valgrind-test-debug-rsa-attack::
+	valgrind --tool=memcheck $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
+valgrind-stego-crypt valgrind-test-debug-stego-crypt::
+	valgrind --tool=memcheck $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
+valgrind-stego-attack valgrind-test-debug-stego-attack::
+	valgrind --tool=memcheck $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
+valgrind-dgcrypto valgrind-test-debug-dgcrypto::
+	valgrind --tool=memcheck $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
+valgrind-dgtype valgrind-test-debug-dgtype::
+	valgrind --tool=memcheck $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
+valgrind-dgimg valgrind-test-debug-dgimg::
+	valgrind --tool=memcheck $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+valgrind-libgnump valgrind-test-debug-libgnump::
+	valgrind --tool=memcheck $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
 help help-all::
 	$(info )

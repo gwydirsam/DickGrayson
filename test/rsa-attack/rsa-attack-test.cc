@@ -4,11 +4,6 @@
 #include "../../lib/rsa-attack-lib/rsa-attack-lib.h"
 using namespace std;
 
-// TEST(dorothyStub, oneEqualsone) {
-//   int one = 1;
-//   EXPECT_EQ(1, one);
-// }
-
  TEST(factorize, smallSemiPrime) {
    mpz_class small_n = 1767;
    vector<pair<mpz_class, mpz_class > > expected_outputs = {

@@ -86,6 +86,7 @@ install:
   - `which valgrind` --version
   - `which gcc-4.9` --version
   - `which gcov` --version
+  - `which gcov-4.9` --version
 
 ## script
 before_script:

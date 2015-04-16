@@ -68,3 +68,8 @@ TEST(Bmp, ByteUnsetMask) {
   bmp.byte_unset_mask(0, 0xFF);
   EXPECT_EQ('\x00', bmp.get_data().get_byte_array()[bmp.get_data().image_offset()]);
 }
+
+TEST(Bmp, MaxPixelValue) {
+  dgbmp bmp("test/dgimg/test_max_xFF.bmp");
+  EXPECT_EQ(0xFF, bmp.max_pixel_value());
+}

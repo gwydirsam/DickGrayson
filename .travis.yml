@@ -80,6 +80,14 @@ before_install:
 install:
   - mkdir -p $HOME/local/`uname`/
   - make install-deps
+  - which ccache
+  - which cmake
+  - which lcov
+  - which valgrind
+  - which gcc
+  - which gcc-4.9
+  - which gcov
+  - which gcov-4.9
   - ccache --version
   - cmake --version
   - lcov --version

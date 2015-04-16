@@ -7,6 +7,7 @@ namespace DG {
 namespace Image {
 class BMP {
 public:
+  BMP() { }
   BMP(const std::string& fname) { open(fname); }
   void open(const std::string& fname);
   void write(const std::string& fname);

@@ -28,10 +28,10 @@ add_library(${RSA_ATTACK_LIB} ${RSA_ATTACK_LIB_FILES})
 
 ## Stego libs
 set(STEGO_CRYPT_LIB_FILES
-  stego-crypt-lib/stego-crypt-lib.cc)
+  stego-crypt-lib/embedding_agent.cc
+  stego-crypt-lib/extracting_agent.cc)
 set(STEGO_ATTACK_LIB_FILES
   stego-attack-lib/stego-attack-lib.cc)
-
 
 add_library(${STEGO_CRYPT_LIB} ${STEGO_CRYPT_LIB_FILES})
 add_library(${STEGO_ATTACK_LIB} ${STEGO_ATTACK_LIB_FILES})

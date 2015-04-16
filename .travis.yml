@@ -5,12 +5,13 @@ compiler:
 # cache apt packages, ccache and installed libraries
 cache:
   apt: true
+  bundler: true
   directories:
     - $HOME/.tmp
     - $HOME/.cache
     - $HOME/.ccache
     - $HOME/local
-# force travis to use container
+# force travis to use containe
 sudo: false
 
 # install gcc-4.9

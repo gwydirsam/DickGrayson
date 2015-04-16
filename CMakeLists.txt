@@ -9,7 +9,7 @@ set(CMAKE_CONFIGURATION_TYPES Debug Release)
 # turn colors on for makefiles
 SET(CMAKE_COLOR_MAKEFILE ON)
 # turn on verbose for makesfiles
-SET(CMAKE_VERBOSE_MAKEFILE ON)
+SET(CMAKE_VERBOSE_MAKEFILE OFF)
 
 # tests are on by default
 option(BUILD_TESTS "Enable tests build" ON)
@@ -43,7 +43,7 @@ set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/lib)
 set(TEST_DIR ${PROJECT_SOURCE_DIR}/test)
 
 # tell cmake to look in share/cmake for modules
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/share/cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/share/cmake)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 if(COVERALLS)
@@ -100,11 +100,11 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     if(COVERALLS)
       ## coverage
       # c++
-      set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} --coverage -fprofile-arcs -ftest-coverage")
+      set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}  -fprofile-arcs -ftest-coverage")
       # c
-      set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --coverage -fprofile-arcs -ftest-coverage")
+      set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}  -fprofile-arcs -ftest-coverage")
       ## linking
-      set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --coverage -fprofile-arcs")
+      set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG}  -fprofile-arcs")
     endif()
   else()
     # linux clang flags (use libstdc++)
@@ -114,11 +114,11 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     if(COVERALLS)
       ## coverage
       # c++
-      set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} --coverage -fprofile-arcs -ftest-coverage")
+      set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}  -fprofile-arcs -ftest-coverage")
       # c
-      set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --coverage -fprofile-arcs -ftest-coverage")
+      set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}  -fprofile-arcs -ftest-coverage")
       ## linking
-      set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --coverage -fprofile-arcs")
+      set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG}  -fprofile-arcs")
     endif()
   endif()
 endif()

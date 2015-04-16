@@ -24,6 +24,7 @@ public:
   unsigned max_pixel_value() const;
 
   const BMP_data& get_data() const { return data; }
+  unsigned get_pixel(int x, int y) const;
 
 private:
   BMP_data data;

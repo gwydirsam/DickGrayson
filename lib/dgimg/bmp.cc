@@ -32,39 +32,38 @@ void BMP::byte_unset_mask(int index, unsigned mask) {
   return;
 }
 
-unsigned BMP::max_pixel_value() const {
+unsigned BMP::get_pixel(int x, int y) const {
+  const std::string& pixel_array = data.get_pixel_array();
   int bpp = data.bits_per_pixel();
   int width = data.width();
   int height = data.height();
-  int num_subpixels = bpp / 8; // we support 8-bit and 24-bit
-  int row_size = num_subpixels * width; // take padding into account
-  int mod = row_size % 4;
-  if (mod) {
-    row_size += mod;
+  int num_subpixels = bpp / 8;
+  int row_size = num_subpixels * width;
+  int num_row_padding_bytes = row_size % 4;
+
+  int pixel_offset = (x + y * height) * num_subpixels;
+  pixel_offset += pixel_offset / (row_size + 1) * num_row_padding_bytes;
+
+  uint32_t pixel_value = 0;
+  for (int i = 0; i < num_subpixels; ++i) {
+    uint8_t subpixel_value = pixel_array[pixel_offset + i];
+    uint8_t shift = (num_subpixels - i - 1) * 8;
+    pixel_value |= subpixel_value << shift;
   }
-  const std::string& pixel_array = data.get_pixel_array();
+  return pixel_value;
+}
 
-  int i = 0;
-  int current_row = 1;
+unsigned BMP::max_pixel_value() const {
   unsigned max = std::numeric_limits<unsigned>::min();
-
-  int z = 0;
-  while (i < pixel_array.size()) {
-    if (i > (current_row) * width * num_subpixels) {
-      ++current_row;
-      i += mod;
+  int width = data.width();
+  int height = data.height();
+  for (int i = 0; i < width; ++i) {
+    for (int j = 0; j < height; ++j) {
+      unsigned pixel_value = get_pixel(i, j);
+      if (pixel_value > max) {
+        max = pixel_value;
+      }
     }
-    uint32_t pixel_value = 0;
-    for (int j = 0; j < num_subpixels; ++j) {
-      ++z;
-      uint8_t subpixel_value = pixel_array[i + j];
-      uint8_t shift = (num_subpixels - j - 1) * 8;
-      pixel_value |= subpixel_value << shift;
-    }
-    if (pixel_value > max) {
-      max = pixel_value;
-    }
-    i += num_subpixels;
   }
   return max;
 }

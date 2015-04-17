@@ -35,12 +35,11 @@ TEST(DGCryptoPrime, Prime16b) {
 }
 
 TEST(DGCryptoPrime, isPrime2) {
-  // create a prime with 2 bits
-  dgrprime tree(2);
+  EXPECT_TRUE(dgrprime::is_prime(2_mpz));  
+}
 
-  EXPECT_EQ(2u, tree.value());
-
-  EXPECT_TRUE(dgrprime::is_prime(2_mpz));
+TEST(DGCryptoPrime, isPrime3) {
+  EXPECT_TRUE(dgrprime::is_prime(3_mpz));
 }
 
 TEST(DGCryptoPrime, isPrime11) {

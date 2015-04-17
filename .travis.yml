@@ -107,7 +107,6 @@ script:
 
 ## after
 after_success:
-  - if [ "$COVERAGE" == "ON" ]; then make -k run-all; fi
   - if [ "$COVERAGE" == "ON" ]; then make -k coverage; fi
   - if [ "$COVERAGE" == "ON" ]; then make -k upload-coverage; fi
   - if [ "$COVERAGE" == "ON" ]; then cat debug/coverage.info; fi

@@ -101,10 +101,8 @@ install:
 ## script
 before_script:
 script:
-  - if [ "$TEST_TYPE" != "all-coverage" ]; then make all; fi
+  - make all
   - if [ "$TEST_TYPE" != "all-coverage" ]; then make ${TEST_TYPE}; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make all; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make test-all; fi
 
 ## after
 after_success:

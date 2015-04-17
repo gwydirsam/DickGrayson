@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <openssl/md5.h>
+#include <md5.h>
 
 unsigned char result1[MD5_DIGEST_LENGTH];
 unsigned char result2[MD5_DIGEST_LENGTH];

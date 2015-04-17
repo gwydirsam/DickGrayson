@@ -19,39 +19,67 @@ bool RandomPrime::is_coprime(mpz_class value1, mpz_class value2){
   
   return true;
 }
+
+//helper for is_prime
+mpz_class RandomPrime::mulmod(mpz_class a, mpz_class b, mpz_class mod)
+{
+    mpz_class x = 0,y = a % mod;
+    while (b > 0)
+    {
+        if (b % 2 == 1)
+        {    
+            x = (x + y) % mod;
+        }
+        y = (y * 2) % mod;
+        b /= 2;
+    }
+    return x % mod;
+}
+//helper for is_prime
+mpz_class RandomPrime::modulo(mpz_class base, mpz_class exponent, mpz_class mod)
+{
+    mpz_class x = 1;
+    mpz_class y = base;
+    while (exponent > 0)
+    {
+        if (exponent % 2 == 1)
+            x = (x * y) % mod;
+        y = (y * y) % mod;
+        exponent = exponent / 2;
+    }
+    return x % mod;
+}
 // is value prime
 bool RandomPrime::is_prime(mpz_class value) {
-  int k = 1;
-  if(value == k)
-    return true;
-  if(value == 3)
-    return true;
-  mpz_class s, d, b, e, x;
-
-  for(s = 0, d = value-1; !(d && 1); s++){
-    d >>= 1;
-  }
-
-  for(x = 1, b = k % value, e = d; e; e >>= 1) {
-    if(e && 1){
-      x = (x * b) % value;
-    }	
-  }
-  
-  if(x == 1 || x == value-1){
-    return true;
-  }
-
-  while( s-- > 1) {
-    x = (x * x) % value;
-    if ( x == 1){
-      return false;
+  mpz_class iteration = 5;
+  if (value < 2)
+    {
+        return false;
     }
-    if( x == value-1) {
-      return true;
+    if (value != 2 && value % 2==0)
+    {
+        return false;
     }
-  }
-  return false; 
+    mpz_class s = value - 1;
+    while (s % 2 == 0)
+    {
+        s /= 2;
+    }
+    for (mpz_class i = 0; i < iteration; i++)
+    {
+        mpz_class a = rand() % (value - 1) + 1, temp = s;
+        mpz_class mod = modulo(a, temp, value);
+        while (temp != value - 1 && mod != 1 && mod != value - 1)
+        {
+            mod = mulmod(mod, mod, value);
+            temp *= 2;
+        }
+        if (mod != value - 1 && temp % 2 == 0)
+        {
+            return false;
+        }
+    }
+    return true;
  }
 
 // set value_ to prime of ~k bits

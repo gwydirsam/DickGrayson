@@ -203,70 +203,96 @@ endif
 	@echo Debug Build Finished
 	@echo ======================================
 
-coverage:: install-lcov test-debug
+coverage::
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --directory $(DEBUG_DIR) --capture --initial --output-file coverage.info --gcov-tool $(GCOV)
+	-@$(MAKE) run-all
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --directory $(DEBUG_DIR) --capture --output-file coverage.info --gcov-tool $(GCOV)
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --list coverage.info
-	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(GENHTML) coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) mkdir -p $(DEBUG_DIR)/html
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(GENHTML) $(DEBUG_DIR)/coverage.info -o $(DEBUG_DIR)/html
 
 upload-coverage:: coverage
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(COVERALLS-LCOV) --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE) -C $(DEBUG_DIR) coveralls
 
+run-all:: all
+	@echo ======================================
+	@echo Running all binaries and test
+	@echo ======================================
 
-test-all:: all
-test-all test test-build:: build
+run-all test-all:: all
+run-all test-all test test-build:: build
 	@echo ======================================
 	@echo Starting Release Tests
 	@echo ======================================
 
-test-all test test-build test-rsa-crypt:: build
+run-all test-all test test-build test-rsa-crypt:: build
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/rsa-crypt-test --gtest_color=yes
-test-all test test-build test-rsa-attack:: build
+run-all test-all test test-build test-rsa-attack:: build
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/rsa-attack-test --gtest_color=yes
-test-all test test-build test-stego-crypt:: build
+run-all test-all test test-build test-stego-crypt:: build
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/stego-crypt-test --gtest_color=yes
-test-all test test-build test-stego-attack:: build
+run-all test-all test test-build test-stego-attack:: build
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/stego-attack-test --gtest_color=yes
-test-all test test-build test-dgcrypto:: build
+run-all test-all test test-build test-dgcrypto:: build
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgcrypto-test --gtest_color=yes
-test-all test test-build test-dgtype:: build
+run-all test-all test test-build test-dgtype:: build
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgtype-test --gtest_color=yes
-test-all test test-build test-dgimg:: build
+run-all test-all test test-build test-dgimg:: build
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgimg-test --gtest_color=yes
-test-all test test-build test-libgnump:: build
+run-all test-all test test-build test-libgnump:: build
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/libgnump-test --gtest_color=yes
 
-test-all test test-build:: build
+run-all test-all test test-build:: build
 	@echo ======================================
 	@echo Finished Release Tests
 	@echo ======================================
 
-test-all test-debug:: debug
+run-all test-all test-debug:: debug
 	@echo ======================================
 	@echo Starting Debug Tests
 	@echo ======================================
 
-test-all test-debug test-debug-rsa-crypt:: debug
+run-all test-all test-debug test-debug-rsa-crypt:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
-test-all test-debug test-debug-rsa-attack:: debug
+run-all test-all test-debug test-debug-rsa-attack:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
-test-all test-debug test-debug-stego-crypt:: debug
+run-all test-all test-debug test-debug-stego-crypt:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
-test-all test-debug test-debug-stego-attack:: debug
+run-all test-all test-debug test-debug-stego-attack:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
-test-all test-debug test-debug-dgcrypto:: debug
+run-all test-all test-debug test-debug-dgcrypto:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
-test-all test-debug test-debug-dgtype:: debug
+run-all test-all test-debug test-debug-dgtype:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
-test-all test-debug test-debug-dgimg:: debug
+run-all test-all test-debug test-debug-dgimg:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
-test-all test-debug test-debug-libgnump:: debug
+run-all test-all test-debug test-debug-libgnump:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
-test-all test-debug:: debug
+run-all test-all test-debug:: debug
 	@echo ======================================
 	@echo Finished Debug Tests
+	@echo ======================================
+
+run-all:: debug
+	@echo ======================================
+	@echo Starting Debug Binaries
+	@echo ======================================
+
+run-all run-debug-rsa-crypt:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/bin/rsa-crypt
+run-all run-debug-rsa-attack:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/bin/rsa-attack
+run-all run-debug-stego-crypt:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/bin/stego-crypt
+run-all run-debug-stego-attack:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/bin/stego-attack
+
+run-all:: debug
+	@echo ======================================
+	@echo Finished Running Debug binaries
 	@echo ======================================
 
 all::

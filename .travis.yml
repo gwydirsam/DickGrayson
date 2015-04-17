@@ -27,8 +27,7 @@ addons:
 # run each of these tests in a seperate instance
 env:
   matrix:
-    - TEST_TYPE=all
-    - TEST_TYPE=all-coverage
+    - TEST_TYPE=all COVERAGE=ON
     - TEST_TYPE=test-libgnump
     - TEST_TYPE=test-debug-libgnump
     - TEST_TYPE=test-rsa-crypt
@@ -48,7 +47,6 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - env: TEST_TYPE=all-coverage
     - env: TEST_TYPE=test-rsa-crypt
     - env: TEST_TYPE=test-rsa-attack
     - env: TEST_TYPE=test-stego-crypt
@@ -77,6 +75,8 @@ before_install:
   - if [ "$CXX" == "clang++" ]; then export CXX="ccache clang++-3.6 -fdiagnostics-color=auto"; fi
   - if [ "$CC" == "gcc" ]; then export CC="ccache gcc-4.9 -fdiagnostics-color=auto"; fi
   - if [ "$CXX" == "g++" ]; then export CXX="ccache g++-4.9 -fdiagnostics-color=auto"; fi
+  - if ! [ -h $HOME/local/$UNAME/bin/gcov ]; then ln -s /usr/bin/gcov-4.9 $HOME/local/$UNAME/bin/gcov; fi
+  - ls $HOME/local/$UNAME/bin
 
 install:
   - mkdir -p $HOME/local/`uname`/
@@ -101,23 +101,20 @@ install:
 ## script
 before_script:
 script:
-  - if [ "$TEST_TYPE" != "all-coverage" ]; then make all; fi
-  - if [ "$TEST_TYPE" != "all-coverage" ]; then make ${TEST_TYPE}; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make all; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make test-all; fi
+  - make -k all
+  - make -k ${TEST_TYPE}
 
 ## after
 after_success:
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make test-all; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make coverage; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then cat debug/coverage.info; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then cat debug/coveralls.json; fi
+  - if [ "$COVERAGE" == "ON" ]; then make -k coverage; fi
+  - if [ "$COVERAGE" == "ON" ]; then make -k upload-coverage; fi
+  - if [ "$COVERAGE" == "ON" ]; then cat debug/coverage.info; fi
+  - if [ "$COVERAGE" == "ON" ]; then cat debug/coveralls.json; fi
 after_failure:
 
 # after_script is run after after_success and failure
 after_script:
-  - if [ "$TEST_TYPE" != "all-coverage" ]; then make valgrind-${TEST_TYPE}; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make valgrind-all; fi
+  - make valgrind-${TEST_TYPE}
 
 # notify gitter
 notifications:

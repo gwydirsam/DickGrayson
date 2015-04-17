@@ -28,9 +28,9 @@ addons:
 env:
   matrix:
     - TEST_TYPE=all
-    - TEST_TYPE=all COVERAGE=ON
     - TEST_TYPE=test-libgnump
     - TEST_TYPE=test-debug-libgnump
+    - TEST_TYPE=all COVERAGE=ON
     - TEST_TYPE=test-rsa-crypt
     - TEST_TYPE=test-rsa-attack
     - TEST_TYPE=test-stego-crypt

@@ -102,13 +102,13 @@ install:
 before_script:
 script:
   - make all
-  - if [ "$TEST_TYPE" != "all-coverage" ]; then make ${TEST_TYPE}; fi
+  - if [ "$TEST_TYPE" != "all-coverage" ]; then make -k ${TEST_TYPE}; fi
 
 ## after
 after_success:
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make test-all; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make coverage; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make upload-coverage; fi
+  - if [ "$TEST_TYPE" == "all-coverage" ]; then make -k run-all; fi
+  - if [ "$TEST_TYPE" == "all-coverage" ]; then make -k coverage; fi
+  - if [ "$TEST_TYPE" == "all-coverage" ]; then make -k upload-coverage; fi
   - if [ "$TEST_TYPE" == "all-coverage" ]; then cat debug/coverage.info; fi
   - if [ "$TEST_TYPE" == "all-coverage" ]; then cat debug/coveralls.json; fi
 after_failure:

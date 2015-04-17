@@ -68,9 +68,14 @@ endif()
 string(REGEX REPLACE "\\*" ";" COVERAGE_SRCS ${COVERAGE_SRCS})
 
 find_program(GCOV_EXECUTABLE gcov)
+# find_program(GCOV_EXECUTABLE gcov-4.9)
 
 if (NOT GCOV_EXECUTABLE)
-	message(FATAL_ERROR "gcov not found! Aborting...")
+	# message(AUTHOR_WARNING "gcov-4.9 not found! Using gcov...")
+  # find_program(GCOV_EXECUTABLE gcov)
+  # if (NOT GCOV_EXECUTABLE)
+	  message(FATAL_ERROR "gcov not found! Aborting...")
+  # endif()
 endif()
 
 find_package(Git)

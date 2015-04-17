@@ -94,7 +94,8 @@ genhtml_charset=UTF-8
 genhtml_desc_html=0
 
 # Location of the gcov tool (same as --gcov-info option of geninfo)
-geninfo_gcov_tool = gcov-4.9
+# geninfo_gcov_tool = gcov-4.9
+geninfo_gcov_tool = gcov
 
 # Adjust test names to include operating system information if non-zero
 #geninfo_adjust_testname = 0

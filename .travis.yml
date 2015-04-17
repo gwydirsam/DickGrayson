@@ -75,7 +75,7 @@ before_install:
   - if [ "$CXX" == "clang++" ]; then export CXX="ccache clang++-3.6 -fdiagnostics-color=auto"; fi
   - if [ "$CC" == "gcc" ]; then export CC="ccache gcc-4.9 -fdiagnostics-color=auto"; fi
   - if [ "$CXX" == "g++" ]; then export CXX="ccache g++-4.9 -fdiagnostics-color=auto"; fi
-  - if [ "$CC" == "gcc" ]; then alias gcov="gcov-4.9"; fi
+  # - if [ "$CC" == "gcc" ]; then alias gcov="gcov-4.9"; fi
 
 install:
   - mkdir -p $HOME/local/`uname`/

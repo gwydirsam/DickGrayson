@@ -204,13 +204,13 @@ endif
 	@echo ======================================
 
 coverage::
-	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --directory . --capture --output-file coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --directory $(DEBUG_DIR) --capture --output-file coverage.info --gcov-tool $(GCOV)
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --list coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(GENHTML) coverage.info
 
 upload-coverage:: debug install-lcov coverage
-	-@$(CMAKE) -E chdir $(DEBUG_DIR) coveralls-lcov --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(COVERALLS-LCOV) --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE) -C $(DEBUG_DIR) coveralls
 
 

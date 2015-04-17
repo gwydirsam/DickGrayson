@@ -28,7 +28,7 @@ addons:
 env:
   matrix:
     - TEST_TYPE=all
-    - TEST_TYPE=all-coverage
+    - TEST_TYPE=all COVERAGE=ON
     - TEST_TYPE=test-libgnump
     - TEST_TYPE=test-debug-libgnump
     - TEST_TYPE=test-rsa-crypt
@@ -49,6 +49,7 @@ matrix:
   fast_finish: true
   allow_failures:
     - env: TEST_TYPE=all-coverage
+    - env: TEST_TYPE=all COVERAGE=ON
     - env: TEST_TYPE=test-rsa-crypt
     - env: TEST_TYPE=test-rsa-attack
     - env: TEST_TYPE=test-stego-crypt
@@ -101,22 +102,21 @@ install:
 ## script
 before_script:
 script:
-  - make all
-  - if [ "$TEST_TYPE" != "all-coverage" ]; then make -k ${TEST_TYPE}; fi
+  - make -k all
+  - make -k ${TEST_TYPE}
 
 ## after
 after_success:
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make -k run-all; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make -k coverage; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make -k upload-coverage; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then cat debug/coverage.info; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then cat debug/coveralls.json; fi
+  - if [ "$COVERAGE" == "ON" ]; then make -k run-all; fi
+  - if [ "$COVERAGE" == "ON" ]; then make -k coverage; fi
+  - if [ "$COVERAGE" == "ON" ]; then make -k upload-coverage; fi
+  - if [ "$COVERAGE" == "ON" ]; then cat debug/coverage.info; fi
+  - if [ "$COVERAGE" == "ON" ]; then cat debug/coveralls.json; fi
 after_failure:
 
 # after_script is run after after_success and failure
 after_script:
-  - if [ "$TEST_TYPE" != "all-coverage" ]; then make valgrind-${TEST_TYPE}; fi
-  - if [ "$TEST_TYPE" == "all-coverage" ]; then make valgrind-all; fi
+  - make valgrind-${TEST_TYPE}
 
 # notify gitter
 notifications:

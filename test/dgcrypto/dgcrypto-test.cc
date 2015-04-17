@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <gmpxx.h>
+#include <stdlib.h>
 #include <dgcrypto/dgcrypto.hh>
 
 TEST(DGCryptoPrime, Prime2b) {
@@ -8,6 +9,7 @@ TEST(DGCryptoPrime, Prime2b) {
   dgrprime two(2);
 
   EXPECT_EQ(2u, two.bits());
+  
 }
 
 TEST(DGCryptoPrime, Prime4b) {
@@ -34,12 +36,13 @@ TEST(DGCryptoPrime, Prime16b) {
   EXPECT_GT(65535, dgrprime::is_prime(sixteen.value()));
 }
 
-TEST(DGCryptoPrime, isPrime3) {
+TEST(DGCryptoPrime, isPrime2) {
   // create a prime with 2 bits
   dgrprime tree(3);
 
   EXPECT_EQ(3, tree.value());
 
+TEST(DGCryptoPrime, isPrime3) {
   EXPECT_TRUE(dgrprime::is_prime(3_mpz));
 }
 

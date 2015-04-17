@@ -101,8 +101,8 @@ install:
 ## script
 before_script:
 script:
-  - make all
-  - make $TEST_TYPE
+  - if [ "$TEST_TYPE" != "all-coverage" ]; then make all; fi
+  - if [ "$TEST_TYPE" != "all-coverage" ]; then make ${TEST_TYPE}; fi
   - if [ "$TEST_TYPE" == "all-coverage" ]; then make all; fi
   - if [ "$TEST_TYPE" == "all-coverage" ]; then make test-all; fi
 
@@ -116,7 +116,8 @@ after_failure:
 
 # after_script is run after after_success and failure
 after_script:
-  - make valgrind-${TEST_TYPE}
+  - if [ "$TEST_TYPE" != "all-coverage" ]; then make valgrind-${TEST_TYPE}; fi
+  - if [ "$TEST_TYPE" == "all-coverage" ]; then make valgrind-all; fi
 
 # notify gitter
 notifications:

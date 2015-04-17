@@ -1,14 +1,20 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <fstream>
 #include <unistd.h>
 #include <getopt.h>
+const std::vector<std::string> attack_types = {"factoring", "chinese_rt", "other"};
 void whatAttackTypes(){
-    std::cout << "\nType can be \'factoring\', \'chinese_rt\', or \'blah\'" << std::endl;
+  std::cout << "\nType can be ";
+  for(int i= 0; i < attack_types.size(); ++i){
+    std::cout << "\'" << attack_types[i] <<  "\', ";
+  }
+  std::cout << std::endl;
 }
 void usage(){
-    std::cout << "Usage is --attack [type] --filename [filename]"  << std::endl;
-    whatAttackTypes();
+  std::cout << "Usage is --attack [type] --filename [filename]"  << std::endl;
+  whatAttackTypes();
 }
 
 void whatWentWrong(int flag, bool ioerror){
@@ -28,8 +34,6 @@ int main(int argc, char* argv[]) {
   int fflag, aflag, ch;
   bool ioerror = false;
 
-  //std::vector<std::string>
-
   /* options descriptor */
   static struct option longopts[] = {
     { "attack",   required_argument,  NULL, 'a'},
@@ -45,6 +49,9 @@ int main(int argc, char* argv[]) {
     switch (ch) {
     case 'a':
       aflag = 1;
+      if(optarg == attack_types[0]){
+        std::cout << "Running " << attack_types[0] << " on file.." << std::endl;
+      }
       break;
 
     case 'f':{

@@ -9,7 +9,7 @@ TEST(factorize, smallSemiPrime) {
   vector<pair<mpz_class, mpz_class > > expected_outputs = {
     pair<mpz_class, mpz_class >(31, 57)
   };
-  EXPECT_EQ(expected_outputs, findFactors(small_n));
+  EXPECT_EQ(expected_outputs, findPrimeFactors(small_n));
 }
 
 TEST(factorize, bigSemiPrime) {
@@ -19,7 +19,7 @@ TEST(factorize, bigSemiPrime) {
   };
 
   //output won't be the same
-  EXPECT_EQ(expected_outputs, findFactors(big_n));
+  EXPECT_EQ(expected_outputs, findPrimeFactors(big_n));
 }
 
 TEST(factorize, smallNormalNumber) {
@@ -32,7 +32,7 @@ TEST(factorize, smallNormalNumber) {
     pair<mpz_class, mpz_class >(9, 12)
   };
 
-  EXPECT_EQ(expected_outputs, findFactors(norm_num));
+  EXPECT_EQ(expected_outputs, findPrimeFactors(norm_num));
 }
 TEST(factorize, largerN){
   mpz_class big_n  = 239774199806447;
@@ -42,7 +42,7 @@ TEST(factorize, largerN){
   };
 
   //output won't be the same
-  EXPECT_EQ(expected_outputs, findFactors(big_n));
+  EXPECT_EQ(expected_outputs, findPrimeFactors(big_n));
 }
 
 //TEST(Primes, Generate){

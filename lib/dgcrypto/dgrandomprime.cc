@@ -22,7 +22,6 @@ bool RandomPrime::is_coprime(mpz_class value1, mpz_class value2){
 // is value prime
 bool RandomPrime::is_prime(mpz_class value) {
   int k = 1;
-  std::cout<<"Value : "<<value;
   if(value == k)
     return true;
   if(value == 3)

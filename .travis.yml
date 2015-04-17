@@ -78,6 +78,7 @@ before_install:
   - if [ "$CXX" == "clang++" ]; then export CXX="ccache clang++-3.6 -fdiagnostics-color=auto"; fi
   - if [ "$CC" == "gcc" ]; then export CC="ccache gcc-4.9 -fdiagnostics-color=auto"; fi
   - if [ "$CXX" == "g++" ]; then export CXX="ccache g++-4.9 -fdiagnostics-color=auto"; fi
+  - if [ "$CC" == "gcc" ]; then cd $HOME/local/$UNAME/bin; ln -s /usr/bin/gcov-4.9 gcov; fi
 
 install:
   - mkdir -p $HOME/local/`uname`/

@@ -203,13 +203,13 @@ endif
 	@echo Debug Build Finished
 	@echo ======================================
 
-coverage::
+coverage:: install-lcov test-debug
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --directory $(DEBUG_DIR) --capture --output-file coverage.info --gcov-tool $(GCOV)
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --list coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(GENHTML) coverage.info
 
-upload-coverage:: debug install-lcov coverage
+upload-coverage:: coverage
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(COVERALLS-LCOV) --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE) -C $(DEBUG_DIR) coveralls
 

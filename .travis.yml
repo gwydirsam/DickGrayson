@@ -28,6 +28,7 @@ addons:
 env:
   matrix:
     - TEST_TYPE=all
+    - TEST_TYPE=all-coverage
     - TEST_TYPE=test-libgnump
     - TEST_TYPE=test-debug-libgnump
     - TEST_TYPE=test-rsa-crypt
@@ -47,6 +48,7 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
+    - env: TEST_TYPE=all-coverage
     - env: TEST_TYPE=test-rsa-crypt
     - env: TEST_TYPE=test-rsa-attack
     - env: TEST_TYPE=test-stego-crypt
@@ -75,7 +77,6 @@ before_install:
   - if [ "$CXX" == "clang++" ]; then export CXX="ccache clang++-3.6 -fdiagnostics-color=auto"; fi
   - if [ "$CC" == "gcc" ]; then export CC="ccache gcc-4.9 -fdiagnostics-color=auto"; fi
   - if [ "$CXX" == "g++" ]; then export CXX="ccache g++-4.9 -fdiagnostics-color=auto"; fi
-  # - if [ "$CC" == "gcc" ]; then alias gcov="gcov-4.9"; fi
 
 install:
   - mkdir -p $HOME/local/`uname`/
@@ -100,17 +101,17 @@ install:
 ## script
 before_script:
 script:
-  # - make $BUILD_TYPE
   - make all
   - make $TEST_TYPE
+  - if [ "$TEST_TYPE" == "all-coverage" ]; then make all; fi
+  - if [ "$TEST_TYPE" == "all-coverage" ]; then make test-all; fi
 
 ## after
 after_success:
-  - make coverage
-  - make upload-coverage
-  - cat debug/coverage.info
-  - cat build/coveralls.json
-  - cat debug/coveralls.json
+  - if [ "$TEST_TYPE" == "all-coverage" ]; then make test-all; fi
+  - if [ "$TEST_TYPE" == "all-coverage" ]; then make coverage; fi
+  - if [ "$TEST_TYPE" == "all-coverage" ]; then cat debug/coverage.info; fi
+  - if [ "$TEST_TYPE" == "all-coverage" ]; then cat debug/coveralls.json; fi
 after_failure:
 
 # after_script is run after after_success and failure

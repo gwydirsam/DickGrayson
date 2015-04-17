@@ -26,12 +26,20 @@ class RandomPrime : public RandomInteger {
   // static for external use
   static bool is_prime(mpz_class value);
 
- private:
+ protected:
   // is value prime
   bool prime() { return is_prime(value_); }
 
   // set value_ to prime of ~k bits
   mpz_class generate_prime(mp_bitcnt_t k);
+
+  //// friend non-member functions
+  // stream extraction
+  friend std::ostream& operator<<(std::ostream& os,
+                                  const RandomPrime& random_prime);
+  // stream insertion
+  friend std::istream& operator>>(std::istream& is,
+                                  RandomPrime& random_prime);
 };
 }
 }

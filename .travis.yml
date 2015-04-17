@@ -1,55 +1,125 @@
+## general settings
 language: cpp
 compiler:
   - gcc
+# cache apt packages, ccache and installed libraries
+cache:
+  apt: true
+  bundler: true
+  directories:
+    - $HOME/.tmp
+    - $HOME/.cache
+    - $HOME/.ccache
+    - $HOME/local
+# force travis to use containe
 sudo: false
+
+# install gcc-4.9
 addons:
   apt:
     sources:
-    # - deadsnakes
     - ubuntu-toolchain-r-test
     packages:
-    # - cmake
+    - valgrind
     - gcc-4.9
     - g++-4.9
+
+# run each of these tests in a seperate instance
 env:
-  - BUILD_TYPE=debug TEST_TYPE=test-rsa-crypt
-  - BUILD_TYPE=debug TEST_TYPE=test-rsa-attack
-  - BUILD_TYPE=debug TEST_TYPE=test-stego-crypt
-  - BUILD_TYPE=debug TEST_TYPE=test-stego-attack
-  - BUILD_TYPE=debug TEST_TYPE=test-dgcrypto
-  - BUILD_TYPE=debug TEST_TYPE=test-dgtype
-  - BUILD_TYPE=debug TEST_TYPE=test-dgimg
-  - BUILD_TYPE=debug TEST_TYPE=test-libgnump
-  - BUILD_TYPE=build TEST_TYPE=test-rsa-crypt
-  - BUILD_TYPE=build TEST_TYPE=test-rsa-attack
-  - BUILD_TYPE=build TEST_TYPE=test-stego-crypt
-  - BUILD_TYPE=build TEST_TYPE=test-stego-attack
-  - BUILD_TYPE=build TEST_TYPE=test-dgcrypto
-  - BUILD_TYPE=build TEST_TYPE=test-dgtype
-  - BUILD_TYPE=build TEST_TYPE=test-dgimg
-  - BUILD_TYPE=build TEST_TYPE=test-libgnump
-cache:
-  apt: true
-  directories:
-    - $HOME/.ccache
-    - $HOME/.tmp
-    - $HOME/local/$UNAME
-install:
-  - export CXX="ccache g++-4.9 -fdiagnostics-color=auto"
-  - export CC="ccache gcc-4.9 -fdiagnostics-color=auto"
-  - mkdir -p $HOME/local/`uname`/
+  matrix:
+    - TEST_TYPE=all
+    - TEST_TYPE=test-libgnump
+    - TEST_TYPE=test-debug-libgnump
+    - TEST_TYPE=test-rsa-crypt
+    - TEST_TYPE=test-rsa-attack
+    - TEST_TYPE=test-stego-crypt
+    - TEST_TYPE=test-stego-attack
+    - TEST_TYPE=test-dgcrypto
+    - TEST_TYPE=test-dgtype
+    - TEST_TYPE=test-dgimg
+    - TEST_TYPE=test-debug-rsa-crypt
+    - TEST_TYPE=test-debug-rsa-attack
+    - TEST_TYPE=test-debug-stego-crypt
+    - TEST_TYPE=test-debug-stego-attack
+    - TEST_TYPE=test-debug-dgcrypto
+    - TEST_TYPE=test-debug-dgtype
+    - TEST_TYPE=test-debug-dgimg
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: TEST_TYPE=test-rsa-crypt
+    - env: TEST_TYPE=test-rsa-attack
+    - env: TEST_TYPE=test-stego-crypt
+    - env: TEST_TYPE=test-stego-attack
+    - env: TEST_TYPE=test-dgcrypto
+    - env: TEST_TYPE=test-dgtype
+    - env: TEST_TYPE=test-dgimg
+    - env: TEST_TYPE=test-debug-rsa-crypt
+    - env: TEST_TYPE=test-debug-rsa-attack
+    - env: TEST_TYPE=test-debug-stego-crypt
+    - env: TEST_TYPE=test-debug-stego-attack
+    - env: TEST_TYPE=test-debug-dgcrypto
+    - env: TEST_TYPE=test-debug-dgtype
+    - env: TEST_TYPE=test-debug-dgimg
+
+## install
+before_install:
+  - bundle install
+  - echo `whoami`
+  - echo `uname`
   - export UNAME=`uname`
   - export PATH=$HOME/local/$UNAME/bin:$PATH
   - export LD_LIBRARY_PATH=$HOME/local/$UNAME/lib:$LD_LIBRARY_PATH
   - export CPLUS_INCLUDE_PATH=$HOME/local/$UNAME/include:$CPLUS_INCLUDE_PATH
-script:
+  - if [ "$CC" == "clang" ]; then export CC="ccache clang-3.6 -fdiagnostics-color=auto"; fi
+  - if [ "$CXX" == "clang++" ]; then export CXX="ccache clang++-3.6 -fdiagnostics-color=auto"; fi
+  - if [ "$CC" == "gcc" ]; then export CC="ccache gcc-4.9 -fdiagnostics-color=auto"; fi
+  - if [ "$CXX" == "g++" ]; then export CXX="ccache g++-4.9 -fdiagnostics-color=auto"; fi
+  - if [ "$CC" == "gcc" ]; then alias gcov="gcov-4.9"; fi
+
+install:
+  - mkdir -p $HOME/local/`uname`/
   - make install-deps
+  - which ccache
+  - which cmake
+  - which lcov
+  - which valgrind
+  - which gcc
+  - which gcc-4.9
+  - which gcov
+  - which gcov-4.9
+  - ccache --version
+  - cmake --version
+  - lcov --version
+  - valgrind --version
+  - gcc --version
+  - gcc-4.9 --version
+  - gcov --version
+  - gcov-4.9 --version
+
+## script
+before_script:
+script:
   # - make $BUILD_TYPE
   - make all
   - make $TEST_TYPE
+
+## after
+after_success:
+  - make coverage
+  - make upload-coverage
+  - cat debug/coverage.info
+  - cat build/coveralls.json
+  - cat debug/coveralls.json
+after_failure:
+
+# after_script is run after after_success and failure
+after_script:
+  - make valgrind-${TEST_TYPE}
+
+# notify gitter
 notifications:
   webhooks:
     urls: https://webhooks.gitter.im/e/1eef7e496a6902ff54c7
     on_success: change
-    on_failure: always
-sudo: false
+    on_failure: change

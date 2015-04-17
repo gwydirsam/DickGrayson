@@ -7,22 +7,27 @@ HOSTNAME := $(shell hostname)
 ifeq ($(UNAME), 'Linux')
 		ifeq ($(HOSTNAME), 'build')
 		NUM_CORES = 8
+	else
+		NUM_CORES = 2
 	endif
-else
-	NUM_CORES = 8
 endif
 
 ifeq ($(UNAME), 'Darwin')
 	ifeq ($(HOSTNAME), 'Tron.local')
 		NUM_CORES = 4
+	else
+		NUM_CORES = 4
 	endif
-else
-	NUM_CORES = 4
 endif
 
 CMAKE := $(shell which cmake)
 CMAKE_GENERATOR ?= "Unix Makefiles"
 #CMAKE_GENERATOR ?= Ninja
+
+LCOV := $(shell which lcov)
+GCOV := $(shell which gcov)
+GENHTML := $(shell which genhtml)
+COVERALLS-LCOV := $(shell which coveralls-lcov)
 
 PROJECT_DIR := $(CURDIR)
 BUILD_DIR := $(PROJECT_DIR)/build
@@ -86,18 +91,18 @@ install-better-defaults::
 	@echo Done Installing Better Defaults
 	@echo ======================================
 
-install-ccache::
+install-deps::
+	@echo ======================================
+	@echo Start Installing Dependencies
+	@echo ======================================
+
+install-deps install-ccache::
 	@echo ======================================
 	@echo Start Installing Better Defaults
 	@echo ======================================
 	@(cd share/scripts; bash install-ccache.sh)
 	@echo ======================================
 	@echo Done Installing Better Defaults
-	@echo ======================================
-
-install-deps::
-	@echo ======================================
-	@echo Start Installing Dependencies
 	@echo ======================================
 
 install-deps install-cmake::
@@ -117,6 +122,15 @@ install-deps install-gmp::
 	@(cd share/scripts; bash install-gmp.sh)
 	@echo ======================================
 	@echo Done Installing GNUMP
+	@echo ======================================
+
+install-deps install-lcov::
+	@echo ======================================
+	@echo Start Installing lcov
+	@echo ======================================
+	@(cd share/scripts; bash install-lcov.sh)
+	@echo ======================================
+	@echo Done Installing lcov
 	@echo ======================================
 
 install-deps::
@@ -152,7 +166,7 @@ update update-makeall::
 	git remote update
 	git pull
 update-makeall::
-	-$(MAKE) all
+	$(MAKE) all
 	@echo ======================================
 	@echo Remember to apply your stashed changes
 	@echo ======================================
@@ -183,33 +197,47 @@ all debug::
 ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(DEBUG_DIR) gtest && ninja -C $(DEBUG_DIR) all
 else
-	@$(MAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE) -C $(DEBUG_DIR) -j $(NUM_CORES)
 endif
 	@echo ======================================
 	@echo Debug Build Finished
 	@echo ======================================
 
+coverage::
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --directory . --capture --output-file coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --list coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(GENHTML) coverage.info
+
+upload-coverage:: debug install-lcov coverage
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) coveralls-lcov --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE) -C $(DEBUG_DIR) coveralls
+
+
+test-all:: all
 test-all test test-build:: build
 	@echo ======================================
 	@echo Starting Release Tests
 	@echo ======================================
 
-test-all test test-build test-rsa-crypt::
-	$(BUILD_DIR)/test/rsa-crypt-test --gtest_color=yes
-test-all test test-build test-rsa-attack::
-	$(BUILD_DIR)/test/rsa-attack-test --gtest_color=yes
-test-all test test-build test-stego-crypt::
-	$(BUILD_DIR)/test/stego-crypt-test --gtest_color=yes
-test-all test test-build test-stego-attack::
-	$(BUILD_DIR)/test/stego-attack-test --gtest_color=yes
-test-all test test-build test-dgcrypto::
-	$(BUILD_DIR)/test/dgcrypto-test --gtest_color=yes
-test-all test test-build test-dgtype::
-	$(BUILD_DIR)/test/dgtype-test --gtest_color=yes
-test-all test test-build test-dgimg::
-	$(BUILD_DIR)/test/dgimg-test --gtest_color=yes
+test-all test test-build test-rsa-crypt:: build
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/rsa-crypt-test --gtest_color=yes
+test-all test test-build test-rsa-attack:: build
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/rsa-attack-test --gtest_color=yes
+test-all test test-build test-stego-crypt:: build
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/stego-crypt-test --gtest_color=yes
+test-all test test-build test-stego-attack:: build
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/stego-attack-test --gtest_color=yes
+test-all test test-build test-dgcrypto:: build
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgcrypto-test --gtest_color=yes
+test-all test test-build test-dgtype:: build
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgtype-test --gtest_color=yes
+test-all test test-build test-dgimg:: build
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgimg-test --gtest_color=yes
+test-all test test-build test-libgnump:: build
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/libgnump-test --gtest_color=yes
 
-test-all test test-build::
+test-all test test-build:: build
 	@echo ======================================
 	@echo Finished Release Tests
 	@echo ======================================
@@ -219,24 +247,24 @@ test-all test-debug:: debug
 	@echo Starting Debug Tests
 	@echo ======================================
 
-test-all test-debug test-rsa-crypt::
-	$(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
-test-all test-debug test-rsa-attack::
-	$(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
-test-all test-debug test-stego-crypt::
-	$(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
-test-all test-debug test-stego-attack::
-	$(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
-test-all test-debug test-dgcrypto::
-	$(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
-test-all test-debug test-dgtype::
-	$(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
-test-all test-debug test-dgimg::
-	$(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
-test-all test-debug test-libgnump::
-	$(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
+test-all test-debug test-debug-rsa-crypt:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
+test-all test-debug test-debug-rsa-attack:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
+test-all test-debug test-debug-stego-crypt:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
+test-all test-debug test-debug-stego-attack:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
+test-all test-debug test-debug-dgcrypto:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
+test-all test-debug test-debug-dgtype:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
+test-all test-debug test-debug-dgimg:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+test-all test-debug test-debug-libgnump:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
-test-all test-debug::
+test-all test-debug:: debug
 	@echo ======================================
 	@echo Finished Debug Tests
 	@echo ======================================
@@ -260,8 +288,38 @@ else
 	@$(MAKE) -C $(DEBUG_DIR) clean
 endif
 
-clean-build-dirs::
-	rm -rf $(DEBUG_DIR) $(BUILD_DIR)
+clean-force clean-build-dirs::
+	-rm -rf $(DEBUG_DIR) $(BUILD_DIR)
+
+cppcheck::
+	cppcheck -j4 --enable=all lib/ bin/
+
+valgrind-all:: debug
+	@echo ======================================
+	@echo Running Valgrind on debug binaries
+	@echo ======================================
+
+valgrind-all valgrind-test-rsa-crypt valgrind-test-debug-rsa-crypt::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
+valgrind-all valgrind-test-rsa-attack valgrind-test-debug-rsa-attack::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
+valgrind-all valgrind-test-stego-crypt valgrind-test-debug-stego-crypt::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
+valgrind-all valgrind-test-stego-attack valgrind-test-debug-stego-attack::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
+valgrind-all valgrind-test-dgcrypto valgrind-test-debug-dgcrypto::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
+valgrind-all valgrind-test-dgtype valgrind-test-debug-dgtype::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
+valgrind-all valgrind-test-dgimg valgrind-test-debug-dgimg::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+valgrind-all valgrind-test-libgnump valgrind-test-debug-libgnump::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
+
+valgrind-all::
+	@echo ======================================
+	@echo Finished Running Valgrind
+	@echo ======================================
 
 help help-all::
 	$(info )
@@ -286,17 +344,26 @@ help help-all::
 	$(info Testing)
 	$(info ===============)
 	$(info make test                    - run test suite on release build)
+	$(info make test-all                - run test suite on release and debug build)
 help-all::
 	$(info make test-build              - run test suite on release build)
 	$(info make test-debug              - run test suite on debug build)
-	$(info make test-rsa-crypt          - run rsa-crypt test)
-	$(info make test-rsa-attack         - run rsa-attack test)
-	$(info make test-stego-crypt        - run stego-crypt test)
-	$(info make test-stego-attack       - run stego-attack test)
-	$(info make test-dgcrypto           - run dgcrypto test)
-	$(info make test-dgtype             - run dgtype test)
-	$(info make test-dgimg              - run dgimg test)
-	$(info make test-libgnump                - run gmp library test)
+	$(info make test-rsa-crypt          - run (release build) rsa-crypt test)
+	$(info make test-rsa-attack         - run (release build) rsa-attack test)
+	$(info make test-stego-crypt        - run (release build) stego-crypt test)
+	$(info make test-stego-attack       - run (release build) stego-attack test)
+	$(info make test-dgcrypto           - run (release build) dgcrypto test)
+	$(info make test-dgtype             - run (release build) dgtype test)
+	$(info make test-dgimg              - run (release build) dgimg test)
+	$(info make test-libgnump           - run (release build) gmp library test)
+	$(info make test-debug-rsa-crypt    - run (debug build) rsa-crypt test)
+	$(info make test-debug-rsa-attack   - run (debug build) rsa-attack test)
+	$(info make test-debug-stego-crypt  - run (debug build) stego-crypt test)
+	$(info make test-debug-stego-attack - run (debug build) stego-attack test)
+	$(info make test-debug-dgcrypto     - run (debug build) dgcrypto test)
+	$(info make test-debug-dgtype       - run (debug build) dgtype test)
+	$(info make test-debug-dgimg        - run (debug build) dgimg test)
+	$(info make test-debug-libgnump     - run (debug build) gmp library test)
 help help-all::
 	$(info )
 	$(info Cleaning)
@@ -306,6 +373,7 @@ help-all::
 	$(info make clean-all               - same as clean)
 	$(info make clean-build             - remove compiled files in build/)
 	$(info make clean-debug             - remove compiled files in debug/)
+	$(info make clean-force             - remove debug and build completely)
 	$(info make clean-build-dirs        - remove debug and build completely)
 	$(info )
 	$(info Configuration Check)

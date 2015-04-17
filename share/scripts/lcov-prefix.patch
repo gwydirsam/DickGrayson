@@ -1,0 +1,24 @@
+--- lcov-1.11/Makefile	2014-05-23 04:03:45.000000000 -0500
++++ lcov-1.11-patch/Makefile	2015-04-15 19:47:35.000000000 -0500
+@@ -15,8 +15,8 @@ VERSION := 1.11
+ RELEASE := 1
+
+ CFG_DIR := $(PREFIX)/etc
+-BIN_DIR := $(PREFIX)/usr/bin
+-MAN_DIR := $(PREFIX)/usr/share/man
++BIN_DIR := $(PREFIX)/bin
++MAN_DIR := $(PREFIX)/share/man
+ TMP_DIR := /tmp/lcov-tmp.$(shell echo $$$$)
+ FILES   := $(wildcard bin/*) $(wildcard man/*) README CHANGES Makefile \
+ 	   $(wildcard rpm/*) lcovrc
+diff -rupN lcov-1.11/bin/install.sh lcov-1.11-patch/bin/install.sh
+--- lcov-1.11/bin/install.sh	2014-05-23 04:03:45.000000000 -0500
++++ lcov-1.11-patch/bin/install.sh	2015-04-15 19:47:35.000000000 -0500
+@@ -34,7 +34,8 @@ do_install()
+   local TARGET=$2
+   local PARAMS=$3
+
+-  install -p -D $PARAMS $SOURCE $TARGET
++  mkdir -p `dirname $TARGET`
++  install -p $PARAMS $SOURCE $TARGET
+ }

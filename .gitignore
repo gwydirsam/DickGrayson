@@ -83,3 +83,5 @@ Session.vim
 /xcode-debug/
 /share/notes/auto/
 /share/notes/bmp.tex
+/.clang_complete
+/coverage.info

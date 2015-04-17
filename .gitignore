@@ -85,3 +85,8 @@ Session.vim
 /share/notes/bmp.tex
 /.clang_complete
 /coverage.info
+/.projectile
+/bin/build_list.cmake
+/lib/build_list.cmake
+/test/build_list.cmake
+/test/test_list.cmake

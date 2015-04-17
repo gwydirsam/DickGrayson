@@ -24,6 +24,7 @@ CMAKE := $(shell which cmake)
 CMAKE_GENERATOR ?= "Unix Makefiles"
 #CMAKE_GENERATOR ?= Ninja
 
+FIND := $(shell which find)
 LCOV := $(shell which lcov)
 GCOV := $(shell which gcov)
 GENHTML := $(shell which genhtml)
@@ -55,6 +56,14 @@ DEBUG_TEST_BINS := $(wildcard $(DEBUG_DIR)/test/*-test)
 				test-all test-build test-debug $(DEBUG_TEST_BINS) \
 				install-better-defaults install-cmake install-gmp xcode xcode-all \
 				xcode-debug xcode-build ninja ninja-all ninja-debug ninja-build test-gmp
+
+all create-build-list::
+	# @$(FIND) bin -mindepth 1 -type d | cut -d '/' -f 2 > $(PROJECT_DIR)/bin/build_list.cmake
+	# @$(FIND) lib -mindepth 1 -type d | cut -d '/' -f 2 > $(PROJECT_DIR)/lib/build_list.cmake
+	@$(FIND) test -mindepth 1 -type d | cut -d '/' -f 2 > $(PROJECT_DIR)/test/test_list.cmake
+	@$(FIND) $(PROJECT_DIR)/bin -name '*.cc' > $(PROJECT_DIR)/bin/build_list.cmake
+	@$(FIND) $(PROJECT_DIR)/lib -name '*.cc' > $(PROJECT_DIR)/lib/build_list.cmake
+	@$(FIND) $(PROJECT_DIR)/test -name '*.cc' > $(PROJECT_DIR)/test/build_list.cmake
 
 all::
 	@echo ======================================

@@ -2,17 +2,23 @@
 #include <string>
 #include <vector>
 #include <fstream>
+
 #include <unistd.h>
 #include <getopt.h>
+
+#include <rsa-attack-lib/rsa-attack-lib.hh>
+
 const std::vector<std::string> attack_types = {"factoring", "chinese_rt",
                                                "other"};
+
 void whatAttackTypes() {
   std::cout << "\nType can be ";
-  for (int i = 0; i < attack_types.size(); ++i) {
+  for (std::size_t i = 0; i < attack_types.size(); ++i) {
     std::cout << "\'" << attack_types[i] << "\', ";
   }
   std::cout << std::endl;
 }
+
 void usage() {
   std::cout << "Usage is --attack [type] --filename [filename]" << std::endl;
   whatAttackTypes();
@@ -34,36 +40,35 @@ void whatWentWrong(int flag, bool ioerror) {
 }
 
 int main(int argc, char* argv[]) {
-  int fflag, aflag, ch;
-  bool ioerror = false;
-
   /* options descriptor */
   static struct option longopts[] = {{"attack", required_argument, NULL, 'a'},
                                      {"filename", required_argument, NULL, 'f'},
                                      {"help", no_argument, NULL, 'h'},
                                      {NULL, 0, NULL, 0}};
 
+  bool ioerror = false;
   int option_index = 0;
-
-  fflag = aflag = 0;
-  while ((ch = getopt_long(argc, argv, "ha:f:", longopts, &option_index)) !=
+  int fflag = 0, aflag = 0, ch = 0;
+  while ((ch = getopt_long(argc, argv, "a:f:h", longopts, &option_index)) !=
          -1) {
     switch (ch) {
-      case 'a':
+      case 'a': {
         aflag = 1;
+        // sam: this should probably out to cerr
         if (optarg == attack_types[0]) {
           std::cout << "Running " << attack_types[0] << " on file.."
                     << std::endl;
         }
         break;
-
+      }
       case 'f': {
         fflag = 2;
-        std::string fname = optarg;
+        std::string fname = std::string(optarg);
         std::fstream f(fname, std::ios::in);
-        if (!f.is_open())
+        // sam: this should probably be a try catch block
+        if (!f.is_open()) {
           ioerror = true;
-        else {
+        } else {
           std::string line = "";
           // this should pass to our fctn eventually
           // for now, test it's reading the right file
@@ -76,16 +81,22 @@ int main(int argc, char* argv[]) {
       }
       case 'h':
       case '?':
-      default:
+      default: {
         usage();
-        exit(EXIT_FAILURE);
-        break;
+        std::exit(EXIT_FAILURE);
+      }
     }
   }
+  // sam: what is this about?
   if (!fflag || !aflag) {
     usage();
   }
+  // sam: why have you commented these?
   // argc -= optind;
+  // sam: you had the following line:
   // argc += optind;
+
+  // sam: the example in the man page has this:
+  // argv += optind;
   whatWentWrong(fflag + aflag, ioerror);
 }

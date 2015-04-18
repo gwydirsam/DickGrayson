@@ -1,42 +1,39 @@
-#include "dgcrypto/dgrandomprime.hh"
-
 #include "rsa-crypt-lib.hh"
 
-//generates two random primes and checks coprimality
-mpz_class RsaCrypt::generate_key(){
-  RandomPrime* prime1;
-  prime1->generate_prime(30);
+#include <gmpxx.h>
 
-  RandomPrime* prime2; 
-  prime2->generate_prime(30);
+#include <dgcrypto/dgcrypto.hh>
 
-  while(!is_coprime(prime1, prime2)){
-  	prime2->generate_prime(30);
+// generates two random primes and checks coprimality
+mpz_class RsaCrypt::generate_key() {
+  // sam: why are these set to 30?
+  mpz_class p = dgrprime::generate_prime(30);
+  mpz_class q = dgrprime::generate_prime(30);
+
+  while (!is_coprime(p, q)) {
+    q = dgrprime::generate_prime(30);
   }
-  
-  return prime1;
 
+  return p;
 }
 
-//helper function to check for primality
-bool RsaCrypt::is_coprime(mpz_class value1, mpz_class value2){
-  int gcd = 1;
-  for(int i = 1; i<= value1 && i <= value2; i++){
-    if(value1 % i == 0 && value2 %i == 0){
+// helper function to check for primality
+bool RsaCrypt::is_coprime(mpz_class p, mpz_class q) {
+  mpz_class gcd = 1;
+  for (mpz_class i = 1; ((i <= p) && (i <= q)); ++i) {
+    if ((p % i == 0) && (q % i == 0)) {
       gcd = i;
     }
   }
-  if(gcd != 1){
+  if (gcd != 1) {
     return false;
-  } 
-  
-  return true;
+  } else {
+    return true;
+  }
 }
 
-mpz_class RsaCrypt::compute_n(mpz_class p, mpz_class q){
-  return p*q;
-}
+mpz_class RsaCrypt::compute_n(mpz_class p, mpz_class q) { return (p * q); }
 
-mpz_class RsaCrypt::compute_theta_n(mpz_class p, mpz_class q){
-  return (p-1)*(q-1);
+mpz_class RsaCrypt::compute_theta_n(mpz_class p, mpz_class q) {
+  return ((p - 1) * (q - 1));
 }

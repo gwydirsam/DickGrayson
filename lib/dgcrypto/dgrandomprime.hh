@@ -39,8 +39,7 @@ class RandomPrime : public RandomInteger {
   friend std::ostream& operator<<(std::ostream& os,
                                   const RandomPrime& random_prime);
   // stream insertion
-  friend std::istream& operator>>(std::istream& is,
-                                  RandomPrime& random_prime);
+  friend std::istream& operator>>(std::istream& is, RandomPrime& random_prime);
 };
 }
 }

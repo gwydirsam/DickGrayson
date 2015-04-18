@@ -1,64 +1,27 @@
 set(MAIN_SRC main.cc)
 
+foreach(BIN_NAME ${PROJECT_BIN_LIST})
+  # include project-internal libraries
+  include_directories(${INCLUDE_DIR})
 
-# include project-internal libraries
-include_directories(${INCLUDE_DIR})
+  # binaries have their own libs called BIN_NAME-lib
+  set(BIN_NAME_LIB ${BIN_NAME}-lib)
 
-add_executable(${RSA_ATTACK} ${RSA_ATTACK}/${MAIN_SRC})
-target_link_libraries(${RSA_ATTACK} ${RSA_ATTACK_LIB} ${PROJECT_GLOBAL_LIBS})
-#use C++14
-set_property(TARGET ${RSA_ATTACK} PROPERTY CXX_STANDARD 14)
-#C++14 required
-set_property(TARGET ${RSA_ATTACK} PROPERTY CXX_STANDARD_REQUIRED ON)
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-  if (COVERALLS)
-    list(APPEND COVERAGE_SRCS ${PROJECT_SOURCE_DIR}/bin/${RSA_ATTACK}/${MAIN_SRC})
+  # create binary named ${BIN_NAME}
+  add_executable(${BIN_NAME} ${BIN_NAME}/${MAIN_SRC})
+
+  if(TARGET ${BIN_NAME_LIB})
+    message("Found ${BIN_NAME_LIB}. Linking ${BIN_NAME} with ${BIN_NAME_LIB}")
+    target_link_libraries(${BIN_NAME}
+      ${BIN_NAME_LIB})
   endif()
-endif()
+  # link with project internal libs and global libs
+  target_link_libraries(${BIN_NAME} ${PROJECT_INTERNAL_LIB_LIST} ${PROJECT_GLOBAL_LIBS})
+  #use C++14
+  set_property(TARGET ${BIN_NAME} PROPERTY CXX_STANDARD 14)
+  #C++14 required
+  set_property(TARGET ${BIN_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
+endforeach(BIN_NAME ${PROJECT_BIN_LIST})
 
-add_executable(${RSA_CRYPT} ${RSA_CRYPT}/${MAIN_SRC})
-target_link_libraries(${RSA_CRYPT} ${RSA_CRYPT_LIB} ${PROJECT_GLOBAL_LIBS})
-#use C++14
-set_property(TARGET ${RSA_CRYPT} PROPERTY CXX_STANDARD 14)
-#C++14 required
-set_property(TARGET ${RSA_CRYPT} PROPERTY CXX_STANDARD_REQUIRED ON)
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-  if (COVERALLS)
-    list(APPEND COVERAGE_SRCS ${PROJECT_SOURCE_DIR}/bin/${RSA_CRYPT}/${MAIN_SRC})
-  endif()
-endif()
-
-add_executable(${STEGO_ATTACK} ${STEGO_ATTACK}/${MAIN_SRC})
-target_link_libraries(${STEGO_ATTACK} ${STEGO_ATTACK_LIB} ${PROJECT_GLOBAL_LIBS})
-#use C++14
-set_property(TARGET ${STEGO_ATTACK} PROPERTY CXX_STANDARD 14)
-#C++14 required
-set_property(TARGET ${STEGO_ATTACK} PROPERTY CXX_STANDARD_REQUIRED ON)
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-  if (COVERALLS)
-    list(APPEND COVERAGE_SRCS ${PROJECT_SOURCE_DIR}/bin/${STEGO_ATTACK}/${MAIN_SRC})
-  endif()
-endif()
-
-add_executable(${STEGO_CRYPT} ${PROJECT_SOURCE_DIR}/bin/${STEGO_CRYPT}/${MAIN_SRC})
-target_link_libraries(${STEGO_CRYPT} ${STEGO_CRYPT_LIB} ${PROJECT_GLOBAL_LIBS})
-#use C++14
-set_property(TARGET ${STEGO_CRYPT} PROPERTY CXX_STANDARD 14)
-#C++14 required
-set_property(TARGET ${STEGO_CRYPT} PROPERTY CXX_STANDARD_REQUIRED ON)
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-  if (COVERALLS)
-    include(${PROJECT_SOURCE_DIR}/lib/coveralls_list.cmake)
-    include(${PROJECT_SOURCE_DIR}/test/coveralls_list.cmake)
-    list(APPEND COVERAGE_SRCS ${PROJECT_SOURCE_DIR}/bin/${STEGO_CRYPT}/${MAIN_SRC})
-
-    # Create the coveralls target.
-    coveralls_setup(
-      # The source files.
-      "${COVERAGE_SRCS}" 
-      # If we should upload.
-      ON                 
-      # (Optional) Alternate project cmake module path.
-      "${PROJECT_SOURCE_DIR}/share/cmake")
-  endif()
-endif()
+# these binaries are built last, so this is where we create our coverage target
+include(coverage_list.cmake)

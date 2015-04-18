@@ -24,6 +24,7 @@ CMAKE := $(shell which cmake)
 CMAKE_GENERATOR ?= "Unix Makefiles"
 #CMAKE_GENERATOR ?= Ninja
 
+FIND := $(shell which find)
 LCOV := $(shell which lcov)
 GCOV := $(shell which gcov)
 GENHTML := $(shell which genhtml)
@@ -55,6 +56,16 @@ DEBUG_TEST_BINS := $(wildcard $(DEBUG_DIR)/test/*-test)
 				test-all test-build test-debug $(DEBUG_TEST_BINS) \
 				install-better-defaults install-cmake install-gmp xcode xcode-all \
 				xcode-debug xcode-build ninja ninja-all ninja-debug ninja-build test-gmp
+
+all create-build-list::
+	@for dir in $(shell $(FIND) $(PROJECT_DIR)/lib -mindepth 1 -type d); do \
+		$(FIND) $$dir -name '*.cc' > $$dir/build_list.cmake; \
+	done
+	@$(FIND) bin -mindepth 1 -type d | cut -d '/' -f 2 > $(PROJECT_DIR)/bin/bin_list.cmake
+	@$(FIND) test -mindepth 1 -type d | cut -d '/' -f 2 > $(PROJECT_DIR)/test/test_list.cmake
+	@$(FIND) $(PROJECT_DIR)/bin -name '*.cc' > $(PROJECT_DIR)/bin/build_list.cmake
+	@$(FIND) $(PROJECT_DIR)/lib -name '*.cc' > $(PROJECT_DIR)/lib/build_list.cmake
+	@$(FIND) $(PROJECT_DIR)/test -name '*.cc' > $(PROJECT_DIR)/test/build_list.cmake
 
 all::
 	@echo ======================================
@@ -207,7 +218,7 @@ coverage::
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --directory $(DEBUG_DIR) --capture --initial --output-file coverage.info --gcov-tool $(GCOV)
 	-@$(MAKE) run-all
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --directory $(DEBUG_DIR) --capture --output-file coverage.info --gcov-tool $(GCOV)
-	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --remove coverage.info 'include/*' 'test/*' '/usr/*' --output-file coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --list coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) mkdir -p $(DEBUG_DIR)/html
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(GENHTML) $(DEBUG_DIR)/coverage.info -o $(DEBUG_DIR)/html

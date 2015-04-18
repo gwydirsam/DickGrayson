@@ -1,6 +1,6 @@
-//#include <lib/d>
 #include <gtest/gtest.h>
 #include <gmpxx.h>
+
 #include <rsa-attack-lib/rsa-attack-lib.hh>
 using namespace std;
 
@@ -29,6 +29,7 @@ TEST(factorize, smallNormalNumber) {
 
   EXPECT_EQ(expected_outputs, findPrimeFactors(norm_num));
 }
+
 TEST(factorize, largerN) {
   mpz_class big_n = 239774199806447;
 

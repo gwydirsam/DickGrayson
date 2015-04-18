@@ -27,6 +27,7 @@ cd DickGrayson
 
 #### recommended
 use your package manager to install:
+- a C++ compiler capable of C++14
 - cmake
 - openssl
 - gmp (GNU MP)

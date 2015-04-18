@@ -17,6 +17,9 @@ make help-all
 ## Building
 
 ```bash
+# clone repository
+git clone https://github.com/gwydirsam/DickGrayson.git
+cd DickGrayson
 make all
 ```
 

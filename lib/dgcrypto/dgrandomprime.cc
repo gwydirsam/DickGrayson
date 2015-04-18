@@ -84,8 +84,11 @@ bool RandomPrime::is_prime(mpz_class value) {
 
 // set value_ to prime of ~k bits
   mpz_class RandomPrime::generate_prime(mp_bitcnt_t k) {
-    this->value_ = gmp_rand_alg_.get_z_bits(k);
-    return this->value_;
+    mpz_class value = 4;
+    while(!is_prime(value)){
+        value  = gmp_rand_alg_.get_z_bits(k);
+    }
+    return value;
   }
 }
 }

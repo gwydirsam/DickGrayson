@@ -17,11 +17,11 @@ if ! [[ $(uname) == "Darwin" ]]; then
             wget ${URL} -O ${TMP_DIR}/`basename $URL`
         fi
 
-        if ! [ -d "${TMP_DIR}/`basename $URL a.tar.bz2`" ]; then
+        if ! [ -d "${TMP_DIR}/`basename $URL .tar.gz`" ]; then
             tar -C ${TMP_DIR} -xf ${TMP_DIR}/`basename $URL`
         fi
 
-        cd ${TMP_DIR}/`basename $URL .tar.bz2`
+        cd ${TMP_DIR}/`basename $URL .tar.gz`
 
         # config
         ./config \

@@ -66,7 +66,7 @@ vector<pair<mpz_class, mpz_class>> findPrimeFactors(mpz_class n) {
   } catch (ios_base::failure& e) {
     cerr << "Caught ios_base::failure: " << __PRETTY_FUNCTION__ << "\n";
     cerr << "Exception: " << e.what() << "\n";
-    cerr << "Error Code: " << e.code() << "\n";
+    // cerr << "Error Code: " << e.code() << "\n";
   }
   return factors;
 }
@@ -89,7 +89,7 @@ mpz_class getNthPrime(mpz_class n) {
     // sam: also this is where you throw in every test
     cerr << "Caught ios_base::failure: " << __PRETTY_FUNCTION__ << "\n";
     cerr << "Exception: " << e.what() << "\n";
-    cerr << "Error Code: " << e.code() << "\n";
+    // cerr << "Error Code: " << e.code() << "\n";
     // sam: are you really sure you want to abort? I always thought catching
     // exceptions was in order to not just abort
     // exit(EXIT_FAILURE);
@@ -117,7 +117,7 @@ mpz_class getNextPrime(ifstream& prime_file, mpz_class n) {
     // "\n";
     cerr << "Caught ios_base::failure: " << __PRETTY_FUNCTION__ << "\n";
     cerr << "Exception: " << e.what() << "\n";
-    cerr << "Error Code: " << e.code() << "\n";
+    // cerr << "Error Code: " << e.code() << "\n";
     exit(EXIT_FAILURE);
   }
   return num;
@@ -142,7 +142,7 @@ void generateNPrimes(long int n) {
   } catch (ios_base::failure& e) {
     cerr << "Caught ios_base::failure: " << __PRETTY_FUNCTION__ << "\n";
     cerr << "Exception: " << e.what() << "\n";
-    cerr << "Error Code: " << e.code() << "\n";
+    // cerr << "Error Code: " << e.code() << "\n";
   }
 }
 
@@ -155,7 +155,7 @@ ifstream& skipToLine(ifstream& file, mpz_class num) {
   } catch (ios_base::failure& e) {
     cerr << "Caught ios_base::failure: " << __PRETTY_FUNCTION__ << "\n";
     cerr << "Exception: " << e.what() << "\n";
-    cerr << "Error Code: " << e.code() << "\n";
+    // cerr << "Error Code: " << e.code() << "\n";
   }
   return file;
 }

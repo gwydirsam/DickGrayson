@@ -18,7 +18,8 @@
 // TODO:
 //      - [ ] put in class (or atleast a namespace, these shouldn't be global)
 //      - [ ] fix exceptions
-//      - [ ] dedicate to either writing std or using std::blah, a mix is hard to
+//      - [ ] dedicate to either writing std or using std::blah, a mix is hard
+//      to
 //            read
 std::vector<std::pair<mpz_class, mpz_class>> findPrimeFactors(mpz_class n);
 

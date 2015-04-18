@@ -92,8 +92,8 @@ DEADLINE: <2015-05-11 Mon 10:30-12:30>
 - 4 scrums/week
   - Ask each group member (and record):
     1. "What have you done since last scrum meeting?"
-    2. "What has impeded your work?"
-    3. "What do you plan on doing between now and next scrum?"
+    2. "What do you plan on doing between now and next scrum?"
+    3. "What has impeded your work?"
   - At end of meeting:
     - Each team-member should update burn-down chart:
       - remaining effort for each task

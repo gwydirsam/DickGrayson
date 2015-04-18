@@ -3,30 +3,25 @@ set(MAIN_SRC main.cc)
 # include project-internal libraries
 include_directories(${INCLUDE_DIR})
 
-add_executable(${RSA_ATTACK} ${RSA_ATTACK}/${MAIN_SRC})
-target_link_libraries(${RSA_ATTACK} ${RSA_ATTACK_LIB} ${PROJECT_GLOBAL_LIBS})
-#use C++14
-set_property(TARGET ${RSA_ATTACK} PROPERTY CXX_STANDARD 14)
-#C++14 required
-set_property(TARGET ${RSA_ATTACK} PROPERTY CXX_STANDARD_REQUIRED ON)
+foreach(BIN_NAME ${PROJECT_BIN_LIST})
+  # binaries have their own libs called BIN_NAME-lib
+  set(BIN_NAME_LIB ${BIN_NAME}-lib)
 
-add_executable(${RSA_CRYPT} ${RSA_CRYPT}/${MAIN_SRC})
-target_link_libraries(${RSA_CRYPT} ${RSA_CRYPT_LIB} ${PROJECT_GLOBAL_LIBS})
-#use C++14
-set_property(TARGET ${RSA_CRYPT} PROPERTY CXX_STANDARD 14)
-#C++14 required
-set_property(TARGET ${RSA_CRYPT} PROPERTY CXX_STANDARD_REQUIRED ON)
+  # create binary named ${BIN_NAME}
+  add_executable(${BIN_NAME} ${BIN_NAME}/${MAIN_SRC})
 
-add_executable(${STEGO_ATTACK} ${STEGO_ATTACK}/${MAIN_SRC})
-target_link_libraries(${STEGO_ATTACK} ${STEGO_ATTACK_LIB} ${PROJECT_GLOBAL_LIBS})
-#use C++14
-set_property(TARGET ${STEGO_ATTACK} PROPERTY CXX_STANDARD 14)
-#C++14 required
-set_property(TARGET ${STEGO_ATTACK} PROPERTY CXX_STANDARD_REQUIRED ON)
+  if(TARGET ${BIN_NAME_LIB})
+    message("Found ${BIN_NAME_LIB}. Linking ${BIN_NAME} with ${BIN_NAME_LIB}")
+    target_link_libraries(${BIN_NAME}
+      ${BIN_NAME_LIB})
+  endif()
+  # link with project internal libs and global libs
+  target_link_libraries(${BIN_NAME} ${PROJECT_INTERNAL_LIB_LIST} ${PROJECT_GLOBAL_LIBS})
+  #use C++14
+  set_property(TARGET ${BIN_NAME} PROPERTY CXX_STANDARD 14)
+  #C++14 required
+  set_property(TARGET ${BIN_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
+endforeach(BIN_NAME ${PROJECT_BIN_LIST})
 
-add_executable(${STEGO_CRYPT} ${STEGO_CRYPT}/${MAIN_SRC})
-target_link_libraries(${STEGO_CRYPT} ${STEGO_CRYPT_LIB} ${PROJECT_GLOBAL_LIBS})
-#use C++14
-set_property(TARGET ${STEGO_CRYPT} PROPERTY CXX_STANDARD 14)
-#C++14 required
-set_property(TARGET ${STEGO_CRYPT} PROPERTY CXX_STANDARD_REQUIRED ON)
+# these binaries are built last, so this is where we create our coverage target
+include(coverage_list.cmake)

@@ -1,5 +1,3 @@
-enable_testing()
-
 # gtest definition
 include(ExternalProject)
 
@@ -23,173 +21,206 @@ ExternalProject_Add(
 ExternalProject_Get_Property(gtest source_dir)
 ExternalProject_Get_Property(gtest binary_dir)
 
-set(TARGET ${RSA_ATTACK})
-set(TARGET_LIB ${TARGET}-lib)
-set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
+file(STRINGS test_list.cmake TEST_LIST)
+## print out list for debugging
+#message(${TEST_LIST})
 
-add_executable(${GTEST_TARGET} ${TESTS_FILES})
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+foreach(TEST_NAME ${TEST_LIST})
+  set(TARGET ${TEST_NAME})
+  set(TARGET_LIB ${TARGET}-lib)
+  set(GTEST_TARGET ${TARGET}-test)
+  set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
-# add_dependencies(${GTEST_TARGET} gmp gtest)
-add_dependencies(${GTEST_TARGET} gtest)
+  add_executable(${GTEST_TARGET} ${TESTS_FILES})
+  include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
 
-target_link_libraries(${GTEST_TARGET}
-  ${TARGET_LIB}
-  ${PROJECT_GLOBAL_LIBS}
-  # TODO OP should work but with something around ENABLE_EXPORTS
-  #  gtest gtest_main
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+  add_dependencies(${GTEST_TARGET} gtest)
 
-target_link_libraries(${GTEST_TARGET} pthread)
+  if(TARGET ${TARGET_LIB})
+    message("Found ${TARGET_LIB}. Linking ${GTEST_TARGET} with ${TARGET_LIB}")
+    target_link_libraries(${GTEST_TARGET}
+      ${TARGET_LIB})
+  endif()
+  # if(TARGET ${TARGET})
+  #   target_link_libraries(${GTEST_TARGET}
+  #     ${TARGET})
+  # endif()
+  target_link_libraries(${GTEST_TARGET}
+    ${PROJECT_INTERAL_LIB_LIST}
+    ${PROJECT_GLOBAL_LIBS}
+    ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
+    ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
-set(TARGET ${RSA_CRYPT})
-set(TARGET_LIB ${TARGET}-lib)
-set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
+  add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
+endforeach(TEST_NAME ${TEST_LIST})
 
-add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+# set(TARGET ${RSA_ATTACK})
+# set(TARGET_LIB ${TARGET}-lib)
+# set(GTEST_TARGET ${TARGET}-test)
+# set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
-# add_dependencies(${GTEST_TARGET} gmp gtest)
-add_dependencies(${GTEST_TARGET} gtest)
+# add_executable(${GTEST_TARGET} ${TESTS_FILES})
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
 
-target_link_libraries(${GTEST_TARGET}
-  ${TARGET_LIB}
-  ${PROJECT_GLOBAL_LIBS}
-  # TODO OP should work but with something around ENABLE_EXPORTS
-  #  gtest gtest_main
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+# add_dependencies(${GTEST_TARGET} gtest)
 
-target_link_libraries(${GTEST_TARGET} pthread)
+# target_link_libraries(${GTEST_TARGET}
+#   ${TARGET_LIB}
+#   ${PROJECT_GLOBAL_LIBS}
+#   # TODO OP should work but with something around ENABLE_EXPORTS
+#   #  gtest gtest_main
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
-set(TARGET ${STEGO_CRYPT})
-set(TARGET_LIB ${TARGET}-lib)
-set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
+# target_link_libraries(${GTEST_TARGET} pthread)
+# add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
-add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+# set(TARGET ${RSA_CRYPT})
+# set(TARGET_LIB ${TARGET}-lib)
+# set(GTEST_TARGET ${TARGET}-test)
+# set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
-# add_dependencies(${GTEST_TARGET} gmp gtest)
-add_dependencies(${GTEST_TARGET} gtest)
+# add_executable(${GTEST_TARGET} ${TESTS_FILES})
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
 
-target_link_libraries(${GTEST_TARGET}
-  ${TARGET_LIB}
-  ${PROJECT_GLOBAL_LIBS}
-  # TODO OP should work but with something around ENABLE_EXPORTS
-  #  gtest gtest_main
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+# # add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gtest)
 
-# add_dependencies(${GTEST_TARGET} gmp gtest)
-add_dependencies(${GTEST_TARGET} gtest)
+# target_link_libraries(${GTEST_TARGET}
+#   ${TARGET_LIB}
+#   ${PROJECT_GLOBAL_LIBS}
+#   # TODO OP should work but with something around ENABLE_EXPORTS
+#   #  gtest gtest_main
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
-set(TARGET ${STEGO_ATTACK})
-set(TARGET_LIB ${TARGET}-lib)
-set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
+# target_link_libraries(${GTEST_TARGET} pthread)
+# add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
-add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+# set(TARGET ${STEGO_CRYPT})
+# set(TARGET_LIB ${TARGET}-lib)
+# set(GTEST_TARGET ${TARGET}-test)
+# set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
-# add_dependencies(${GTEST_TARGET} gmp gtest)
-add_dependencies(${GTEST_TARGET} gtest)
+# add_executable(${GTEST_TARGET} ${TESTS_FILES})
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
 
-target_link_libraries(${GTEST_TARGET}
-  ${TARGET_LIB}
-  ${PROJECT_GLOBAL_LIBS}
-  # TODO OP should work but with something around ENABLE_EXPORTS
-  #  gtest gtest_main
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+# # add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gtest)
 
-target_link_libraries(${GTEST_TARGET} pthread)
+# target_link_libraries(${GTEST_TARGET}
+#   ${TARGET_LIB}
+#   ${PROJECT_GLOBAL_LIBS}
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
-set(TARGET ${IMAGE_LIB})
-set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
+# target_link_libraries(${GTEST_TARGET} pthread)
+# add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
-add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+# # add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gtest)
 
-# add_dependencies(${GTEST_TARGET} gmp gtest)
-add_dependencies(${GTEST_TARGET} gtest)
+# set(TARGET ${STEGO_ATTACK})
+# set(TARGET_LIB ${TARGET}-lib)
+# set(GTEST_TARGET ${TARGET}-test)
+# set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
-target_link_libraries(${GTEST_TARGET}
-  ${TARGET}
-  ${PROJECT_GLOBAL_LIBS}
-  # TODO OP should work but with something around ENABLE_EXPORTS
-  #  gtest gtest_main
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+# add_executable(${GTEST_TARGET} ${TESTS_FILES})
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
 
-target_link_libraries(${GTEST_TARGET} pthread)
+# # add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gtest)
 
-set(TARGET ${CRYPTO_LIB})
-set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
+# target_link_libraries(${GTEST_TARGET}
+#   ${TARGET_LIB}
+#   ${PROJECT_GLOBAL_LIBS}
+#   # TODO OP should work but with something around ENABLE_EXPORTS
+#   #  gtest gtest_main
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
-add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+# target_link_libraries(${GTEST_TARGET} pthread)
+# add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
-# add_dependencies(${GTEST_TARGET} gmp gtest)
-add_dependencies(${GTEST_TARGET} gtest)
+# set(TARGET ${IMAGE_LIB})
+# set(GTEST_TARGET ${TARGET}-test)
+# set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
-target_link_libraries(${GTEST_TARGET}
-  ${TARGET}
-  ${PROJECT_GLOBAL_LIBS}
-  # TODO OP should work but with something around ENABLE_EXPORTS
-  #  gtest gtest_main
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+# add_executable(${GTEST_TARGET} ${TESTS_FILES})
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
 
-target_link_libraries(${GTEST_TARGET} pthread)
+# # add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gtest)
 
-set(TARGET ${TYPE_LIB})
-set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
+# target_link_libraries(${GTEST_TARGET}
+#   ${TARGET}
+#   ${PROJECT_GLOBAL_LIBS}
+#   # TODO OP should work but with something around ENABLE_EXPORTS
+#   #  gtest gtest_main
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
-add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+# target_link_libraries(${GTEST_TARGET} pthread)
+# add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
-# add_dependencies(${GTEST_TARGET} gmp gtest)
-add_dependencies(${GTEST_TARGET} gtest)
+# set(TARGET ${CRYPTO_LIB})
+# set(GTEST_TARGET ${TARGET}-test)
+# set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
-target_link_libraries(${GTEST_TARGET}
-  ${TARGET}
-  ${PROJECT_GLOBAL_LIBS}
-  # TODO OP should work but with something around ENABLE_EXPORTS
-  #  gtest gtest_main
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+# add_executable(${GTEST_TARGET} ${TESTS_FILES})
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
 
-target_link_libraries(${GTEST_TARGET} pthread)
+# # add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gtest)
 
-set(TARGET libgnump)
-set(GTEST_TARGET ${TARGET}-test)
-set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
+# target_link_libraries(${GTEST_TARGET}
+#   ${TARGET}
+#   ${PROJECT_GLOBAL_LIBS}
+#   # TODO OP should work but with something around ENABLE_EXPORTS
+#   #  gtest gtest_main
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 
-add_executable(${GTEST_TARGET} ${TESTS_FILES})
-# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/include)
-include_directories(${source_dir}/include ${INCLUDE_DIR})
+# target_link_libraries(${GTEST_TARGET} pthread)
+# add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
 
-# add_dependencies(${GTEST_TARGET} gmp gtest)
-add_dependencies(${GTEST_TARGET} gtest)
+# set(TARGET ${TYPE_LIB})
+# set(GTEST_TARGET ${TARGET}-test)
+# set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
-target_link_libraries(${GTEST_TARGET}
-  ${PROJECT_GLOBAL_LIBS}
-  # TODO OP should work but with something around ENABLE_EXPORTS
-  #  gtest gtest_main
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
-  ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+# add_executable(${GTEST_TARGET} ${TESTS_FILES})
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
 
-target_link_libraries(${GTEST_TARGET} pthread)
+# # add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gtest)
+
+# target_link_libraries(${GTEST_TARGET}
+#   ${TARGET}
+#   ${PROJECT_GLOBAL_LIBS}
+#   # TODO OP should work but with something around ENABLE_EXPORTS
+#   #  gtest gtest_main
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+
+# target_link_libraries(${GTEST_TARGET} pthread)
+# add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)
+
+# set(TARGET libgnump)
+# set(GTEST_TARGET ${TARGET}-test)
+# set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
+
+# add_executable(${GTEST_TARGET} ${TESTS_FILES})
+# include_directories(${source_dir}/include ${PROJECT_SOURCE_DIR}/lib)
+
+# # add_dependencies(${GTEST_TARGET} gmp gtest)
+# add_dependencies(${GTEST_TARGET} gtest)
+
+# target_link_libraries(${GTEST_TARGET}
+#   ${PROJECT_GLOBAL_LIBS}
+#   # TODO OP should work but with something around ENABLE_EXPORTS
+#   #  gtest gtest_main
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
+#   ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+
+# target_link_libraries(${GTEST_TARGET} pthread)
+# add_test(${TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${GTEST_TARGET} --gtest_color=yes)

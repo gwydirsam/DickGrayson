@@ -116,6 +116,16 @@ install-deps install-ccache::
 	@echo Done Installing Better Defaults
 	@echo ======================================
 
+# install-deps install-openssl::
+install-openssl::
+	@echo ======================================
+	@echo Start Installing OpenSSL
+	@echo ======================================
+	@(cd share/scripts; bash install-openssl.sh)
+	@echo ======================================
+	@echo Done Installing OpenSSL
+	@echo ======================================
+
 install-deps install-cmake::
 	@echo ======================================
 	@echo Start Installing CMake

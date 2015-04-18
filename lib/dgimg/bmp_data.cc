@@ -20,7 +20,8 @@ std::istream& operator>>(std::istream& is, BMP_data& bmp) {
   ost << is.rdbuf();
   std::string bytes(ost.str());
   bmp.byte_array = bytes;
-  bmp.pixel_array = bmp.byte_array.substr(bmp.image_offset(), bmp.pixel_array_size());
+  bmp.pixel_array =
+      bmp.byte_array.substr(bmp.image_offset(), bmp.pixel_array_size());
   return is;
 }
 
@@ -32,7 +33,8 @@ std::ostream& operator<<(std::ostream& os, const BMP_data& bmp) {
   return os;
 }
 
-// returns the offset at which the pixel array begins (The data after the BMP header info)
+// returns the offset at which the pixel array begins (The data after the BMP
+// header info)
 unsigned BMP_data::image_offset() const {
   std::string bytes = byte_array.substr(0xa, 4);
   int offset = bytes_to_int(bytes);
@@ -73,6 +75,5 @@ bool BMP_data::is_valid() const {
   std::string validation = byte_array.substr(0, 2);
   return validation == "BM" && num_color_planes() == 1;
 }
-
 }
 }

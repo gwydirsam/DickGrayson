@@ -79,7 +79,8 @@ double BMP::mean_squared_error(const BMP& other) const {
       squared_errors_sum += squared_error;
     }
   }
-  return (double)squared_errors_sum / (get_num_pixels() * other.get_num_pixels());
+  return (double)squared_errors_sum /
+         (get_num_pixels() * other.get_num_pixels());
 }
 
 // source peak signal to noise ratio wiki, returns psnr in decibels
@@ -95,9 +96,6 @@ std::ostream& operator<<(std::ostream& os, const DG::Image::BMP& bmp) {
   return os;
 }
 
-std::istream& operator>>(std::istream& is, DG::Image::BMP& bmp) {
-  return is;
-}
-
+std::istream& operator>>(std::istream& is, DG::Image::BMP& bmp) { return is; }
 }
 }

@@ -3,13 +3,14 @@
 #include <dgimg/dgimg.hh>
 
 class Extracting_agent {
-public:
+ public:
   Extracting_agent() = delete;
   Extracting_agent(const std::string& inbmp, int num_lsb);
   Extracting_agent(const std::string& inbmp);
 
   std::string extract() const;
-private:
+
+ private:
   dgbmp input;
   int num_lsb;
 };

@@ -6,8 +6,8 @@
 namespace DG {
 namespace Image {
 class BMP {
-public:
-  BMP() { }
+ public:
+  BMP() {}
   BMP(const std::string& fname) { open(fname); }
   void open(const std::string& fname);
   void write(const std::string& fname);
@@ -31,7 +31,7 @@ public:
 
   int get_num_pixels() const { return data.width() * data.height(); }
 
-private:
+ private:
   BMP_data data;
 
   friend std::ostream& operator<<(std::ostream& os, const BMP& bmp);
@@ -39,7 +39,6 @@ private:
 };
 }
 }
-
 
 //// aliases
 // namespace alias

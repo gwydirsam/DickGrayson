@@ -51,12 +51,12 @@ mpz_class RandomPrime::modulo(mpz_class base, mpz_class exponent,
 
 // is value prime
 bool RandomPrime::is_prime(mpz_class value) {
-  if ((value < 2) || (value % 2 == 0)) {
-    // if value is less than 2 or even return false
-    return false;
-  } else if ((value == 2) || (value == 3)) {
+  if ((value == 2) || (value == 3)) {
     // if value is 2 or 3, just return true they're not worth the time
     return true;
+  } else if ((value < 2) || (value % 2 == 0)) {
+    // if value is less than 2 or even return false
+    return false;
   } else {
     // initialize random engine (can't use our member in static function)
     gmp_randclass rand_engine{gmp_randinit_default};

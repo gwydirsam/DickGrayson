@@ -1,4 +1,7 @@
 foreach(LIB_NAME ${PROJECT_COMBINED_LIB_LIST})
+  # include project-internal libraries
+  include_directories(${INCLUDE_DIR})
+
   file(STRINGS ${LIB_NAME}/build_list.cmake LIB_BUILD_LIST)
   add_library(${LIB_NAME} ${LIB_BUILD_LIST})
 

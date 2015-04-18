@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <utility>
-#include <fstream>
+#include <iosfwd>
 
 #include <gmpxx.h>
 

@@ -1,9 +1,9 @@
 set(MAIN_SRC main.cc)
 
-# include project-internal libraries
-include_directories(${INCLUDE_DIR})
-
 foreach(BIN_NAME ${PROJECT_BIN_LIST})
+  # include project-internal libraries
+  include_directories(${INCLUDE_DIR})
+
   # binaries have their own libs called BIN_NAME-lib
   set(BIN_NAME_LIB ${BIN_NAME}-lib)
 

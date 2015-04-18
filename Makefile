@@ -58,8 +58,6 @@ DEBUG_TEST_BINS := $(wildcard $(DEBUG_DIR)/test/*-test)
 				xcode-debug xcode-build ninja ninja-all ninja-debug ninja-build test-gmp
 
 all create-build-list::
-	# @$(FIND) bin -mindepth 1 -type d | cut -d '/' -f 2 > $(PROJECT_DIR)/bin/build_list.cmake
-	# @$(FIND) lib -mindepth 1 -type d | cut -d '/' -f 2 > $(PROJECT_DIR)/lib/build_list.cmake
 	@$(FIND) test -mindepth 1 -type d | cut -d '/' -f 2 > $(PROJECT_DIR)/test/test_list.cmake
 	@$(FIND) $(PROJECT_DIR)/bin -name '*.cc' > $(PROJECT_DIR)/bin/build_list.cmake
 	@$(FIND) $(PROJECT_DIR)/lib -name '*.cc' > $(PROJECT_DIR)/lib/build_list.cmake

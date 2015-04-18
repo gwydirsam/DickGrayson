@@ -3,7 +3,7 @@
 #include <string>
 #include <cassert>
 #include "rsa-attack-lib.hh"
-#include "../dgcrypto/dgrandomprime.hh"
+#include <dgcrypto/dgrandomprime.hh>
 using namespace std;
 
 //ported here from dg_randomprime until Rafa fixes..

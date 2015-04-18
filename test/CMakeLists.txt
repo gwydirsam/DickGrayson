@@ -21,13 +21,13 @@ ExternalProject_Add(
 ExternalProject_Get_Property(gtest source_dir)
 ExternalProject_Get_Property(gtest binary_dir)
 
-# set(TEST_LIST include(test_list.cmake))
-list(APPEND TEST_LIST
-  include(${PROJECT_SOURCE_DIR}/test/test_list.cmake))
+file(STRINGS test_list.cmake TEST_LIST)
+## print out list for debugging
+#message(${TEST_LIST})
 
 foreach(TEST_NAME ${TEST_LIST})
   set(TARGET ${TEST_NAME})
-  set(TARGET_LIB ${TARGET})
+  set(TARGET_LIB ${TARGET}-lib)
   set(GTEST_TARGET ${TARGET}-test)
   set(TESTS_FILES ${TARGET}/${TARGET}-test.cc)
 
@@ -36,8 +36,17 @@ foreach(TEST_NAME ${TEST_LIST})
 
   add_dependencies(${GTEST_TARGET} gtest)
 
+  if(TARGET ${TARGET_LIB})
+    message("Found ${TARGET_LIB}. Linking ${GTEST_TARGET} with ${TARGET_LIB}")
+    target_link_libraries(${GTEST_TARGET}
+      ${TARGET_LIB})
+  endif()
+  # if(TARGET ${TARGET})
+  #   target_link_libraries(${GTEST_TARGET}
+  #     ${TARGET})
+  # endif()
   target_link_libraries(${GTEST_TARGET}
-    ${TARGET_LIB}
+    ${PROJECT_INTERAL_LIB_LIST}
     ${PROJECT_GLOBAL_LIBS}
     ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
     ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})

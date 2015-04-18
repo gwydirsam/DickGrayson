@@ -37,6 +37,14 @@ set(IMAGE_LIB dgimg)
 set(CRYPTO_LIB dgcrypto)
 set(TYPE_LIB dgtype)
 
+## list of binaries
+list(APPEND PROJECT_BIN_LIST ${RSA_CRYPT} ${RSA_ATTACK} ${STEGO_CRYPT} ${STEGO_ATTACK})
+## list of libraries
+# binary specific libraries
+list(APPEND PROJECT_BIN_LIB_LIST ${RSA_CRYPT_LIB} ${RSA_ATTACK_LIB} ${STEGO_CRYPT_LIB} ${STEGO_ATTACK_LIB})
+# project internal libraries
+list(APPEND PROJECT_INTERAL_LIB_LIST ${IMAGE_LIB} ${CRYPTO_LIB} ${TYPE_LIB})
+
 ## locations
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/bin)
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/lib)
@@ -63,6 +71,13 @@ find_package(GMP REQUIRED)
 if(GMP_FOUND)
   include_directories(${GMP_INCLUDE_DIR})
   list(APPEND PROJECT_GLOBAL_LIBS ${GMP_LIBRARIES} ${GMPXX_LIBRARIES})
+endif()
+
+# find OpenSSL
+find_package(OpenSSL REQUIRED)
+if(OPENSSL_FOUND)
+  include_directories(${OPENSSL_INCLUDE_DIR})
+  list(APPEND PROJECT_GLOBAL_LIBS ${OPENSSL_CRYPTO_LIBRARY})
 endif()
 
 ## set some compiler flags

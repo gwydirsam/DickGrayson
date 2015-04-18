@@ -116,8 +116,7 @@ install-deps install-ccache::
 	@echo Done Installing Better Defaults
 	@echo ======================================
 
-# install-deps install-openssl::
-install-openssl::
+install-deps install-openssl::
 	@echo ======================================
 	@echo Start Installing OpenSSL
 	@echo ======================================

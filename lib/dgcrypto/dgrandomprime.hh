@@ -25,6 +25,7 @@ class RandomPrime : public RandomInteger {
   // is value prime?
   // static for external use
   static bool is_prime(mpz_class value);
+  static bool is_coprime(mpz_class value1, mpz_class value2);
 
  protected:
   // is value prime

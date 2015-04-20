@@ -1,6 +1,8 @@
 #include "dginteger.hh"
 
 #include <iostream>
+#include <cassert>
+#include <random>
 
 namespace DG {
 namespace Crypto {

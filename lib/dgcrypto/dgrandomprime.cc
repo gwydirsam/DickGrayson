@@ -24,9 +24,12 @@ bool RandomPrime::is_coprime(mpz_class value1, mpz_class value2) {
 
 // helper for is_prime
 mpz_class RandomPrime::mulmod(mpz_class a, mpz_class b, mpz_class mod) {
+  // sam: what are any of these one letter variables?
   mpz_class x = 0, y = a % mod;
   while (b > 0) {
-    if (b % 2 == 1) {
+    // sam: same as below
+    // if (b % 2 == 1) {
+    if (b % 2 != 0) {
       x = (x + y) % mod;
     }
     y = (y * 2) % mod;
@@ -38,11 +41,18 @@ mpz_class RandomPrime::mulmod(mpz_class a, mpz_class b, mpz_class mod) {
 // helper for is_prime
 mpz_class RandomPrime::modulo(mpz_class base, mpz_class exponent,
                               mpz_class mod) {
+  // sam: what are any of these one letter variables?
   mpz_class x = 1;
   mpz_class y = base;
 
   while (exponent > 0) {
-    if (exponent % 2 == 1) x = (x * y) % mod;
+    // sam: changed to inverse logic so we can use 0 (faster and easier to
+    //      understand)
+    // sam: cut your test time almost in half by itself
+    // if (exponent % 2 == 1) x = (x * y) % mod;
+    if (exponent % 2 != 0) {
+      x = (x * y) % mod;
+    }
     y = (y * y) % mod;
     exponent = exponent / 2;
   }
@@ -63,6 +73,7 @@ bool RandomPrime::is_prime(mpz_class value) {
     // seed gmp_rand_alg_ with a uint from random_device
     rand_engine.seed(std::random_device{}());
 
+    // sam: what are any of these one letter variables?
     // sam: what does 's' mean?
     mpz_class s = value - 1;
     while (s % 2 == 0) {
@@ -111,23 +122,6 @@ mpz_class RandomPrime::generate_prime(mp_bitcnt_t k) {
   }
 
   return value;
-}
-
-//// friend non-member operators
-std::ostream& operator<<(std::ostream& os,
-                         const DG::Crypto::RandomPrime& random_prime) {
-  os << random_prime.value_;
-  return os;
-}
-
-std::istream& operator>>(std::istream& is,
-                         DG::Crypto::RandomPrime& random_prime) {
-  // read in bits followed by value
-  is >> random_prime.bits_ >> random_prime.value_;
-
-  // figure out how to decide if this construction is invalid
-  // if () is.setstate(std::ios::failbit);
-  return is;
 }
 }
 }

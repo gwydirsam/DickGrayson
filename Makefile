@@ -23,12 +23,12 @@ endif
 CMAKE := $(shell which cmake)
 CMAKE_GENERATOR ?= "Unix Makefiles"
 #CMAKE_GENERATOR ?= Ninja
+#CMAKE_GENERATOR ?= Xcode
 
 FIND := $(shell which find)
 LCOV := $(shell which lcov)
 GCOV := $(shell which gcov)
 GENHTML := $(shell which genhtml)
-COVERALLS-LCOV := $(shell which coveralls-lcov)
 
 PROJECT_DIR := $(CURDIR)
 BUILD_DIR := $(PROJECT_DIR)/build
@@ -58,6 +58,8 @@ DEBUG_TEST_BINS := $(wildcard $(DEBUG_DIR)/test/*-test)
 				xcode-debug xcode-build ninja ninja-all ninja-debug ninja-build test-gmp
 
 all create-build-list::
+	-@find . -name '*.gcda' -delete
+	-@find . -name '*.gcno' -delete
 	@for dir in $(shell $(FIND) $(PROJECT_DIR)/lib -mindepth 1 -type d); do \
 		$(FIND) $$dir -name '*.cc' > $$dir/build_list.cmake; \
 	done
@@ -233,7 +235,7 @@ coverage::
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(GENHTML) $(DEBUG_DIR)/coverage.info -o $(DEBUG_DIR)/html
 
 upload-coverage:: coverage
-	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(COVERALLS-LCOV) --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(shell which coveralls-lcov) --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE) -C $(DEBUG_DIR) coveralls
 
 run-all:: all
@@ -321,6 +323,8 @@ all::
 	@echo ======================================
 
 clean-all clean clean-release clean-build::
+	-find . -name '*.gcda' -delete
+	-find . -name '*.gcno' -delete
 ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(BUILD_DIR) clean
 else
@@ -328,6 +332,8 @@ else
 endif
 
 clean-all clean-debug::
+	-find . -name '*.gcda' -delete
+	-find . -name '*.gcno' -delete
 ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(DEBUG_DIR) clean
 else

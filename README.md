@@ -16,6 +16,38 @@ make help-all
 
 ## Building
 
+### Download Repository
+```bash
+# Clone Repository
+git clone https://github.com/gwydirsam/DickGrayson.git
+cd DickGrayson
+```
+
+### Install Dependencies
+
+#### Recommended
+use your package manager to install:
+- a C++ compiler capable of C++14
+- cmake
+- openssl
+- gmp (GNU MP)
+
+#### Automated
+The makefile included is capable of installing all of the needed dependencies, but will install them to your home folder. This is probably not what you want and is mostly intended for un-attended testing. If you are ok with this use `make install-deps`
+
+```bash
+# install dependencies to $HOME/local/$(uname)/
+make install-deps
+
+# add paths to bashrc
+echo "export PATH=$HOME/local/$UNAME/bin:$PATH" >> $HOME/.bashrc
+echo "export MANPATH=$HOME/local/$UNAME/share/man:$MANPATH" >> $HOME/.bashrc
+echo "export LD_LIBRARY_PATH=$HOME/local/$UNAME/lib:$LD_LIBRARY_PATH" >> $HOME/.bashrc
+echo "export CPLUS_INCLUDE_PATH=$HOME/local/$UNAME/include:$CPLUS_INCLUDE_PATH" >> $HOME/.bashrc
+```
+
+### Build
+
 ```bash
 make all
 ```
@@ -27,7 +59,8 @@ make test-all
 ```
 
 ## Dependencies
-- cmake (installed seperately)
-- GNU MP library (installed seperately)
+- cmake (installed separately)
+- GNU MP library (installed separately)
+- openssl (installed separately)
 - googletest (included)
 

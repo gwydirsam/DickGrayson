@@ -20,6 +20,8 @@ class RandomPrime : public RandomInteger {
     assert(bits_ >= 2);
     // set value
     value_ = generate_prime(bits_);
+    // and value must be geq 2
+    assert(value_ >= 2);
   }
 
   // is value prime?
@@ -47,13 +49,6 @@ class RandomPrime : public RandomInteger {
 
   // helper for is_prime
   static mpz_class modulo(mpz_class base, mpz_class exponent, mpz_class mod);
-
-  //// friend non-member functions
-  // stream extraction
-  friend std::ostream& operator<<(std::ostream& os,
-                                  const RandomPrime& random_prime);
-  // stream insertion
-  friend std::istream& operator>>(std::istream& is, RandomPrime& random_prime);
 };
 }
 }

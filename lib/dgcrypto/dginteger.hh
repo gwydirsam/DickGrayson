@@ -2,6 +2,7 @@
 
 #include <gmpxx.h>
 
+#include <iosfwd>
 #include <cassert>
 #include <random>
 

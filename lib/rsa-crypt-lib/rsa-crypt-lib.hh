@@ -3,7 +3,7 @@
 #include <gmpxx.h>
 
 // sam: why is this a class? Or maybe it should be called PublicKey?
-class RsaCrypt {
+class PublicKey {
  public:
   // generates two random primes and checks coprimality
   mpz_class generate_key();

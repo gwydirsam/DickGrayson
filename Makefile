@@ -58,8 +58,6 @@ DEBUG_TEST_BINS := $(wildcard $(DEBUG_DIR)/test/*-test)
 				xcode-debug xcode-build ninja ninja-all ninja-debug ninja-build test-gmp
 
 all create-build-list::
-	-@find . -name '*.gcda' -delete
-	-@find . -name '*.gcno' -delete
 	@for dir in $(shell $(FIND) $(PROJECT_DIR)/lib -mindepth 1 -type d); do \
 		$(FIND) $$dir -name '*.cc' > $$dir/build_list.cmake; \
 	done

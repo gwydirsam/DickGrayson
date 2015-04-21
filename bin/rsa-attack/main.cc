@@ -4,7 +4,9 @@
 #include <fstream>
 #include <unistd.h>
 #include <getopt.h>
+
 const std::vector<std::string> attack_types = {"factoring", "chinese_rt", "other"};
+
 void whatAttackTypes(){
   std::cout << "\nType can be ";
   for(int i= 0; i < attack_types.size(); ++i){
@@ -12,6 +14,7 @@ void whatAttackTypes(){
   }
   std::cout << std::endl;
 }
+
 void usage(){
   std::cout << "Usage is --attack [type] --filename [filename]"  << std::endl;
   whatAttackTypes();
@@ -81,7 +84,5 @@ int main(int argc, char* argv[]) {
   if(!fflag || !aflag){
     usage();
   }
-  //argc -= optind;
-  //argc += optind;
   whatWentWrong(fflag + aflag, ioerror);
 }

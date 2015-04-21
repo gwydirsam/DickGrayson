@@ -21,6 +21,7 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - valgrind
+    - openssl
     - gcc-4.9
     - g++-4.9
 

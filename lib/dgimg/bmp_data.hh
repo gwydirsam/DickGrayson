@@ -10,7 +10,7 @@
 
 namespace DG {
 namespace Image {
-struct BMP;
+class BMP;
 struct BMP_data {
   unsigned image_offset() const;
   unsigned bits_per_pixel() const;

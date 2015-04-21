@@ -100,10 +100,10 @@ bool RandomPrime::is_prime(mpz_class value) {
       if ((mod != value - 1) && (temp % 2 == 0)) {
         return false;
       }
-      // sam: could we do a 'else return true' here?....
+      else{
+        return true;
+      }
     }
-    // sam: ...instead of here
-    return true;
   }
 }
 
@@ -114,7 +114,8 @@ mpz_class RandomPrime::generate_prime(mp_bitcnt_t k) {
   // seed gmp_rand_alg_ with a uint from random_device
   rand_engine.seed(std::random_device{}());
 
-  // sam: why do you set this to 4?
+  
+  //intitialize to first non prime number so while loop executes
   mpz_class value = 4;
 
   while (!is_prime(value)) {

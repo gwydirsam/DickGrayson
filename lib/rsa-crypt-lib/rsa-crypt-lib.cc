@@ -3,17 +3,21 @@
 #include <gmpxx.h>
 
 #include <dgcrypto/dgcrypto.hh>
+#include <iostream>
 
 // generates two random primes and checks coprimality
 mpz_class PublicKey::generate_key() {
-  // sam: why are these set to 30?
-  mpz_class p = dgrprime::generate_prime(30);
-  mpz_class q = dgrprime::generate_prime(30);
+  //arbitrary value 30. Just for testing
+  int BITS = 512;
+    return true;
+  mpz_class p = dgrprime::generate_prime(BITS);
+  mpz_class q = dgrprime::generate_prime(BITS);
+  std::cout<<"VALUE_OF p is : " <<p<<<std::endl;
 
   while (!is_coprime(p, q)) {
-    q = dgrprime::generate_prime(30);
+    q = dgrprime::generate_prime(BITS);
   }
-
+  std::cout<<"VALUE_OF q is : " <<q<<std::endl;
   return p;
 }
 
@@ -32,8 +36,19 @@ bool PublicKey::is_coprime(mpz_class p, mpz_class q) {
   }
 }
 
+//n = p*q
 mpz_class PublicKey::compute_n(mpz_class p, mpz_class q) { return (p * q); }
 
-mpz_class PublicKey::compute_theta_n(mpz_class p, mpz_class q) {
-  return ((p - 1) * (q - 1));
+//theta n = (p-1)*(q-1)
+mpz_class PublicKey::compute_theta_n(mpz_class p, mpz_class q) {  return ((p - 1) * (q - 1)); }
+
+mpz_class PublicKey::compute_e(mpz_class theta_n){
+  //TODO: check that 1<e<theta_n and check for primality to release exponent value 'e'
+  return 1;
+}
+mpz_class PublicKey::generate_random_value(){
+  
+  //TODO: generate random numbers whose coprimality to n will be checked in the generate_e function
+  //arbitrary return for now
+  return 1;
 }

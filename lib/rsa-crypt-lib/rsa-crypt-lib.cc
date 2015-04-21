@@ -7,17 +7,17 @@
 
 // generates two random primes and checks coprimality
 mpz_class PublicKey::generate_key() {
-  //arbitrary value 30. Just for testing
+  // arbitrary value 30. Just for testing
   int BITS = 512;
-    return true;
+  return true;
   mpz_class p = dgrprime::generate_prime(BITS);
   mpz_class q = dgrprime::generate_prime(BITS);
-  std::cout<<"VALUE_OF p is : " <<p<<<std::endl;
+  std::cout << "VALUE_OF p is : " << p << std::endl;
 
   while (!is_coprime(p, q)) {
     q = dgrprime::generate_prime(BITS);
   }
-  std::cout<<"VALUE_OF q is : " <<q<<std::endl;
+  std::cout << "VALUE_OF q is : " << q << std::endl;
   return p;
 }
 
@@ -36,19 +36,22 @@ bool PublicKey::is_coprime(mpz_class p, mpz_class q) {
   }
 }
 
-//n = p*q
+// n = p*q
 mpz_class PublicKey::compute_n(mpz_class p, mpz_class q) { return (p * q); }
 
-//theta n = (p-1)*(q-1)
-mpz_class PublicKey::compute_theta_n(mpz_class p, mpz_class q) {  return ((p - 1) * (q - 1)); }
+// theta n = (p-1)*(q-1)
+mpz_class PublicKey::compute_theta_n(mpz_class p, mpz_class q) {
+  return ((p - 1) * (q - 1));
+}
 
-mpz_class PublicKey::compute_e(mpz_class theta_n){
-  //TODO: check that 1<e<theta_n and check for primality to release exponent value 'e'
+mpz_class PublicKey::compute_e(mpz_class theta_n) {
+  // TODO: check that 1<e<theta_n and check for primality to release exponent
+  // value 'e'
   return 1;
 }
-mpz_class PublicKey::generate_random_value(){
-  
-  //TODO: generate random numbers whose coprimality to n will be checked in the generate_e function
-  //arbitrary return for now
+mpz_class PublicKey::generate_random_value() {
+  // TODO: generate random numbers whose coprimality to n will be checked in the
+  // generate_e function
+  // arbitrary return for now
   return 1;
 }

@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 
 #include <gmpxx.h>
-#include <stdlib.h>
+// sam: you don't need this, also use #include <cstdlib> in c++
+// #include <stdlib.h>
 #include <dgcrypto/dgcrypto.hh>
 
 TEST(DGCryptoPrime, Prime2b) {

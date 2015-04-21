@@ -8,14 +8,18 @@
 // generates two random primes and checks coprimality
 mpz_class PublicKey::generate_key() {
   // arbitrary value 30. Just for testing
-  int BITS = 512;
-  return true;
-  mpz_class p = dgrprime::generate_prime(BITS);
-  mpz_class q = dgrprime::generate_prime(BITS);
+  int num_bits = 512;
+
+  // sam: what was this about?
+  // return true;
+
+  mpz_class p = dgrprime::generate_prime(num_bits);
+  mpz_class q = dgrprime::generate_prime(num_bits);
+
   std::cout << "VALUE_OF p is : " << p << std::endl;
 
   while (!is_coprime(p, q)) {
-    q = dgrprime::generate_prime(BITS);
+    q = dgrprime::generate_prime(num_bits);
   }
   std::cout << "VALUE_OF q is : " << q << std::endl;
   return p;
@@ -29,11 +33,8 @@ bool PublicKey::is_coprime(mpz_class p, mpz_class q) {
       gcd = i;
     }
   }
-  if (gcd != 1) {
-    return false;
-  } else {
-    return true;
-  }
+
+  return (gcd != 1) ? false : true;
 }
 
 // n = p*q

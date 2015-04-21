@@ -118,7 +118,7 @@ install-deps install-ccache::
 	@echo Done Installing Better Defaults
 	@echo ======================================
 
-install-deps install-openssl::
+install-openssl::
 	@echo ======================================
 	@echo Start Installing OpenSSL
 	@echo ======================================
@@ -323,8 +323,7 @@ all::
 	@echo ======================================
 
 clean-all clean clean-release clean-build::
-	-find . -name '*.gcda' -delete
-	-find . -name '*.gcno' -delete
+	-@$(FIND) . -name '*.gcda' -delete
 ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(BUILD_DIR) clean
 else
@@ -332,8 +331,7 @@ else
 endif
 
 clean-all clean-debug::
-	-find . -name '*.gcda' -delete
-	-find . -name '*.gcno' -delete
+	-@$(FIND) . -name '*.gcda' -delete
 ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(DEBUG_DIR) clean
 else

@@ -35,8 +35,8 @@ TEST(BmpData, Write) {
 }
 
 TEST(BmpData, BitsPerPixel) {
-  dgbmpdata bmp = open_bmp("test.bmp");
-  EXPECT_EQ(8, bmp.bits_per_pixel());
+  dgbmpdata bmp = open_bmp("test/dgimg/test.bmp");
+  EXPECT_EQ(8u, bmp.bits_per_pixel());
 }
 
 TEST(BmpData, Dimensions) {
@@ -46,14 +46,14 @@ TEST(BmpData, Dimensions) {
 }
 
 TEST(BmpData, PixelArraySize) {
-  dgbmpdata bmp = open_bmp("test.bmp");
-  EXPECT_EQ(512 * 512, bmp.pixel_array_size());
+  dgbmpdata bmp = open_bmp("test/dgimg/test.bmp");
+  EXPECT_EQ(512u * 512u, bmp.pixel_array_size());
 }
 
 TEST(BmpData, ImageOffset) {
   dgbmpdata bmp = open_bmp("test.bmp");
   unsigned offset = bmp.image_offset();
-  EXPECT_EQ(512 * 512, bmp.get_byte_array().size() - offset);
+  EXPECT_EQ(512u * 512u, bmp.get_byte_array().size() - offset);
 }
 
 TEST(Bmp, ByteSetMask) {
@@ -81,10 +81,10 @@ TEST(Bmp, ByteUnsetMask) {
 }
 
 TEST(Bmp, MaxPixelValue) {
-  dgbmp bmp("test_max_xFF.bmp");
-  dgbmp bmp2("test_black.bmp");
-  dgbmp bmp3("test_24bit_max_xFFFFFF.bmp");
-  EXPECT_EQ(0xFF, bmp.max_pixel_value());
-  EXPECT_EQ(0x0, bmp2.max_pixel_value());
-  EXPECT_EQ(0xFFFFFF, bmp3.max_pixel_value());
+  dgbmp bmp("test/dgimg/test_max_xFF.bmp");
+  dgbmp bmp2("test/dgimg/test_black.bmp");
+  dgbmp bmp3("test/dgimg/test_24bit_max_xFFFFFF.bmp");
+  EXPECT_EQ(0xFFu, bmp.max_pixel_value());
+  EXPECT_EQ(0x0u, bmp2.max_pixel_value());
+  EXPECT_EQ(0xFFFFFFu, bmp3.max_pixel_value());
 }

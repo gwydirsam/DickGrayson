@@ -48,7 +48,15 @@ mpz_class PublicKey::compute_e(mpz_class theta_n){
 }
 mpz_class PublicKey::generate_random_value(){
   
-  //TODO: generate random numbers whose coprimality to n will be checked in the generate_e function
-  //arbitrary return for now
-  return 1;
+  // initialize random engine (can't use our member in static function)
+  gmp_randclass rand_engine{gmp_randinit_default};
+  
+  // seed gmp_rand_alg_ with a uint from random_device
+  rand_engine.seed(std::random_device{}());
+
+
+  //intitialize to first non prime number so while loop executes
+  value = rand_engine.get_z_bits(k);
+
+  return value;
 }

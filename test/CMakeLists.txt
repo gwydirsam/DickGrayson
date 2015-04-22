@@ -46,7 +46,7 @@ foreach(TEST_NAME ${TEST_LIST})
   #     ${TARGET})
   # endif()
   target_link_libraries(${GTEST_TARGET}
-    ${PROJECT_INTERAL_LIB_LIST}
+    ${PROJECT_INTERNAL_LIB_LIST}
     ${PROJECT_GLOBAL_LIBS}
     ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
     ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})

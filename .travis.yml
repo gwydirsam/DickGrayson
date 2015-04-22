@@ -20,6 +20,7 @@ addons:
     sources:
     - ubuntu-toolchain-r-test
     packages:
+    - libsndfile
     - valgrind
     - openssl
     - gcc-4.9

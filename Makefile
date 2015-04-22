@@ -57,7 +57,8 @@ DEBUG_TEST_BINS := $(wildcard $(DEBUG_DIR)/test/*-test)
 				install-better-defaults install-cmake install-gmp xcode xcode-all \
 				xcode-debug xcode-build ninja ninja-all ninja-debug ninja-build test-gmp
 
-all create-build-list::
+all xcode-all xcode xcode-build xcode-debug ninja-all \
+ninja ninja-build ninja-debug release build debug compile create-build-list::
 	@for dir in $(shell $(FIND) $(PROJECT_DIR)/lib -mindepth 1 -type d); do \
 		$(FIND) $$dir -name '*.cc' > $$dir/build_list.cmake; \
 	done
@@ -114,6 +115,15 @@ install-deps install-ccache::
 	@(cd share/scripts; bash install-ccache.sh)
 	@echo ======================================
 	@echo Done Installing Better Defaults
+	@echo ======================================
+
+install-deps install-libsndfile::
+	@echo ======================================
+	@echo Start Installing libsndfile
+	@echo ======================================
+	@(cd share/scripts; bash install-libsndfile.sh)
+	@echo ======================================
+	@echo Done Installing libsndfile
 	@echo ======================================
 
 install-openssl::
@@ -347,8 +357,10 @@ cppcheck::
 	cppcheck -j4 --enable=all lib/ bin/
 
 clang-format::
-	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) . -name '*.hh'`
-	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) . -name '*.cc'`
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) lib -name '*.hh'`
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) lib -name '*.cc'`
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) bin -name '*.cc'`
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) test -name '*.cc'`
 
 valgrind-all:: debug
 	@echo ======================================

@@ -2,75 +2,85 @@
 
 #include <gmpxx.h>
 
-#include <dgcrypto/dgcrypto.hh>
 #include <iostream>
 
-//to use 'random' is there more specific header?
-#include <stdlib.h>
+// to use 'random' is there more specific header?
+// I meant #include <random> for std::random_device
+#include <random>
 
-//always run with primes 512 bits big to make sure max value works
-int NUM_BITS = 512;
+#include <algorithm>  // std::min
+
+// #include <stdlib.h>
+// sam: should be this
+// #include <cstdlib>, but you don't use it
+
+#include <dgcrypto/dgcrypto.hh>
+
 // generates two random primes and checks coprimality
-mpz_class PublicKey::generate_key() {
-  
+mpz_class PublicKey::generate_key() const {
+  // mpz_class p = dgrandprime::generate_prime(bits_);
+  // mpz_class q = dgrandprime::generate_prime(bits_);
+  dgrandprime p(bits_);
+  dgrandprime q(bits_);
 
-  // sam: what was this about?
-  // return true;
-
-  mpz_class p = dgrprime::generate_prime(NUM_BITS); 
-  mpz_class q = dgrprime::generate_prime(num_bits);
-
-  std::cout << "VALUE_OF p is : " << p << std::endl;
-
-  while (!is_coprime(p, q)) {
-    q = dgrprime::generate_prime(num_bits);
+  while (!is_coprime(p.get_mpz_class(), q.get_mpz_class())) {
+    q.reroll();
   }
-  std::cout << "VALUE_OF q is : " << q << std::endl;
-  return p;
+
+  std::cerr << "VALUE_OF p is : " << p << std::endl;
+  std::cerr << "VALUE_OF q is : " << q << std::endl;
+
+  return p.get_mpz_class();
 }
 
 // helper function to check for primality
-bool PublicKey::is_coprime(mpz_class p, mpz_class q) {
+mpz_class PublicKey::get_gcd(mpz_class p, mpz_class q) const {
   mpz_class gcd = 1;
-  for (mpz_class i = 1; ((i <= p) && (i <= q)); ++i) {
+  // for (mpz_class i = 1; ((i <= p) && (i <= q)); ++i) {
+  for (mpz_class i = 1; std::min(p, q); ++i) {
     if ((p % i == 0) && (q % i == 0)) {
       gcd = i;
     }
   }
 
-  return (gcd != 1) ? false : true;
+  return gcd;
 }
 
-// n = p*q
-mpz_class PublicKey::compute_n(mpz_class p, mpz_class q) { return (p * q); }
-
-// theta n = (p-1)*(q-1)
-mpz_class PublicKey::compute_theta_n(mpz_class p, mpz_class q) {
-  return ((p - 1) * (q - 1));
+// helper function to check for primality
+inline bool PublicKey::is_coprime(mpz_class p, mpz_class q) const {
+  return (get_gcd(p, q) != 1) ? false : true;
 }
 
-mpz_class PublicKey::compute_e(mpz_class theta_n) {
+mpz_class PublicKey::compute_e(mpz_class theta_n) const {
   // TODO: check that 1<e<theta_n and check for primality to release exponent
   // value 'e'
-  int e = generate_random_value();
-  while(e < theta_n || !is_coprime(e, theta_n)){
-    e = generate_random_value();
+  // sam: generate_random_value() returns an mpz_class not an int
+  //      also this function returns an mpz_class!
+  // int e = generate_random_value();
+  // mpz_class e = generate_random_value();
+
+  // why not use dgrandominteger...this is what it's for
+  dgrandint e(bits_);
+  while (e.get_mpz_class() < theta_n ||
+         !is_coprime(e.get_mpz_class(), theta_n)) {
+    e.reroll();
   }
-  return e;
+  return e.get_mpz_class();
 }
 
-mpz_class PublicKey::generate_random_value(){
-  
-  int value = 0;
-  // initialize random engine (can't use our member in static function)
-  gmp_randclass rand_engine{gmp_randinit_default};
-  
-  // seed gmp_rand_alg_ with a uint from random_device
-  rand_engine.seed(std::random_device{}());
+mpz_class PublicKey::generate_random_value() const {
+  // // initialize random engine (can't use our member in static function)
+  // gmp_randclass rand_engine{gmp_randinit_default};
 
+  // // seed gmp_rand_alg_ with a uint from random_device
+  // rand_engine.seed(std::random_device{}());
 
-  //intitialize to first non prime number so while loop executes
-  value = rand_engine.get_z_bits(NUM_BITS);
+  // // sam: this should be an mpz_class
+  // // int value = 0;
 
-  return value;
+  // // intitialize to first non prime number so while loop executes
+  // mpz_class value(rand_engine.get_z_bits(bits_));
+
+  // return value;
+  return dgrandint(bits_).get_mpz_class();
 }

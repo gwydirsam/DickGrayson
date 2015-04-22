@@ -18,6 +18,15 @@ class Integer {
   // get value
   mpz_class value() const { return value_; }
 
+  // get value alias
+  mpz_class get_mpz_class() const { return value_; }
+
+  // is value even
+  static inline bool is_even(mpz_class value) { return (value % 2 == 0); }
+
+  // is value odd
+  static inline bool is_odd(mpz_class value) { return (value % 2 != 0); }
+
  protected:
   //// private member variables
   // actual number
@@ -26,6 +35,12 @@ class Integer {
   //// private helper functions
   // set value
   void value(mpz_class value) { value_ = value; }
+
+  // is value_ even
+  inline bool even() const { return (value_ % 2 == 0); }
+
+  // is value_ odd
+  inline bool odd() const { return (value_ % 2 != 0); }
 
   //// friend non-member functions
   // stream extraction

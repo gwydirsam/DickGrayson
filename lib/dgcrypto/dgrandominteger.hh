@@ -33,6 +33,8 @@ class RandomInteger : public Integer {
   // returns the maximum number this object can hold
   const mpz_class max_size() const;
 
+  const mpz_class reroll() { return generate_integer(bits_); }
+
  protected:
   //// private member variables
   // number of bits (mp_bitcnt_t is an unsigned long int)
@@ -63,3 +65,4 @@ class RandomInteger : public Integer {
 namespace dgcrypto = DG::Crypto;
 // type alias
 using dgrint = DG::Crypto::RandomInteger;
+using dgrandint = DG::Crypto::RandomInteger;

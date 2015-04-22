@@ -20,16 +20,17 @@ std::istream& operator>>(std::istream& is, BMP_data& bmp) {
   ost << is.rdbuf();
   std::string bytes(ost.str());
   bmp.byte_array = bytes;
-  bmp.pixel_array =
-      bmp.byte_array.substr(bmp.image_offset(), bmp.pixel_array_size());
+  try {
+    bmp.pixel_array =
+        bmp.byte_array.substr(bmp.image_offset(), bmp.pixel_array_size());
+  } catch (...) {
+  }
   return is;
 }
 
 // write
 std::ostream& operator<<(std::ostream& os, const BMP_data& bmp) {
-  /*
   os << bmp.byte_array;
-  */
   return os;
 }
 
@@ -72,7 +73,12 @@ unsigned BMP_data::num_color_planes() const {
 }
 
 bool BMP_data::is_valid() const {
-  std::string validation = byte_array.substr(0, 2);
+  std::string validation;
+  try {
+    validation = byte_array.substr(0, 2);
+  } catch (...) {
+    return false;
+  }
   return validation == "BM" && num_color_planes() == 1;
 }
 }

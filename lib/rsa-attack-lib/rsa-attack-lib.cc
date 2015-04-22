@@ -6,7 +6,7 @@ using namespace std;
 namespace rsatk{
 string relative_path = "../../lib/rsa-attack-lib/";
   //returns a vector of pairs that correspond to the found factors
-  vector<pair<mpz_class, mpz_class > > findPrimeFactors(mpz_class n){
+  vector<pair<mpz_class, mpz_class > > find_prime_factors(mpz_class n){
     vector<pair< mpz_class, mpz_class> > factors;
 
     ifstream prime_file;
@@ -25,7 +25,7 @@ string relative_path = "../../lib/rsa-attack-lib/";
 
     //ignore 0 and 1, since they're not valid factors
     while((prime_candidate * prime_candidate) <= n) {
-      prime_candidate = getNextPrime(prime_file);
+      prime_candidate = get_next_prime(prime_file);
 
       if((n % prime_candidate) == 0) { //then it's a factor
         mpz_class first_factor = prime_candidate;
@@ -41,7 +41,7 @@ string relative_path = "../../lib/rsa-attack-lib/";
   }
 
 
-  mpz_class getNextPrime(ifstream& prime_file){
+  mpz_class get_next_prime(ifstream& prime_file){
     mpz_class num = -1;
     try {
       prime_file.exceptions(ifstream::failbit | ifstream::badbit);
@@ -53,7 +53,7 @@ string relative_path = "../../lib/rsa-attack-lib/";
     return num;
   }
 
-  void generateNPrimes(long int n) {
+  void generate_n_primes(long int n) {
     try {
       fstream prime_list_file;
       prime_list_file.open(relative_path + "prime_list_" + to_string(n));

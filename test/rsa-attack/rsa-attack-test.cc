@@ -9,7 +9,7 @@ TEST(factorize, smallSemiPrime) {
   mpz_class small_n = 48443;
   vector<pair<mpz_class, mpz_class>> expected_outputs = {
       pair<mpz_class, mpz_class>(193, 251)};
-  EXPECT_EQ(expected_outputs, rsatk::findPrimeFactors(small_n));
+  EXPECT_EQ(expected_outputs, rsatk::find_prime_factors(small_n));
 }
 
 TEST(factorize, bigSemiPrime) {
@@ -18,7 +18,7 @@ TEST(factorize, bigSemiPrime) {
       pair<mpz_class, mpz_class>(2677, 3319)};
 
   // output won't be the same
-  EXPECT_EQ(expected_outputs, rsatk::findPrimeFactors(big_n));
+  EXPECT_EQ(expected_outputs, rsatk::find_prime_factors(big_n));
 }
 
 TEST(factorize, smallNormalNumber) {
@@ -31,7 +31,7 @@ TEST(factorize, smallNormalNumber) {
 
   //since none of these are prime, result should be empty
 
-  EXPECT_TRUE(rsatk::findPrimeFactors(norm_num).empty());
+  EXPECT_TRUE(rsatk::find_prime_factors(norm_num).empty());
 }
 
 TEST(factorize, largerN) {
@@ -41,7 +41,7 @@ TEST(factorize, largerN) {
       pair<mpz_class, mpz_class>(15484627, 15484661)};
 
   // output won't be the same
-  EXPECT_EQ(expected_outputs, rsatk::findPrimeFactors(big_n));
+  EXPECT_EQ(expected_outputs, rsatk::find_prime_factors(big_n));
 }
 
 //test based from example in http://en.wikipedia.org/wiki/Extended_Euclidean_algorithm
@@ -104,5 +104,5 @@ protected:
 
 
 // TEST(Primes, Generate){
-// generateNPrimes(1000000);
+// generate_n_primes(1000000);
 //}

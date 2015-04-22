@@ -10,12 +10,12 @@
 //p and q are the prime numbers, and n is their product
 //m is the plain_test
 namespace rsatk{
-  std::vector<std::pair<mpz_class, mpz_class> > findPrimeFactors(mpz_class n);
-  void generateNPrimes(long int n);
+  std::vector<std::pair<mpz_class, mpz_class> > find_prime_factors(mpz_class n);
+  void generate_n_primes(long int n);
 
   //this function is faster since you can hold onto your place
   //where n is the file offset
-  mpz_class getNextPrime(std::ifstream & prime_file);
+  mpz_class get_next_prime(std::ifstream & prime_file);
 
   mpz_class calculate_totient(mpz_class p, mpz_class q);
   mpz_class calculate_d(mpz_class totient, mpz_class e);

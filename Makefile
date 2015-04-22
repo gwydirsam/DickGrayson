@@ -248,21 +248,21 @@ run-all test-all test test-build:: build
 	@echo ======================================
 
 run-all test-all test test-build test-rsa-crypt:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/rsa-crypt-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/rsa-crypt-test --gtest_color=yes
 run-all test-all test test-build test-rsa-attack:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/rsa-attack-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/rsa-attack-test --gtest_color=yes
 run-all test-all test test-build test-stego-crypt:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/stego-crypt-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/stego-crypt-test --gtest_color=yes
 run-all test-all test test-build test-stego-attack:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/stego-attack-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/stego-attack-test --gtest_color=yes
 run-all test-all test test-build test-dgcrypto:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgcrypto-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/dgcrypto-test --gtest_color=yes
 run-all test-all test test-build test-dgtype:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgtype-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/dgtype-test --gtest_color=yes
 run-all test-all test test-build test-dgimg:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgimg-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/dgimg-test --gtest_color=yes
 run-all test-all test test-build test-libgnump:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/libgnump-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/libgnump-test --gtest_color=yes
 
 run-all test-all test test-build:: build
 	@echo ======================================
@@ -275,21 +275,21 @@ run-all test-all test-debug:: debug
 	@echo ======================================
 
 run-all test-all test-debug test-debug-rsa-crypt:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
 run-all test-all test-debug test-debug-rsa-attack:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
 run-all test-all test-debug test-debug-stego-crypt:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
 run-all test-all test-debug test-debug-stego-attack:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
 run-all test-all test-debug test-debug-dgcrypto:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
 run-all test-all test-debug test-debug-dgtype:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
 run-all test-all test-debug test-debug-dgimg:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
 run-all test-all test-debug test-debug-libgnump:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
 run-all test-all test-debug:: debug
 	@echo ======================================
@@ -302,13 +302,13 @@ run-all:: debug
 	@echo ======================================
 
 run-all run-debug-rsa-crypt:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/bin/rsa-crypt
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-crypt
 run-all run-debug-rsa-attack:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/bin/rsa-attack
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-attack
 run-all run-debug-stego-crypt:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/bin/stego-crypt
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/stego-crypt
 run-all run-debug-stego-attack:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/bin/stego-attack
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/stego-attack
 
 run-all:: debug
 	@echo ======================================

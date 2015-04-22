@@ -1,7 +1,9 @@
 #pragma once
 
+#include <gmp.h>
 #include <gmpxx.h>
 
+#include <iosfwd>
 #include <cassert>
 #include <random>
 
@@ -28,6 +30,9 @@ class RandomInteger : public Integer {
   // get number of bits
   mp_bitcnt_t bits() const { return bits_; }
 
+  // returns the maximum number this object can hold
+  const mpz_class max_size() const;
+
  protected:
   //// private member variables
   // number of bits (mp_bitcnt_t is an unsigned long int)
@@ -39,7 +44,7 @@ class RandomInteger : public Integer {
   // set number of bits
   void bits(mp_bitcnt_t bits) { bits_ = bits; }
 
-  // set value_ to prime of ~k bits
+  // set value_ to integer of k bits
   mpz_class generate_integer(mp_bitcnt_t k);
 
   //// friend non-member functions

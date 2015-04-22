@@ -16,8 +16,7 @@ Desktop.ini
 ## Tags
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
 TAGS
-!TAGS/
-tags
+!TAGS/ tags
 !tags/
 gtags.files
 GTAGS
@@ -83,3 +82,19 @@ Session.vim
 /xcode-debug/
 /share/notes/auto/
 /share/notes/bmp.tex
+/.clang_complete
+/coverage.info
+/.projectile
+/bin/build_list.cmake
+/lib/build_list.cmake
+/test/build_list.cmake
+/test/test_list.cmake
+/bin/bin_list.cmake
+/build_list.cmake
+/lib/dgcrypto/build_list.cmake
+/lib/dgimg/build_list.cmake
+/lib/dgtype/build_list.cmake
+/lib/rsa-attack-lib/build_list.cmake
+/lib/rsa-crypt-lib/build_list.cmake
+/lib/stego-attack-lib/build_list.cmake
+/lib/stego-crypt-lib/build_list.cmake

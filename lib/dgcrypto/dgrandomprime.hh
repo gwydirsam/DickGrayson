@@ -24,6 +24,12 @@ class RandomPrime : public RandomInteger {
     assert(value_ >= 2);
   }
 
+  // generate a random prime of ~k bits
+  mpz_class reroll() {
+    value_ = generate_prime(bits_);
+    return value_;
+  }
+
   // is value prime?
   // static for external use
   static bool is_prime(mpz_class value);
@@ -42,7 +48,7 @@ class RandomPrime : public RandomInteger {
 
  protected:
   // is value prime
-  bool prime() { return is_prime(value_); }
+  bool prime() const { return is_prime(value_); }
 
   // helper for is_prime
   static mpz_class mulmod(mpz_class a, mpz_class b, mpz_class mod);
@@ -58,3 +64,4 @@ class RandomPrime : public RandomInteger {
 namespace dgcrypto = DG::Crypto;
 // type alias
 using dgrprime = DG::Crypto::RandomPrime;
+using dgrandprime = DG::Crypto::RandomPrime;

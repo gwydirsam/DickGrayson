@@ -31,7 +31,4 @@ class PublicKey {
   // private member helper functions
   // helper function to check for primality
   inline bool is_coprime(mpz_class p, mpz_class q) const;
-
-  // helper function to generate random numbers
-  mpz_class generate_random_value() const;
 };

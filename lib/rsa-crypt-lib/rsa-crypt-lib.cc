@@ -67,20 +67,3 @@ mpz_class PublicKey::compute_e(mpz_class theta_n) const {
   }
   return e.get_mpz_class();
 }
-
-mpz_class PublicKey::generate_random_value() const {
-  // // initialize random engine (can't use our member in static function)
-  // gmp_randclass rand_engine{gmp_randinit_default};
-
-  // // seed gmp_rand_alg_ with a uint from random_device
-  // rand_engine.seed(std::random_device{}());
-
-  // // sam: this should be an mpz_class
-  // // int value = 0;
-
-  // // intitialize to first non prime number so while loop executes
-  // mpz_class value(rand_engine.get_z_bits(bits_));
-
-  // return value;
-  return dgrandint(bits_).get_mpz_class();
-}

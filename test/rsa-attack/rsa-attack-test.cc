@@ -22,12 +22,15 @@ TEST(factorize, bigSemiPrime) {
 
 TEST(factorize, smallNormalNumber) {
   mpz_class norm_num = 108;
-  vector<pair<mpz_class, mpz_class>> expected_outputs = {
-      pair<mpz_class, mpz_class>(2, 54), pair<mpz_class, mpz_class>(3, 36),
-      pair<mpz_class, mpz_class>(4, 27), pair<mpz_class, mpz_class>(6, 18),
-      pair<mpz_class, mpz_class>(9, 12)};
+  //(2, 54)
+  //(4, 27)
+  //(9, 12)
+  //(3, 36)
+  //(6, 18)
 
-  EXPECT_EQ(expected_outputs, rsatk::findPrimeFactors(norm_num));
+  //since none of these are prime, result should be empty
+
+  EXPECT_TRUE(rsatk::findPrimeFactors(norm_num).empty());
 }
 
 TEST(factorize, largerN) {

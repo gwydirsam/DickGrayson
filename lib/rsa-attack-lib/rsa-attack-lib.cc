@@ -3,20 +3,20 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
 namespace rsatk{
+string relative_path = "../../lib/rsa-attack-lib/";
   //returns a vector of pairs that correspond to the found factors
   vector<pair<mpz_class, mpz_class > > findPrimeFactors(mpz_class n){
     vector<pair< mpz_class, mpz_class> > factors;
 
     ifstream prime_file;
-    prime_file.exceptions ( std::ifstream::failbit | std::ifstream::badbit );
+    prime_file.exceptions ( ifstream::failbit | ifstream::badbit );
     try{
       //assumption that we run the executable inside of top directory
-      prime_file.open("lib/rsa-attack-lib/prime_list_1000000", ios::in);
+      prime_file.open(relative_path + "prime_list_1000000", ios::in);
     }
-    catch (std::ifstream::failure e) {
-      std::cerr << "Exception opening file..file not found\n";
+    catch (ifstream::failure e) {
+      cerr << "Exception opening file..file not found\n";
       return factors;
     }
 
@@ -31,7 +31,7 @@ namespace rsatk{
         mpz_class first_factor = prime_candidate;
         mpz_class other_factor = (n/prime_candidate);
 
-        if(dgrprime::is_prime(other_factor) && dgrprime::is_prime(first_factor)){// then it's a prime
+        if(dgrprime::is_prime(other_factor) && dgrprime::is_prime(first_factor)){// then it's a prime factor
           factors.push_back(pair<mpz_class, mpz_class>(first_factor, other_factor));
           return factors;
         }
@@ -56,7 +56,7 @@ namespace rsatk{
   void generateNPrimes(long int n) {
     try {
       fstream prime_list_file;
-      prime_list_file.open("prime_list_" + to_string(n));
+      prime_list_file.open(relative_path + "prime_list_" + to_string(n));
       mpz_class prime;
 
       // sam: n is a long int, i should be too

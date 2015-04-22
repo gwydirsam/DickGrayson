@@ -11,6 +11,9 @@ namespace Image {
 void BMP::open(const std::string& fname) {
   std::ifstream ifs(fname, std::ios::binary);
   ifs >> data;
+  if (!data.is_valid()) {
+    throw invalid_format;
+  }
 }
 
 void BMP::write(const std::string& fname) {

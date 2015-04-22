@@ -17,7 +17,11 @@ class BMP {
 
   BMP() {}
   BMP(const std::string& fname) { open(fname); }
+
+  // opens a bmp file fname and stores it
   void open(const std::string& fname);
+
+  // saves the bmp data out to the file fname
   void write(const std::string& fname);
 
   // masks a byte from the byte array with the specified mask

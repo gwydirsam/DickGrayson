@@ -23,7 +23,8 @@ class RandomInteger : public Integer {
       : Integer{0_mpz}, bits_{k}, gmp_rand_alg_{gmp_randinit_default} {
     // http://www.cppsamples.com/common-tasks/unpredictable-random-numbers.html
     std::random_device rand_d;
-    std::seed_seq seed_seq{rand_d(), rand_d(), rand_d(), rand_d(), rand_d(), rand_d()};
+    std::seed_seq seed_seq{rand_d(), rand_d(), rand_d(),
+                           rand_d(), rand_d(), rand_d()};
     std::mt19937 mt_engine{seed_seq};
 
     // seed gmp_rand_alg_ with a uint from random_device

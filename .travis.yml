@@ -38,6 +38,7 @@ env:
     - TEST_TYPE=test-dgcrypto
     - TEST_TYPE=test-dgtype
     - TEST_TYPE=test-dgimg
+    - TEST_TYPE=test-dgsnd
     - TEST_TYPE=test-debug-rsa-crypt
     - TEST_TYPE=test-debug-rsa-attack
     - TEST_TYPE=test-debug-stego-crypt
@@ -45,6 +46,7 @@ env:
     - TEST_TYPE=test-debug-dgcrypto
     - TEST_TYPE=test-debug-dgtype
     - TEST_TYPE=test-debug-dgimg
+    - TEST_TYPE=test-debug-dgsnd
 matrix:
   fast_finish: true
   allow_failures:

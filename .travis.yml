@@ -57,6 +57,7 @@ matrix:
     - env: TEST_TYPE=test-dgcrypto
     - env: TEST_TYPE=test-dgtype
     - env: TEST_TYPE=test-dgimg
+    - env: TEST_TYPE=test-dgsnd
     - env: TEST_TYPE=test-debug-rsa-crypt
     - env: TEST_TYPE=test-debug-rsa-attack
     - env: TEST_TYPE=test-debug-stego-crypt
@@ -64,6 +65,7 @@ matrix:
     - env: TEST_TYPE=test-debug-dgcrypto
     - env: TEST_TYPE=test-debug-dgtype
     - env: TEST_TYPE=test-debug-dgimg
+    - env: TEST_TYPE=test-debug-dgsnd
 
 ## install
 before_install:

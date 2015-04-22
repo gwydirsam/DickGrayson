@@ -11,7 +11,7 @@
 //m is the plain_test
 namespace rsatk{
   std::vector<std::pair<mpz_class, mpz_class> > find_prime_factors(mpz_class n);
-  void generate_n_primes(long int n);
+  void generate_n_primes(mpz_class n);
 
   //this function is faster since you can hold onto your place
   //where n is the file offset

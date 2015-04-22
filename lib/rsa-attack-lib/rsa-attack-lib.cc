@@ -54,7 +54,7 @@ string relative_path = "../../lib/rsa-attack-lib/";
     return num;
   }
 
-  void generate_n_primes(long int n) {
+  void generate_n_primes(mpz_class n) {
     try {
       fstream prime_list_file;
       prime_list_file.open(relative_path + "prime_list_" + to_string(n));

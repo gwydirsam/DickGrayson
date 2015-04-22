@@ -56,6 +56,10 @@ TEST(BmpData, ImageOffset) {
   EXPECT_EQ(512u * 512u, bmp.get_byte_array().size() - offset);
 }
 
+TEST(Bmp, InvalidFormatException) {
+  ASSERT_THROW(dgbmp png("../test/dgimg/badformat.png"), dgbmp::Invalid_format_exception);
+}
+
 TEST(Bmp, ByteSetMask) {
   dgbmp bmp("../test/dgimg/test.bmp");
   char first_pixel =

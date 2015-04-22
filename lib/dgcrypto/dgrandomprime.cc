@@ -10,12 +10,14 @@ namespace Crypto {
 // are the two values coprime
 bool RandomPrime::is_coprime(mpz_class value1, mpz_class value2) {
   int gcd = 1;
+  
   for (int i = 1; i <= value1 && i <= value2; i++) {
     if (value1 % i == 0 && value2 % i == 0) {
       gcd = i;
     }
   }
   if (gcd != 1) {
+    std::cout<<"false";
     return false;
   } else {
     return true;

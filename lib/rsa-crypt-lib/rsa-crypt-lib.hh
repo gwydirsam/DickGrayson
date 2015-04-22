@@ -3,10 +3,14 @@
 #include <gmpxx.h>
 
 // sam: why is this a class? Or maybe it should be called PublicKey?
-class PublicKey {
+class RsaKeys {
  public:
-  // generates two random primes and checks coprimality
-  mpz_class generate_key();
+  
+  //generates public key
+  mpz_class generate_public_key(int num_bits);
+
+  //generates private key
+  mpz_class generate_private key();
 
   // n = p*q
   mpz_class compute_n(mpz_class p, mpz_class q);

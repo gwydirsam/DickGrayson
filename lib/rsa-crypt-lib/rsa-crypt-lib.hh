@@ -1,31 +1,35 @@
 #pragma once
 
 #include <gmpxx.h>
+#include <tuple>  // std::tuple
 
 class PublicKey {
  public:
-  PublicKey() : bits_(512) {}
-  PublicKey(mp_bitcnt_t k) : bits_(k) {}
+  PublicKey() : PublicKey{512} {}
+  PublicKey(mp_bitcnt_t k);
 
   // generates two random primes and checks coprimality
-  mpz_class generate_key() const;
+  // mpz_class generate_key() const;
+  const std::tuple<mpz_class, mpz_class> generate_keys() const;
 
   // n = p*q
-  inline mpz_class compute_n(mpz_class p, mpz_class q) const { return (p * q); }
+  inline const mpz_class compute_n(mpz_class p, mpz_class q) const { return (p * q); }
 
   // theta_n = (p-1)*(q-1)
-  inline mpz_class compute_theta_n(mpz_class p, mpz_class q) const {
+  inline const mpz_class compute_theta_n(mpz_class p, mpz_class q) const {
     return ((p - 1) * (q - 1));
   }
 
   // generates exponent (e) where 1 < e < theta_n and theta_n and e are coprime
-  mpz_class compute_e(mpz_class theta_n) const;
+  const mpz_class compute_e(mpz_class theta_n) const;
 
-  // helper function to check for primality
-  mpz_class get_gcd(mpz_class p, mpz_class q) const;
+  // get gcd
+  const mpz_class get_gcd(mpz_class p, mpz_class q) const;
 
  private:
   // data members
+  mpz_class n_;
+  mpz_class e_;
   mp_bitcnt_t bits_;
 
   // private member helper functions

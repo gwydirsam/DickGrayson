@@ -116,6 +116,15 @@ install-deps install-ccache::
 	@echo Done Installing Better Defaults
 	@echo ======================================
 
+install-deps install-libsndfile::
+	@echo ======================================
+	@echo Start Installing libsndfile
+	@echo ======================================
+	@(cd share/scripts; bash install-libsndfile.sh)
+	@echo ======================================
+	@echo Done Installing libsndfile
+	@echo ======================================
+
 install-openssl::
 	@echo ======================================
 	@echo Start Installing OpenSSL

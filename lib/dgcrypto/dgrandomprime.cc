@@ -18,7 +18,7 @@ bool RandomPrime::is_coprime(mpz_class value1, mpz_class value2) {
   }
 
   if (gcd != 1) {
-    std::cout<<"false";
+    std::cerr << "false";
     return false;
   } else {
     return true;
@@ -106,6 +106,7 @@ bool RandomPrime::is_prime(mpz_class value) {
         return true;
       }
     }
+    return false;
   }
   // nothing should manage to reach this, but it's definitly not prime then.
   return false;

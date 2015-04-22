@@ -2,6 +2,49 @@
 #include <fstream>
 #include <dgimg/dgimg.hh>
 
+////// BMP TESTS
+
+TEST(Bmp, InvalidFormatException) {
+  ASSERT_THROW(dgbmp png("../../test/dgimg/badformat.png"),
+               dgbmp::Invalid_format_exception);
+}
+
+TEST(Bmp, ByteSetMask) {
+  dgbmp bmp("../../test/dgimg/test.bmp");
+  const std::string& byte_array = bmp.get_data().get_byte_array();
+  int image_offset = bmp.get_data().image_offset();
+  char first_pixel = byte_array[image_offset];
+
+  bmp.byte_set_mask(0, 0x0);
+  EXPECT_EQ(first_pixel, byte_array[image_offset]);
+
+  bmp.byte_set_mask(0, 0xFF);
+  EXPECT_EQ('\xFF', byte_array[image_offset]);
+}
+
+TEST(Bmp, ByteUnsetMask) {
+  dgbmp bmp("../../test/dgimg/test.bmp");
+  const std::string& byte_array = bmp.get_data().get_byte_array();
+  int image_offset = bmp.get_data().image_offset();
+  char first_pixel = byte_array[image_offset];
+
+  bmp.byte_unset_mask(0, 0x0);
+  EXPECT_EQ(first_pixel, byte_array[image_offset]);
+  bmp.byte_unset_mask(0, 0xFF);
+  EXPECT_EQ('\x00', byte_array[image_offset]);
+}
+
+TEST(Bmp, MaxPixelValue) {
+  dgbmp bmp("../../test/dgimg/test_max_xFF.bmp");
+  dgbmp bmp2("../../test/dgimg/test_black.bmp");
+  dgbmp bmp3("../../test/dgimg/test_24bit_max_xFFFFFF.bmp");
+  EXPECT_EQ(0xFFu, bmp.max_pixel_value());
+  EXPECT_EQ(0x0u, bmp2.max_pixel_value());
+  EXPECT_EQ(0xFFFFFFu, bmp3.max_pixel_value());
+}
+
+////// BMP_DATA TESTS
+
 //// helper functions which read and write BMP_data to/from file
 static dgbmpdata open_bmp(const std::string& fname) {
   std::ifstream ifs(fname, std::ios::binary);
@@ -54,42 +97,4 @@ TEST(BmpData, ImageOffset) {
   dgbmpdata bmp = open_bmp("../../test/dgimg/test.bmp");
   unsigned offset = bmp.image_offset();
   EXPECT_EQ(512u * 512u, bmp.get_byte_array().size() - offset);
-}
-
-TEST(Bmp, InvalidFormatException) {
-  ASSERT_THROW(dgbmp png("../../test/dgimg/badformat.png"),
-               dgbmp::Invalid_format_exception);
-}
-
-TEST(Bmp, ByteSetMask) {
-  dgbmp bmp("../../test/dgimg/test.bmp");
-  char first_pixel =
-      bmp.get_data().get_byte_array()[bmp.get_data().image_offset()];
-  bmp.byte_set_mask(0, 0x0);
-  EXPECT_EQ(first_pixel,
-            bmp.get_data().get_byte_array()[bmp.get_data().image_offset()]);
-  bmp.byte_set_mask(0, 0xFF);
-  EXPECT_EQ('\xFF',
-            bmp.get_data().get_byte_array()[bmp.get_data().image_offset()]);
-}
-
-TEST(Bmp, ByteUnsetMask) {
-  dgbmp bmp("../../test/dgimg/test.bmp");
-  char first_pixel =
-      bmp.get_data().get_byte_array()[bmp.get_data().image_offset()];
-  bmp.byte_unset_mask(0, 0x0);
-  EXPECT_EQ(first_pixel,
-            bmp.get_data().get_byte_array()[bmp.get_data().image_offset()]);
-  bmp.byte_unset_mask(0, 0xFF);
-  EXPECT_EQ('\x00',
-            bmp.get_data().get_byte_array()[bmp.get_data().image_offset()]);
-}
-
-TEST(Bmp, MaxPixelValue) {
-  dgbmp bmp("../../test/dgimg/test_max_xFF.bmp");
-  dgbmp bmp2("../../test/dgimg/test_black.bmp");
-  dgbmp bmp3("../../test/dgimg/test_24bit_max_xFFFFFF.bmp");
-  EXPECT_EQ(0xFFu, bmp.max_pixel_value());
-  EXPECT_EQ(0x0u, bmp2.max_pixel_value());
-  EXPECT_EQ(0xFFFFFFu, bmp3.max_pixel_value());
 }

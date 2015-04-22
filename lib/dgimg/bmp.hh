@@ -2,6 +2,7 @@
 
 #include <string>
 #include <exception>
+#include "EasyBMP.h"
 #include "bmp_data.hh"
 
 namespace DG {

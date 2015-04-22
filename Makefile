@@ -261,6 +261,8 @@ run-all test-all test test-build test-dgtype:: build
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgtype-test --gtest_color=yes
 run-all test-all test test-build test-dgimg:: build
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgimg-test --gtest_color=yes
+run-all test-all test test-build test-dgsnd:: build
+	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgsnd-test --gtest_color=yes
 run-all test-all test test-build test-libgnump:: build
 	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/libgnump-test --gtest_color=yes
 
@@ -288,6 +290,8 @@ run-all test-all test-debug test-debug-dgtype:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
 run-all test-all test-debug test-debug-dgimg:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+run-all test-all test-debug test-debug-dgsnd:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgsnd-test --gtest_color=yes
 run-all test-all test-debug test-debug-libgnump:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
@@ -361,6 +365,8 @@ valgrind-all valgrind-test-dgtype valgrind-test-debug-dgtype::
 	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
 valgrind-all valgrind-test-dgimg valgrind-test-debug-dgimg::
 	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+valgrind-all valgrind-test-dgsnd valgrind-test-debug-dgsnd::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgsnd-test --gtest_color=yes
 valgrind-all valgrind-test-libgnump valgrind-test-debug-libgnump::
 	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
@@ -403,6 +409,7 @@ help-all::
 	$(info make test-dgcrypto           - run (release build) dgcrypto test)
 	$(info make test-dgtype             - run (release build) dgtype test)
 	$(info make test-dgimg              - run (release build) dgimg test)
+	$(info make test-dgsnd              - run (release build) dgsnd test)
 	$(info make test-libgnump           - run (release build) gmp library test)
 	$(info make test-debug-rsa-crypt    - run (debug build) rsa-crypt test)
 	$(info make test-debug-rsa-attack   - run (debug build) rsa-attack test)
@@ -411,6 +418,7 @@ help-all::
 	$(info make test-debug-dgcrypto     - run (debug build) dgcrypto test)
 	$(info make test-debug-dgtype       - run (debug build) dgtype test)
 	$(info make test-debug-dgimg        - run (debug build) dgimg test)
+	$(info make test-debug-dgsnd        - run (debug build) dgsnd test)
 	$(info make test-debug-libgnump     - run (debug build) gmp library test)
 help help-all::
 	$(info )

@@ -23,7 +23,8 @@ std::istream& operator>>(std::istream& is, BMP_data& bmp) {
   try {
     bmp.pixel_array =
         bmp.byte_array.substr(bmp.image_offset(), bmp.pixel_array_size());
-  } catch(...) { }
+  } catch (...) {
+  }
   return is;
 }
 
@@ -75,7 +76,7 @@ bool BMP_data::is_valid() const {
   std::string validation;
   try {
     validation = byte_array.substr(0, 2);
-  } catch(...) {
+  } catch (...) {
     return false;
   }
   return validation == "BM" && num_color_planes() == 1;

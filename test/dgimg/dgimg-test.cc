@@ -57,7 +57,8 @@ TEST(BmpData, ImageOffset) {
 }
 
 TEST(Bmp, InvalidFormatException) {
-  ASSERT_THROW(dgbmp png("../test/dgimg/badformat.png"), dgbmp::Invalid_format_exception);
+  ASSERT_THROW(dgbmp png("../test/dgimg/badformat.png"),
+               dgbmp::Invalid_format_exception);
 }
 
 TEST(Bmp, ByteSetMask) {

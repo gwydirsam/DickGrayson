@@ -347,8 +347,10 @@ cppcheck::
 	cppcheck -j4 --enable=all lib/ bin/
 
 clang-format::
-	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) . -name '*.hh'`
-	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) . -name '*.cc'`
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) lib -name '*.hh'`
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) lib -name '*.cc'`
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) bin -name '*.cc'`
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) test -name '*.cc'`
 
 valgrind-all:: debug
 	@echo ======================================

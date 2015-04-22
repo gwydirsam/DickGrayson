@@ -346,6 +346,10 @@ clean-force clean-build-dirs::
 cppcheck::
 	cppcheck -j4 --enable=all lib/ bin/
 
+clang-format::
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) . -name '*.hh'`
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) . -name '*.cc'`
+
 valgrind-all:: debug
 	@echo ======================================
 	@echo Running Valgrind on debug binaries

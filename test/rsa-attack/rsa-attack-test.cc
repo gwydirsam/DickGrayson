@@ -23,14 +23,8 @@ TEST(factorize, bigSemiPrime) {
 
 TEST(factorize, smallNormalNumber) {
   mpz_class norm_num = 108;
-  //(2, 54)
-  //(4, 27)
-  //(9, 12)
-  //(3, 36)
-  //(6, 18)
-
+  //factors are (2, 54) , (4, 27) , (9, 12) , (3, 36) , (6, 18)
   //since none of these are prime, result should be empty
-
   EXPECT_TRUE(rsatk::find_prime_factors(norm_num).empty());
 }
 
@@ -60,7 +54,6 @@ protected:
   virtual void SetUp() {
     n = p * q;
   }
-  //tear down?
 
   mpz_class p = 11; //we get this from factorization
   mpz_class q = 13;
@@ -70,16 +63,12 @@ protected:
 };
 
 
-//namespace crt = CrackingRSATest;
   TEST_F(CrackingRSATest, calculateTotient){
     mpz_class expected_totient = 120;
     mpz_class actual_totient = rsatk::calculate_totient(p, q);
     EXPECT_EQ(expected_totient, actual_totient);
   }
 
-  //TEST(CrackingRSATest, findE){
-  //EXPECT_EQ(0,1);
-  //}
   TEST_F(CrackingRSATest, calculateD){
     mpz_class expected_d = 103;
     mpz_class totient = rsatk::calculate_totient(p, q);
@@ -101,7 +90,9 @@ protected:
     EXPECT_EQ(m, decrypted_message);
   }
 
-
+TEST(PublicKeyReading, findE){
+  EXPECT_EQ(0,1); //dummy
+}
 
 // TEST(Primes, Generate){
 // generate_n_primes(1000000);

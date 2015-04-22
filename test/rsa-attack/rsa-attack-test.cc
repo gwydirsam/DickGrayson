@@ -5,9 +5,9 @@
 using namespace std;
 
 TEST(factorize, smallSemiPrime) {
-  mpz_class small_n = 1767;
+  mpz_class small_n = 48443;
   vector<pair<mpz_class, mpz_class>> expected_outputs = {
-      pair<mpz_class, mpz_class>(31, 57)};
+      pair<mpz_class, mpz_class>(193, 251)};
   EXPECT_EQ(expected_outputs, rsatk::findPrimeFactors(small_n));
 }
 

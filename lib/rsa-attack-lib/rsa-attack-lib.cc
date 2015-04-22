@@ -87,4 +87,10 @@ string relative_path = "../../lib/rsa-attack-lib/";
     return file;
   }
 
+  //not implemented yet
+  mpz_class calculate_totient(mpz_class p, mpz_class q){return -2;}
+  mpz_class calculate_d(mpz_class totient, mpz_class e){return -2;}
+  mpz_class extended_euclidean(mpz_class totient, mpz_class e){return -2;}
+
+  std::string decrypt_message(std::string encrypted,  mpz_class n, mpz_class d){return "not implemented";}
 }

@@ -1,12 +1,19 @@
 #pragma once
 
 #include <string>
+#include <exception>
 #include "bmp_data.hh"
 
 namespace DG {
 namespace Image {
 class BMP {
  public:
+  struct Invalid_format_exception : public std::exception {
+    virtual const char* what() const throw() {
+      return "BMP: Invalid_format_exception";
+    }
+  } invalid_format;
+
   BMP() {}
   BMP(const std::string& fname) { open(fname); }
   void open(const std::string& fname);

@@ -1,30 +1,38 @@
 #pragma once
 
 #include <gmpxx.h>
+#include <tuple>  // std::tuple
 
-// sam: why is this a class? Or maybe it should be called PublicKey?
 class RsaKeys {
  public:
-  
-  //generates public key
-  mpz_class generate_public_key(int num_bits);
+  RsaKeys() : RsaKeys{512} {}
+  RsaKeys(mp_bitcnt_t k);
 
-  //generates private key
-  mpz_class generate_private key();
+  // generates two random primes and checks coprimality
+  // mpz_class generate_key() const;
+  const std::tuple<mpz_class, mpz_class> generate_keys() const;
 
   // n = p*q
-  mpz_class compute_n(mpz_class p, mpz_class q);
+  inline const mpz_class compute_n(mpz_class p, mpz_class q) const { return (p * q); }
 
   // theta_n = (p-1)*(q-1)
-  mpz_class compute_theta_n(mpz_class p, mpz_class q);
+  inline const mpz_class compute_theta_n(mpz_class p, mpz_class q) const {
+    return ((p - 1) * (q - 1));
+  }
 
   // generates exponent (e) where 1 < e < theta_n and theta_n and e are coprime
-  mpz_class compute_e(mpz_class theta_n);
+  const mpz_class compute_e(mpz_class theta_n) const;
+
+  // get gcd
+  const mpz_class get_gcd(mpz_class p, mpz_class q) const;
 
  private:
-  // helper function to check for primality
-  bool is_coprime(mpz_class p, mpz_class q);
+  // data members
+  mpz_class n_;
+  mpz_class e_;
+  mp_bitcnt_t bits_;
 
-  // helper function to generate random numbers
-  mpz_class generate_random_value();
+  // private member helper functions
+  // helper function to check for primality
+  inline bool is_coprime(mpz_class p, mpz_class q) const;
 };

@@ -42,14 +42,19 @@ TEST(factorize, largerN) {
 TEST(ExtendedEuclidean, wikipediaExample){
   mpz_class a = 240;
   mpz_class b = 46;
+
+  mpz_class expected_x = -9;
+  mpz_class expected_y = 47;
   mpz_class expected_gcd = 2;
 
-  mpz_class actual_gcd = rsatk::extended_euclidean(a,b);
-  EXPECT_EQ(expected_gcd, actual_gcd);
+  vector<mpz_class> actual = rsatk::extended_euclidean(a,b);
+  EXPECT_EQ(expected_x, actual[0]);
+  EXPECT_EQ(expected_y, actual[1]);
+  EXPECT_EQ(expected_gcd, actual[2]);
 }
 
 //test pulled from here: http://doctrina.org/How-RSA-Works-With-Examples.html
-class CrackingRSATest : public ::testing::Test {
+class EasyCrackingRSATest : public ::testing::Test {
 protected:
   virtual void SetUp() {
     n = p * q;
@@ -58,18 +63,18 @@ protected:
   mpz_class p = 11; //we get this from factorization
   mpz_class q = 13;
   mpz_class e = 7; //given(supposedly) in public key
-  string m = "attack at dawn"; //for testing
+  string m = "9";
   mpz_class n;
 };
 
 
-  TEST_F(CrackingRSATest, calculateTotient){
+  TEST_F(EasyCrackingRSATest, calculateTotient){
     mpz_class expected_totient = 120;
     mpz_class actual_totient = rsatk::calculate_totient(p, q);
     EXPECT_EQ(expected_totient, actual_totient);
   }
 
-  TEST_F(CrackingRSATest, calculateD){
+  TEST_F(EasyCrackingRSATest, calculateD){
     mpz_class expected_d = 103;
     mpz_class totient = rsatk::calculate_totient(p, q);
     ASSERT_EQ(120, totient);
@@ -77,8 +82,8 @@ protected:
     EXPECT_EQ(expected_d, actual_d);
   }
 
-  TEST_F(CrackingRSATest, applyPrivateKey){
-    string encrypted_message = "35052111338673026690212423937053328511880760811579981620642802346685810623109850235943049080973386241113784040794704193978215378499765413083646438784740952306932534945195080183861574225226218879827232453912820596886440377536082465681750074417459151485407445862511023472235560823053497791518928820272257787786";
+  TEST_F(EasyCrackingRSATest, applyPrivateKey){
+    string encrypted_message = "48";
 
     mpz_class totient = rsatk::calculate_totient(p, q);
     ASSERT_EQ(120, totient);
@@ -90,10 +95,12 @@ protected:
     EXPECT_EQ(m, decrypted_message);
   }
 
-TEST(PublicKeyReading, findE){
+/*
+  TEST(PublicKeyReading, findE){
   EXPECT_EQ(0,1); //dummy
 }
 
-// TEST(Primes, Generate){
-// generate_n_primes(1000000);
-//}
+ TEST(Primes, Generate){
+ generate_n_primes(1000000);
+ }
+*/

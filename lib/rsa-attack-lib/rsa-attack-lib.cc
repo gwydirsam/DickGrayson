@@ -2,8 +2,8 @@
 #include <dgcrypto/dgcrypto.hh>
 #include <iostream>
 #include <vector>
-using namespace std;
 namespace rsatk{
+using namespace std;
 string relative_path = "../../lib/rsa-attack-lib/";
   //returns a vector of pairs that correspond to the found factors
   vector<pair<mpz_class, mpz_class > > find_prime_factors(mpz_class n){
@@ -16,7 +16,8 @@ string relative_path = "../../lib/rsa-attack-lib/";
       prime_file.open(relative_path + "prime_list_1000000", ios::in);
     }
     catch (ifstream::failure e) {
-      cerr << "Exception opening file..file not found\n";
+      cerr << "Caught ios_base::failure: " << __PRETTY_FUNCTION__ << "\n";
+      cerr << "Exception: " << e.what() << "\n";
       return factors;
     }
 
@@ -91,8 +92,48 @@ string relative_path = "../../lib/rsa-attack-lib/";
   mpz_class calculate_totient(mpz_class p, mpz_class q){
     return (p-1) * (q-1);
   }
-  mpz_class calculate_d(mpz_class totient, mpz_class e){return -2;}
-  mpz_class extended_euclidean(mpz_class totient, mpz_class e){return -2;}
+  mpz_class calculate_d(mpz_class totient, mpz_class e){
+    //we want the second value: y
+    mpz_class d = extended_euclidean(totient, e)[1];
+    //make sure d is in our bounds
+
+    mpz_class bounded_d = d % totient;
+
+    //C++ mod arithmetic not suitable if d is negative
+    //http://stackoverflow.com/a/12089637
+    if(bounded_d < 0){
+      bounded_d = bounded_d + totient;
+    }
+
+    return bounded_d;
+  }
+
+  vector<mpz_class> extended_euclidean(mpz_class a, mpz_class b){
+    vector<mpz_class> x_y_gcd(3);
+
+    mpz_class x, last_x, y, last_y, r, last_r;
+    x =  last_y = 0;
+    y = last_x = 1;
+    r = b;
+    last_r = a;
+    while(r != 0){
+      mpz_class q = last_r / r; //floor division because of int type
+      //mpz_class r = b % a;
+      mpz_class tmp = r;
+      r = last_r - q * tmp;
+      last_r = tmp;
+
+      tmp = x;
+      x = last_x - q * tmp;
+      last_x = tmp;
+
+      tmp = y;
+      y = last_y - q * tmp;
+      last_y = tmp;
+    }
+    x_y_gcd = {last_x, last_y, last_r};
+    return x_y_gcd;
+  }
 
   std::string decrypt_message(std::string encrypted,  mpz_class n, mpz_class d){return "not implemented";}
 }

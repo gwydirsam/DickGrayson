@@ -4,14 +4,14 @@
 #include <dgcrypto/dgcrypto.hh>
 
 TEST(DGCryptoPrime, Prime2b) {
-  // create a prime with 8 bits
+  // create a prime with 2 bits
   dgrprime two(2);
 
   EXPECT_EQ(2u, two.bits());
 }
 
 TEST(DGCryptoPrime, Prime4b) {
-  // create a prime with 8 bits
+  // create a prime with 4 bits
   dgrprime four(4);
 
   EXPECT_EQ(4u, four.bits());
@@ -25,17 +25,17 @@ TEST(DGCryptoPrime, Prime8b) {
 }
 
 TEST(DGCryptoPrime, Prime16b) {
-  // create a prime with 2 bits
+  // create a prime with 16 bits
   dgrprime sixteen(16);
 
   EXPECT_EQ(16u, sixteen.bits());
 }
 
 TEST(DGCryptoPrime, Prime199b) {
-  // create a prime with 100 bits
-  dgrprime hundred(199);
+  // create a prime with 199 bits
+  dgrprime oneninenine(199);
 
-  EXPECT_EQ(199u, hundred.bits());
+  EXPECT_EQ(199u, oneninenine.bits());
 }
 
 TEST(DGCryptoPrime, isPrime2) { EXPECT_TRUE(dgrprime::is_prime(2_mpz)); }

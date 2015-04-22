@@ -64,10 +64,16 @@ bool RandomPrime::is_prime(mpz_class value) {
     // if value is less than 2 or even return false
     return false;
   } else {
+    // http://www.cppsamples.com/common-tasks/unpredictable-random-numbers.html
+    std::random_device rand_d;
+    std::seed_seq seed_seq{rand_d(), rand_d(), rand_d(),
+                           rand_d(), rand_d(), rand_d()};
+    std::mt19937 mt_engine{seed_seq};
+
     // initialize random engine (can't use our member in static function)
     gmp_randclass rand_engine{gmp_randinit_default};
     // seed gmp_rand_alg_ with a uint from random_device
-    rand_engine.seed(std::random_device{}());
+    rand_engine.seed(mt_engine());
 
     // sam: what are any of these one letter variables?
     // sam: what does 's' mean?
@@ -106,10 +112,16 @@ bool RandomPrime::is_prime(mpz_class value) {
 
 // return random prime of ~k bits
 mpz_class RandomPrime::generate_prime(mp_bitcnt_t k) {
+  // http://www.cppsamples.com/common-tasks/unpredictable-random-numbers.html
+  std::random_device rand_d;
+  std::seed_seq seed_seq{rand_d(), rand_d(), rand_d(),
+                         rand_d(), rand_d(), rand_d()};
+  std::mt19937 mt_engine{seed_seq};
+
   // initialize random engine (can't use our member in static function)
   gmp_randclass rand_engine{gmp_randinit_default};
   // seed gmp_rand_alg_ with a uint from random_device
-  rand_engine.seed(std::random_device{}());
+  rand_engine.seed(mt_engine());
 
   // intitialize to first non prime number so while loop executes
   mpz_class value = 4;

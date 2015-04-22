@@ -3,6 +3,36 @@
 #include <gmpxx.h>
 #include <dgcrypto/dgcrypto.hh>
 
+TEST(DGCryptoInteger, emptyConstructor) {
+  // create a dgint with empty constructor -- should be zero
+  dgint zero;
+
+  EXPECT_EQ(0_mpz, zero.value());
+}
+
+TEST(DGCryptoInteger, TenConstructor) {
+  // create a dgint with value 10
+  dgint ten(10);
+
+  EXPECT_EQ(10_mpz, ten.value());
+}
+
+TEST(DGCryptoInteger, prefixIncrement) {
+  // create a dgint with value 10
+  dgint ten(10);
+  dgint after_inc = ++ten;
+
+  EXPECT_EQ(11_mpz, after_inc.value());
+}
+
+TEST(DGCryptoInteger, postfixIncrement) {
+  // create a dgint with value 10
+  dgint ten(10);
+  dgint before_inc = ten++;
+
+  EXPECT_EQ(10_mpz, before_inc.value());
+}
+
 TEST(DGCryptoPrime, Prime2b) {
   // create a prime with 2 bits
   dgrprime two(2);

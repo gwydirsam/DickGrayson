@@ -15,11 +15,12 @@ if ! [[ $(uname) == "Darwin" ]]; then
 
     if ! [ -f "${INSTALL_PREFIX}/include/sndfile.h" ]; then
 
-        if ! [ -f "${TMP_DIR}/`basename $URL`" ]; then
-            wget ${URL} -O ${TMP_DIR}/`basename $URL`
-        fi
-
         if ! [ -d "${TMP_DIR}/${DIR_NAME}" ]; then
+
+            if ! [ -f "${TMP_DIR}/`basename $URL`" ]; then
+                wget ${URL} -O ${TMP_DIR}/`basename $URL`
+            fi
+
             tar -C ${TMP_DIR} -xf ${TMP_DIR}/`basename $URL`
         fi
 

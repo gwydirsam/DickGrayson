@@ -57,7 +57,8 @@ DEBUG_TEST_BINS := $(wildcard $(DEBUG_DIR)/test/*-test)
 				install-better-defaults install-cmake install-gmp xcode xcode-all \
 				xcode-debug xcode-build ninja ninja-all ninja-debug ninja-build test-gmp
 
-all create-build-list::
+all xcode-all xcode xcode-build xcode-debug ninja-all \
+ninja ninja-build ninja-debug release build debug compile create-build-list::
 	@for dir in $(shell $(FIND) $(PROJECT_DIR)/lib -mindepth 1 -type d); do \
 		$(FIND) $$dir -name '*.cc' > $$dir/build_list.cmake; \
 	done

@@ -5,11 +5,13 @@
 
 #include <unistd.h>
 #include <getopt.h>
+
 #include <rsa-attack-lib/rsa-attack-lib.hh>
 
-const std::vector<std::string> attack_types = {"factoring", "chinese_rt", "other"};
+const std::vector<std::string> attack_types = {"factoring", "chinese_rt",
+                                               "other"};
 
-void whatAttackTypes() {
+void what_attack_types() {
   std::cout << "\nType can be ";
   for (std::size_t i = 0; i < attack_types.size(); ++i) {
     std::cout << "\'" << attack_types[i] << "\', ";
@@ -17,12 +19,12 @@ void whatAttackTypes() {
   std::cout << std::endl;
 }
 
-void usage(){
-  std::cout << "Usage is --attack [type] --filename [filename]"  << std::endl;
-  whatAttackTypes();
+void usage() {
+  std::cout << "Usage is --attack [type] --filename [filename]" << std::endl;
+  what_attack_types();
 }
 
-void whatWentWrong(int flag, bool ioerror) {
+void what_went_wrong(int flag, bool ioerror) {
   if (ioerror) {
     std::cout
         << "File i/o error. Check that file exists and has correct permissions."
@@ -30,9 +32,8 @@ void whatWentWrong(int flag, bool ioerror) {
   }
   if (flag == 1) {
     std::cout << "missing argument --attack [type]" << std::endl;
-    whatAttackTypes();
-  }
-  if (flag == 2) {
+    what_attack_types();
+  } else if (flag == 2) {
     std::cout << "missing argument --filename [file_to_crack]" << std::endl;
   }
 }
@@ -52,9 +53,8 @@ int main(int argc, char* argv[]) {
     switch (ch) {
       case 'a': {
         aflag = 1;
-        // sam: this should probably out to cerr
         if (optarg == attack_types[0]) {
-          std::cout << "Running " << attack_types[0] << " on file.."
+          std::cerr << "Running " << attack_types[0] << " on file.."
                     << std::endl;
         }
         break;
@@ -63,7 +63,6 @@ int main(int argc, char* argv[]) {
         fflag = 2;
         std::string fname = std::string(optarg);
         std::fstream f(fname, std::ios::in);
-        // sam: this should probably be a try catch block
         if (!f.is_open()) {
           ioerror = true;
         } else {
@@ -85,11 +84,15 @@ int main(int argc, char* argv[]) {
       }
     }
   }
-  // sam: what is this about?
+
   if (!fflag || !aflag) {
     usage();
   }
+
   argc -= optind;
   argv += optind;
-  whatWentWrong(fflag + aflag, ioerror);
+
+  what_went_wrong(fflag + aflag, ioerror);
+
+  std::exit(EXIT_SUCCESS);
 }

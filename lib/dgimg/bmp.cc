@@ -35,12 +35,6 @@ void BMP::pixel_set_mask(int x, int y, unsigned mask) {
   RGBApixel rgba = unsigned_to_rgba(pixel);
   rgba.Alpha = data.GetPixel(x, y).Alpha;
   data.SetPixel(x, y, rgba);
-  /*
-  unsigned byte = data.byte_array[index + data.image_offset()];
-  byte |= mask;
-  data.byte_array[index + data.image_offset()] = byte;
-  return;
-  */
 }
 
 void BMP::pixel_unset_mask(int x, int y, unsigned mask) {
@@ -49,12 +43,6 @@ void BMP::pixel_unset_mask(int x, int y, unsigned mask) {
   RGBApixel rgba = unsigned_to_rgba(pixel);
   rgba.Alpha = data.GetPixel(x, y).Alpha;
   data.SetPixel(x, y, rgba);
-  /*
-  unsigned byte = data.byte_array[index + data.image_offset()];
-  byte &= ~mask;
-  data.byte_array[index + data.image_offset()] = byte;
-  return;
-  */
 }
 
 unsigned BMP::get_pixel(int x, int y) const {

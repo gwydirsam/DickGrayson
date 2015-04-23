@@ -8,7 +8,7 @@ set(CMAKE_CONFIGURATION_TYPES Debug Release)
 
 # turn colors on for makefiles
 SET(CMAKE_COLOR_MAKEFILE ON)
-# turn on verbose for makesfiles
+# turn on for verbose makesfiles
 SET(CMAKE_VERBOSE_MAKEFILE OFF)
 
 # tests are on by default
@@ -44,9 +44,9 @@ list(APPEND PROJECT_BIN_LIST ${RSA_CRYPT} ${RSA_ATTACK} ${STEGO_CRYPT} ${STEGO_A
 # binary specific libraries
 list(APPEND PROJECT_BIN_LIB_LIST ${RSA_CRYPT_LIB} ${RSA_ATTACK_LIB} ${STEGO_CRYPT_LIB} ${STEGO_ATTACK_LIB})
 # project internal libraries
-list(APPEND PROJECT_INTERAL_LIB_LIST ${IMAGE_LIB} ${SOUND_LIB} ${CRYPTO_LIB} ${TYPE_LIB})
+list(APPEND PROJECT_INTERNAL_LIB_LIST ${IMAGE_LIB} ${SOUND_LIB} ${CRYPTO_LIB} ${TYPE_LIB})
 # project internal and binary specific libraries
-list(APPEND PROJECT_COMBINED_LIB_LIST ${PROJECT_BIN_LIB_LIST} ${PROJECT_INTERAL_LIB_LIST})
+list(APPEND PROJECT_COMBINED_LIB_LIST ${PROJECT_BIN_LIB_LIST} ${PROJECT_INTERNAL_LIB_LIST})
 
 ## locations
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/bin)

@@ -12,11 +12,12 @@ if ! [[ $(uname) == "Darwin" ]]; then
 
     if ! [ -f "${INSTALL_PREFIX}/bin/ccache" ]; then
 
-        if ! [ -f "${TMP_DIR}/`basename $URL`" ]; then
-            wget --no-check-certificate ${URL} -O ${TMP_DIR}/`basename $URL`
-        fi
-
         if ! [ -d "${TMP_DIR}/`basename $URL .tar.bz2`" ]; then
+
+            if ! [ -f "${TMP_DIR}/`basename $URL`" ]; then
+                wget --no-check-certificate ${URL} -O ${TMP_DIR}/`basename $URL`
+            fi
+
             tar -C ${TMP_DIR} -xjf ${TMP_DIR}/`basename $URL`
         fi
 

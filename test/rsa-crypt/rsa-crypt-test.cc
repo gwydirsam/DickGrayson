@@ -1,11 +1,12 @@
 #include <gtest/gtest.h>
+
+#include <iostream>
+#include <dgcrypto/dgcrypto.hh>
 #include <rsa-crypt-lib/rsa-crypt-lib.hh>
-#include <cstdlib.h>
-TEST(CryptStub, oneEqualsone) {
-  int one = 1;
-  RsaKeys::RsaKeys publickey = new RsaKeys(512);
-  
-  EXPECT_EQ(1, one);
+
+
+TEST(RSACrypt, RsaKeysConstructor) {
+  RsaKeys my_keys(1024);
+
+  EXPECT_EQ(1024ul, my_keys.bits());
 }
-
-

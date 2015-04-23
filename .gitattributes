@@ -1,0 +1,14 @@
+# Some files should not be treated as text when diffing or merging.
+*.gpg binary
+*.gz binary
+*.icns binary
+*.ico binary
+*.pbm binary
+*.pdf binary
+*.png binary
+*.sig binary
+*.tiff binary
+*.bmp binary
+
+*.bmp diff=nodiff
+prime_list* diff=nodiff

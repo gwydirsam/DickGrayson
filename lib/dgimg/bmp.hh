@@ -22,6 +22,12 @@ class BMP {
     }
   } invalid_format;
 
+  struct No_such_file_exception : public std::exception {
+    virtual const char* what() const throw() {
+      return "BMP: No_such_file_exception";
+    }
+  } no_such_file;
+
   BMP() {SetEasyBMPwarningsOff();}
   BMP(const std::string& fname) :BMP() { open(fname); }
 

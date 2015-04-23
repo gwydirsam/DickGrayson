@@ -9,6 +9,11 @@ TEST(Bmp, InvalidFormatException) {
                dgbmp::Invalid_format_exception);
 }
 
+TEST(Bmp, NoSuchFileException) {
+  ASSERT_THROW(dgbmp bmp("../../test/dgimg/imaginary.bmp"),
+               dgbmp::No_such_file_exception);
+}
+
 TEST(Bmp, PixelSetMask) {
   dgbmp bmp("../../test/dgimg/test.bmp");
   unsigned first_pixel = bmp.get_pixel(0, 0);

@@ -11,24 +11,24 @@ TEST(Bmp, InvalidFormatException) {
 
 TEST(Bmp, PixelSetMask) {
   dgbmp bmp("../../test/dgimg/test.bmp");
-  char first_pixel = bmp.get_pixel(0, 0);
+  unsigned first_pixel = bmp.get_pixel(0, 0);
 
   bmp.pixel_set_mask(0, 0, 0x0);
   EXPECT_EQ(first_pixel, bmp.get_pixel(0, 0));
 
-  bmp.pixel_set_mask(0, 0, 0xFF);
-  EXPECT_EQ(first_pixel, bmp.get_pixel(0, 0));
+  bmp.pixel_set_mask(0, 0, 0xFFFFFF);
+  EXPECT_EQ(0xFFFFFF, bmp.get_pixel(0, 0));
 }
 
 TEST(Bmp, PixelUnsetMask) {
   dgbmp bmp("../../test/dgimg/test.bmp");
-  char first_pixel = bmp.get_pixel(0, 0);
+  unsigned first_pixel = bmp.get_pixel(0, 0);
 
   bmp.pixel_unset_mask(0, 0, 0x0);
   EXPECT_EQ(first_pixel, bmp.get_pixel(0, 0));
 
-  bmp.pixel_unset_mask(0, 0, 0xFF);
-  EXPECT_EQ('\x00', bmp.get_pixel(0, 0));
+  bmp.pixel_unset_mask(0, 0, 0xFFFFFF);
+  EXPECT_EQ(0x0, bmp.get_pixel(0, 0));
 }
 
 TEST(Bmp, MaxPixelValue) {

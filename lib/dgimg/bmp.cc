@@ -8,6 +8,17 @@
 namespace DG {
 namespace Image {
 
+static RGBApixel unsigned_to_rgba(unsigned uint) {
+  unsigned char r = (uint >> 16) & 0xFF;
+  unsigned char g = (uint >> 8) & 0xFF;
+  unsigned char b = uint & 0xFF;
+  RGBApixel rgba;
+  rgba.Red = r;
+  rgba.Green = g;
+  rgba.Blue = b;
+  return rgba;
+}
+
 void BMP::open(const std::string& fname) {
   if (!data.ReadFromFile(fname.c_str())) {
     throw invalid_format;
@@ -19,6 +30,11 @@ void BMP::write(const std::string& fname) {
 }
 
 void BMP::pixel_set_mask(int x, int y, unsigned mask) {
+  unsigned pixel = get_pixel(x, y);
+  pixel |= mask;
+  RGBApixel rgba = unsigned_to_rgba(pixel);
+  rgba.Alpha = data.GetPixel(x, y).Alpha;
+  data.SetPixel(x, y, rgba);
   /*
   unsigned byte = data.byte_array[index + data.image_offset()];
   byte |= mask;
@@ -28,6 +44,11 @@ void BMP::pixel_set_mask(int x, int y, unsigned mask) {
 }
 
 void BMP::pixel_unset_mask(int x, int y, unsigned mask) {
+  unsigned pixel = get_pixel(x, y);
+  pixel &= ~mask;
+  RGBApixel rgba = unsigned_to_rgba(pixel);
+  rgba.Alpha = data.GetPixel(x, y).Alpha;
+  data.SetPixel(x, y, rgba);
   /*
   unsigned byte = data.byte_array[index + data.image_offset()];
   byte &= ~mask;
@@ -75,7 +96,7 @@ double BMP::mean_squared_error(const BMP& other) const {
          (get_num_pixels() * other.get_num_pixels());
 }
 
-// source peak signal to noise ratio wiki, returns psnr in decibels
+// source: peak signal to noise ratio wiki, returns psnr in decibels
 double BMP::peak_signal_noise_ratio(const BMP& other) const {
   unsigned max_val = max_pixel_value();
   double mse = mean_squared_error(other);

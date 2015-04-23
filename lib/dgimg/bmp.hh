@@ -10,7 +10,7 @@ typedef BMP Easy_bmp;
 
 // EasyBMP library doesn't declare some functions const, this allows us to use
 // those functions even on const objects
-#define CONST_CALL(obj, func) const_cast<decltype(obj)*>(&obj)->func();
+#define CONST_CALL(obj, func) const_cast<decltype(obj)*>(&obj)->func()
 
 namespace DG {
 namespace Image {

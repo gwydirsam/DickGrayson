@@ -33,6 +33,10 @@ static unsigned normalize_mask(unsigned mask, int bpp) {
 }
 
 void BMP::open(const std::string& fname) {
+  std::ifstream ifs(fname.c_str());
+  if (!ifs.good()) {
+    throw inaccessible_file;
+  }
   if (!data.ReadFromFile(fname.c_str())) {
     throw invalid_format;
   }

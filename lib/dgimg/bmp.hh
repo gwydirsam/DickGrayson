@@ -26,7 +26,7 @@ class BMP {
     virtual const char* what() const throw() {
       return "BMP: Inaccessible_file_exception";
     }
-  } no_such_file;
+  } inaccessible_file;
 
   BMP() {SetEasyBMPwarningsOff();}
   BMP(const std::string& fname) :BMP() { open(fname); }

@@ -9,7 +9,9 @@
 *.sig binary
 *.tiff binary
 *.bmp binary
-prime_list* binary
 
-#*.bmp diff=nodiff
-#prime_list* diff=nodiff
+*.wav binary
+*.mp3 binary
+*.flac binary
+
+prime_list* -diff

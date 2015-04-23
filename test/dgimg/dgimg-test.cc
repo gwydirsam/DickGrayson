@@ -9,9 +9,9 @@ TEST(Bmp, InvalidFormatException) {
                dgbmp::Invalid_format_exception);
 }
 
-TEST(Bmp, NoSuchFileException) {
+TEST(Bmp, InaccessibleFileException) {
   ASSERT_THROW(dgbmp bmp("../../test/dgimg/imaginary.bmp"),
-               dgbmp::No_such_file_exception);
+               dgbmp::Inaccessible_file_exception);
 }
 
 TEST(Bmp, PixelSetMask) {

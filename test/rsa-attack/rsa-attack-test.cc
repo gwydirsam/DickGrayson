@@ -139,6 +139,13 @@ TEST_F(HarderCrackingRSATest, applyPrivateKey){
 
   EXPECT_EQ(m, decrypted_message);
 }
+
+//
+//TEST(known_totient, simple){
+//EXPECT
+//}
+
+
 /*
   TEST(PublicKeyReading, findE){
   EXPECT_EQ(0,1); //dummy

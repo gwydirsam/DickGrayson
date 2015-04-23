@@ -9,6 +9,7 @@
 *.sig binary
 *.tiff binary
 *.bmp binary
+prime_list* binary
 
-*.bmp diff=nodiff
-prime_list* diff=nodiff
+#*.bmp diff=nodiff
+#prime_list* diff=nodiff

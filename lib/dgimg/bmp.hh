@@ -50,6 +50,10 @@ class BMP {
   const Easy_bmp& get_data() const { return data; }
   unsigned get_pixel(int x, int y) const;
 
+  int get_bpp() const {
+    return CONST_CALL(data, TellBitDepth);
+  }
+
   int get_width() const {
     return CONST_CALL(data, TellWidth);
   }

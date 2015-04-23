@@ -3,20 +3,33 @@
 #include <limits>
 #include <cmath>
 #include <iostream>
+#include <algorithm>
 #include "bmp.hh"
 
 namespace DG {
 namespace Image {
 
-static RGBApixel unsigned_to_rgba(unsigned uint) {
-  unsigned char r = (uint >> 16) & 0xFF;
-  unsigned char g = (uint >> 8) & 0xFF;
-  unsigned char b = uint & 0xFF;
+static RGBApixel unsigned_to_rgba(unsigned uint, int bpp) {
+  uint8_t r = (uint >> 16) & 0xFF;
+  uint8_t g = (uint >> 8) & 0xFF;
+  uint8_t b = uint & 0xFF;
   RGBApixel rgba;
-  rgba.Red = r;
-  rgba.Green = g;
-  rgba.Blue = b;
+  rgba.Red = bpp == 8 ? r : std::max({r, g, b});
+  rgba.Green = bpp == 8 ? g : std::max({r, g, b});
+  rgba.Blue = bpp == 8 ? b : std::max({r, g, b});
   return rgba;
+}
+
+// normalizes the mask so that an 8-bit mask become
+// a 24-bit mask which repeats itself every 8-bits
+static unsigned normalize_mask(unsigned mask, int bpp) {
+  unsigned normalized_mask = mask;
+  if (bpp == 8) {
+    mask &= 0xFF;
+    mask |= mask << 0x10;
+    mask |= mask << 0x8;
+  }
+  return mask;
 }
 
 void BMP::open(const std::string& fname) {
@@ -31,16 +44,18 @@ void BMP::write(const std::string& fname) {
 
 void BMP::pixel_set_mask(int x, int y, unsigned mask) {
   unsigned pixel = get_pixel(x, y);
-  pixel |= mask;
-  RGBApixel rgba = unsigned_to_rgba(pixel);
+  unsigned normalized_mask = normalize_mask(mask, get_bpp());
+  pixel |= normalized_mask;
+  RGBApixel rgba = unsigned_to_rgba(pixel, get_bpp());
   rgba.Alpha = data.GetPixel(x, y).Alpha;
   data.SetPixel(x, y, rgba);
 }
 
 void BMP::pixel_unset_mask(int x, int y, unsigned mask) {
   unsigned pixel = get_pixel(x, y);
-  pixel &= ~mask;
-  RGBApixel rgba = unsigned_to_rgba(pixel);
+  unsigned normalized_mask = normalize_mask(mask, get_bpp());
+  pixel &= ~normalized_mask;
+  RGBApixel rgba = unsigned_to_rgba(pixel, get_bpp());
   rgba.Alpha = data.GetPixel(x, y).Alpha;
   data.SetPixel(x, y, rgba);
 }

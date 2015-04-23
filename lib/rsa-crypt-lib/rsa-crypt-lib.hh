@@ -35,6 +35,9 @@ class RsaKeys {
   // get gcd
   const mpz_class get_gcd(mpz_class p, mpz_class q) const;
 
+  //computer e (euclidean extended algorithm)
+  const mpz_class compute_d(mpz_class e, mpz_class totient) const;
+
  private:
   // data members
   mpz_class n_;

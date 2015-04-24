@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-URL=ftp://ftp.gmplib.org/pub/gmp/gmp-6.0.0a.tar.bz2
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+URL=https://mirrors.kernel.org/debian/pool/main/libs/libsndfile/libsndfile_1.0.25.orig.tar.gz
+DIR_NAME=libsndfile-1.0.25
 TMP_DIR=${HOME}/.tmp
 INSTALL_PREFIX=${HOME}/local/$(uname)
 
@@ -10,30 +13,21 @@ mkdir -p ${INSTALL_PREFIX}
 
 if ! [[ $(uname) == "Darwin" ]]; then
 
-    if ! [ -f "${INSTALL_PREFIX}/include/gmpxx.h" ]; then
+    if ! [ -f "${INSTALL_PREFIX}/include/sndfile.h" ]; then
 
-        if ! [ -d "${TMP_DIR}/`basename $URL a.tar.bz2`" ]; then
+        if ! [ -d "${TMP_DIR}/${DIR_NAME}" ]; then
 
             if ! [ -f "${TMP_DIR}/`basename $URL`" ]; then
                 wget ${URL} -O ${TMP_DIR}/`basename $URL`
             fi
 
-            tar -C ${TMP_DIR} -xjf ${TMP_DIR}/`basename $URL`
+            tar -C ${TMP_DIR} -xf ${TMP_DIR}/`basename $URL`
         fi
 
-        cd ${TMP_DIR}/`basename $URL a.tar.bz2`
+        cd ${TMP_DIR}/${DIR_NAME}
 
-        # configure
-        ./configure \
-            --prefix=${INSTALL_PREFIX} --enable-fat --enable-cxx || exit$?
-
-        # build
+        ./configure --prefix=${INSTALL_PREFIX} || exit $?
         make || exit $?
-
-        # check
-        #make check || exit $?
-
-        # install
         make install || exit $?
 
     fi
@@ -41,7 +35,7 @@ else
     # if $(uname) == "Darwin"
     echo ======================================
     echo "Use Homebrew Instead:"
-    echo "$ brew install gmp --c++11"
+    echo "$ brew install libsndfile"
 	  echo ======================================
 fi
 

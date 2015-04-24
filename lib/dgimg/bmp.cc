@@ -111,11 +111,5 @@ double BMP::peak_signal_noise_ratio(const BMP& other) const {
   return psnr;
 }
 
-//// friend non-member operators
-std::ostream& operator<<(std::ostream& os, const DG::Image::BMP& bmp) {
-  return os;
-}
-
-std::istream& operator>>(std::istream& is, DG::Image::BMP& bmp) { return is; }
 }
 }

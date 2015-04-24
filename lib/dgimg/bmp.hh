@@ -14,6 +14,7 @@ typedef BMP Easy_bmp;
 
 namespace DG {
 namespace Image {
+
 class BMP {
  public:
   struct Invalid_format_exception : public std::exception {
@@ -76,9 +77,8 @@ class BMP {
   //BMP_data data;
   Easy_bmp data;
 
-  friend std::ostream& operator<<(std::ostream& os, const BMP& bmp);
-  friend std::istream& operator>>(std::istream& is, BMP& bmp);
 };
+
 }
 }
 

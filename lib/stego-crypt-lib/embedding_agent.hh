@@ -39,7 +39,5 @@ class Embedding_agent {
   std::vector<bool> message_to_bits(const std::string& msg);
 
   // returns true when the message can fit within the bmp
-  bool check_msg_bmp_capacity(const std::string& msg) {
-    return msg.length() * 8 < inbmp.get_num_pixels();
-  }
+  bool check_msg_bmp_capacity(const std::string& msg);
 };

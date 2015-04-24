@@ -30,7 +30,8 @@ void Embedding_agent::embed_and_save(const std::string& msg) {
     for (int j = 0; j < width && !done; ++j) {
       outbmp.pixel_set_mask(j, i, set_masks[i + j]);
       outbmp.pixel_unset_mask(j, i, unset_masks[i + j]);
-      if (i + j + 1 >= set_masks.size()) {
+      unsigned next_index = i + j + 1;
+      if (next_index >= set_masks.size()) {
         done = true;
       }
     }
@@ -46,9 +47,11 @@ std::vector<unsigned> Embedding_agent::message_to_masks(const std::string& msg, 
 
   int msg_bits_per_mask = outbmp.get_bpp() / 8; // (msg) bits per mask
 
-  for (int i = 0; i < msg_bits.size(); i += msg_bits_per_mask) {
+  for (int i = 0; (unsigned)i < msg_bits.size(); i += msg_bits_per_mask) {
     unsigned mask = 0;
-    for (int j = msg_bits_per_mask - 1; j >= 0 && i + j < msg_bits.size(); --j) {
+    for (int j = msg_bits_per_mask - 1;
+         j >= 0 && (unsigned)(i + j) < msg_bits.size();
+         --j) {
       switch (mask_type) {
       case Mask_type::SET:
         mask |= (msg_bits[i + j] << (j * 8));
@@ -65,7 +68,7 @@ std::vector<unsigned> Embedding_agent::message_to_masks(const std::string& msg, 
 
 std::vector<bool> Embedding_agent::message_to_bits(const std::string& msg) {
   std::vector<bool> bits;
-  for (int i = 0; i < msg.length(); ++i) {
+  for (int i = 0; (unsigned)i < msg.length(); ++i) {
     uint8_t c = msg[i];
     for (int j = 7; j >= 0; --j) {
       unsigned bit = (c >> j) & 0x1;
@@ -73,4 +76,11 @@ std::vector<bool> Embedding_agent::message_to_bits(const std::string& msg) {
     }
   }
   return bits;
+}
+
+bool Embedding_agent::check_msg_bmp_capacity(const std::string& msg) {
+  unsigned num_bits = msg.length() * 8;
+  unsigned subpixels_per_pixel = inbmp.get_bpp() / 8;
+  unsigned num_pixels = inbmp.get_num_pixels();
+  return num_bits < subpixels_per_pixel * num_pixels;
 }

@@ -22,7 +22,7 @@ TEST(Bmp, PixelSetMask) {
   EXPECT_EQ(first_pixel, bmp.get_pixel(0, 0));
 
   bmp.pixel_set_mask(0, 0, 0xFFFFFF);
-  EXPECT_EQ(0xFFFFFF, bmp.get_pixel(0, 0));
+  EXPECT_EQ(0xFFFFFFu, bmp.get_pixel(0, 0));
 }
 
 TEST(Bmp, PixelUnsetMask) {
@@ -33,7 +33,7 @@ TEST(Bmp, PixelUnsetMask) {
   EXPECT_EQ(first_pixel, bmp.get_pixel(0, 0));
 
   bmp.pixel_unset_mask(0, 0, 0xFFFFFF);
-  EXPECT_EQ(0x0, bmp.get_pixel(0, 0));
+  EXPECT_EQ(0x0u, bmp.get_pixel(0, 0));
 }
 
 TEST(Bmp, MaxPixelValue) {

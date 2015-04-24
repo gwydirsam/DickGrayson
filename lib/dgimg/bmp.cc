@@ -25,11 +25,11 @@ static RGBApixel unsigned_to_rgba(unsigned uint, int bpp) {
 static unsigned normalize_mask(unsigned mask, int bpp) {
   unsigned normalized_mask = mask;
   if (bpp == 8) {
-    mask &= 0xFF;
-    mask |= mask << 0x10;
-    mask |= mask << 0x8;
+    normalized_mask &= 0xFF;
+    normalized_mask |= mask << 0x10;
+    normalized_mask |= mask << 0x8;
   }
-  return mask;
+  return normalized_mask;
 }
 
 void BMP::open(const std::string& fname) {
@@ -111,11 +111,5 @@ double BMP::peak_signal_noise_ratio(const BMP& other) const {
   return psnr;
 }
 
-//// friend non-member operators
-std::ostream& operator<<(std::ostream& os, const DG::Image::BMP& bmp) {
-  return os;
-}
-
-std::istream& operator>>(std::istream& is, DG::Image::BMP& bmp) { return is; }
 }
 }

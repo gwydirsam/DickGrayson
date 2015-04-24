@@ -11,6 +11,7 @@ cache:
     - $HOME/.cache
     - $HOME/.ccache
     - $HOME/local
+    - vendor/bundle
 # force travis to use containe
 sudo: false
 

@@ -4,9 +4,8 @@
 #include <dgcrypto/dgcrypto.hh>
 #include <rsa-crypt-lib/rsa-crypt-lib.hh>
 
-
 TEST(RSACrypt, RsaKeysConstructor) {
-  RsaKeys my_keys(1024);
+  RsaKeys my_keys(512);
 
-  EXPECT_EQ(1024ul, my_keys.bits());
+  EXPECT_EQ(512ul, my_keys.bits());
 }

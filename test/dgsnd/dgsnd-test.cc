@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <sndfile.h>
+//#include <sndfile.h>
 
 TEST(sndStub, oneEqualsone) {
   int one = 1;

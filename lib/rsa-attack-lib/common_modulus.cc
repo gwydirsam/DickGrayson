@@ -1,26 +1,16 @@
-#include "rsa-attack-lib.hh"
-#include <rsa-crypt-lib/rsa-crypt-lib.hh>
+#include "common_modulus.hh"
 
 namespace comodulus {
 
 using namespace std;
 
-struct RSA_data {
-  mpz_class C = -1;        // cipher text
-  mpz_class n = -1;        // p*q
-  mpz_class e = -1;        // exponent of pub key
-  mpz_class p = -1;        // prime factor
-  mpz_class q = -1;        // ''
-  mpz_class totient = -1;  // (p - 1) * (q - 1)
-};
-
 // returns private key d
 // this should take two ciphertexts...but what form does that come in?
 // for now let's use large numbers
-mpz_class common_modulus_attack(RSA_data m_1, RSA_data m_2) {
+  mpz_class common_modulus_attack(rsatk::RSA_data m_1, rsatk::RSA_data m_2) {
   vector<mpz_class> ee_result = rsatk::extended_euclidean(m_1.e, m_2.e);
 
-  if (m_1.n != m_2.n || ee_result[2] != 1) {
+  if (m_1.n != m_2.n || ee_result[2] != 1 || m_1.n == -1) {
     cerr << "Common modulus won't work. Both n_1 and n_2 must be the same and "
             "gcd(e_1, e_2) must equal 1. " << endl;
     return -1;

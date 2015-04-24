@@ -10,11 +10,14 @@ foreach(BIN_NAME ${PROJECT_BIN_LIST})
   # create binary named ${BIN_NAME}
   add_executable(${BIN_NAME} ${BIN_NAME}/${MAIN_SRC})
 
-  if(TARGET ${BIN_NAME_LIB})
+  add_dependencies(${BIN_NAME} ${BIN_NAME_LIB})
+  message("Found ${BIN_NAME_LIB}. Adding dependency: ${BIN_NAME} depends on ${BIN_NAME_LIB}")
+
+  # if(TARGET ${BIN_NAME_LIB})
     message("Found ${BIN_NAME_LIB}. Linking ${BIN_NAME} with ${BIN_NAME_LIB}")
-    target_link_libraries(${BIN_NAME}
-      ${BIN_NAME_LIB})
-  endif()
+    target_link_libraries(${BIN_NAME} ${BIN_NAME_LIB})
+  # endif()
+
   # link with project internal libs and global libs
   target_link_libraries(${BIN_NAME} ${PROJECT_INTERNAL_LIB_LIST} ${PROJECT_GLOBAL_LIBS})
   #use C++14

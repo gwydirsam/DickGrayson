@@ -1,34 +1,34 @@
 #pragma once
 
-#include <vector>
-#include <utility>
-#include <iosfwd>
-
 #include <gmpxx.h>
 
-// sam: this stuff should really be a class -- otherwise you have to understand
-//      your implementation to use these functions without doing something you
-//      do not want.
-//      notably, you open a file and close it in different functions
-//      maybe in the class version open in the constructor and close in the
-//      destructor? (not totally sure that is good advice)
-//      I've also left some comments in the cc
-//      I also moved you to using std::blah, and removed all std:: from the file
-//
-// TODO:
-//      - [ ] put in class (or atleast a namespace, these shouldn't be global)
-//      - [ ] fix exceptions
-//      - [ ] dedicate to either writing std or using std::blah, a mix is hard
-//      to
-//            read
-std::vector<std::pair<mpz_class, mpz_class>> findPrimeFactors(mpz_class n);
+#include <vector>
+#include <iostream>
+#include <utility>
+#include <fstream>
 
-void generateNPrimes(long int n);
+// done in an intentionally procedural style. You can use any function
+// independently
+// names are according to RSA idioms
+// p and q are the prime numbers, and n is their product
+// m is the plain_test
+namespace rsatk {
 
-std::ifstream& skipToLine(std::ifstream& file, mpz_class num);
+static const std::string relative_path = "../../lib/rsa-attack-lib/";
 
-mpz_class getNthPrime(mpz_class n);
+std::vector<std::pair<mpz_class, mpz_class>> find_prime_factors(mpz_class n);
+void generate_n_primes(mpz_class n);
 
-mpz_class getNextPrime(
-    std::ifstream& prime_file,
-    mpz_class n);  // this function is faster since you can hold onto your place
+// this function uses pre-cached prime_lists
+mpz_class get_next_prime(std::ifstream& prime_file);
+
+mpz_class calculate_totient(mpz_class p, mpz_class q);
+
+mpz_class calculate_d(mpz_class totient, mpz_class e);
+
+// extended_euclidean(a, b) returns three values:
+// x, y, gcd, such that ax + by = gcd(a, b)
+std::vector<mpz_class> extended_euclidean(mpz_class totient, mpz_class e);
+std::string decrypt_message(std::string encrypted, mpz_class n, mpz_class d);
+
+}

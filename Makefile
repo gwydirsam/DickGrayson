@@ -318,7 +318,7 @@ run-all:: debug
 run-all run-debug-rsa-crypt:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-crypt
 run-all run-debug-rsa-attack:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-attack
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-attack --attack chinese_rt
 run-all run-debug-stego-crypt:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/stego-crypt
 run-all run-debug-stego-attack:: debug

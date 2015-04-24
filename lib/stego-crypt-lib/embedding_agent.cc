@@ -45,7 +45,6 @@ std::vector<unsigned> Embedding_agent::message_to_masks(const std::string& msg, 
   std::vector<bool> msg_bits = message_to_bits(msg);
 
   int msg_bits_per_mask = outbmp.get_bpp() / 8; // (msg) bits per mask
-  std::cout << "bpm: " << msg_bits_per_mask << std::endl;
 
   for (int i = 0; i < msg_bits.size(); i += msg_bits_per_mask) {
     unsigned mask = 0;

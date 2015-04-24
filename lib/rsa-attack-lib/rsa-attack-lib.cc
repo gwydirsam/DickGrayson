@@ -142,5 +142,7 @@ namespace rsatk {
   std::string decrypt_message(std::string encrypted, mpz_class n, mpz_class d) {
     return "not implemented";
   }
-  RSA_data parse_rsa_file(std::fstream& fname);
+  RSA_data parse_rsa_file(std::fstream& fname){
+    return RSA_data();
+  }
 }

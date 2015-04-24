@@ -81,15 +81,15 @@ void print_help() {
   print_usage();
   std::cout << std::endl
             << "Long         short  desc\n"
-            << "--type       -t     indicate type of media (wav or bmp)\n"
+            << "--help       -h     show this screen\n"
             << "--input      -i     location of input file to embed message in\n"
-            << "--output     -o     location of output stego file\n"
             << "--message    -m     location of file containing the message\n"
+            << "--output     -o     location of output stego file\n"
+            << "--type       -t     indicate type of media (wav or bmp)\n"
             << "--verbose    -v     verbosely describe steg process\n"
-            << "--help       -h     show this screen\n";
 }
 
 void print_usage() {
-  std::cout << "usage: munchkinsteg [-hv] [-t wav | bmp] [-i inputfile]\n"
-            << "                    [-o outputfile] [-m messagefile]\n";
+  std::cout << "usage: munchkinsteg [-hv] [-i inputfile]\n"
+            << "                    [-m messagefile] [-o outputfile] [-t wav | bmp]\n";
 }

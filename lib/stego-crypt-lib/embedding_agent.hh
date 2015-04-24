@@ -1,33 +1,43 @@
 #pragma once
 
+#include <vector>
+#include <exception>
 #include <dgimg/dgimg.hh>
 
 class Embedding_agent {
-  // takes a bmp inbmp, and embeds data into it, saving the image
-  // with embedded data to outbmp
+  // takes an input bmp, and embeds data into it, saving the image
+  // with embedded data to an output bmp
  public:
-  enum class LSB_encoding : unsigned {
-    LSB1 = 0x01,
-    LSB2 = 0x03,
-    LSB3 = 0x07,
-    LSB4 = 0x0F,
-    LSB5 = 0x1F,
-    LSB6 = 0x3F,
-    LSB7 = 0x7F,
-    LSB8 = 0xFF
-  };
+
+  struct Msg_too_long_for_media_exception : public std::exception {
+    virtual const char* what() const throw() {
+      return "Munchkin-steg: Msg_too_long_for_media_exception";
+    }
+  } msg_too_long;
 
   Embedding_agent() = delete;
-  Embedding_agent(const std::string& inbmp, const std::string& outbmp);
-  Embedding_agent(const std::string& inbmp, const std::string& outbmp,
-                  int num_lsb);
+
+  Embedding_agent(const std::string& inbmp_fname,
+                  const std::string& outbmp_fname);
 
   // Embeds msg into output and writes the bmp out to disk
   void embed_and_save(const std::string& msg);
 
  private:
-  dgbmp input;
-  dgbmp output;
-  std::string output_fname;
-  int num_lsb;  // number of least significant bits
+  dgbmp inbmp;
+  dgbmp outbmp;
+  std::string outbmp_fname;
+
+  enum class Mask_type { SET, UNSET };
+
+  //// helper functions
+
+  // Takes a message and returns a list of bit masks based on the
+  // bits per pixel (bpp) of the input bmp
+  std::vector<unsigned> message_to_masks(const std::string& msg, Mask_type mask_type);
+
+  std::vector<bool> message_to_bits(const std::string& msg);
+
+  // returns true when the message can fit within the bmp
+  bool check_msg_bmp_capacity(const std::string& msg);
 };

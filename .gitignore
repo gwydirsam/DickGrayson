@@ -99,4 +99,5 @@ Session.vim
 /lib/stego-attack-lib/build_list.cmake
 /lib/stego-crypt-lib/build_list.cmake
 /test/dgimg/write_test.bmp
+/test/stego-crypt/test-stego.bmp
 /lib/dgsnd/build_list.cmake

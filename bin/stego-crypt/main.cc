@@ -86,7 +86,7 @@ void print_help() {
             << "--message    -m     location of file containing the message\n"
             << "--output     -o     location of output stego file\n"
             << "--type       -t     indicate type of media (wav or bmp)\n"
-            << "--verbose    -v     verbosely describe steg process\n"
+            << "--verbose    -v     verbosely describe steg process\n";
 }
 
 void print_usage() {

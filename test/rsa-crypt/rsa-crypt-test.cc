@@ -5,7 +5,9 @@
 #include <rsa-crypt-lib/rsa-crypt-lib.hh>
 
 TEST(RSACrypt, RsaKeysConstructor) {
-  RsaKeys my_keys(512);
+  RsaKeys my_keys(8);
 
-  EXPECT_EQ(512ul, my_keys.bits());
-}
+  EXPECT_EQ(my_keys.e(), my_keys.totient());
+
+
+

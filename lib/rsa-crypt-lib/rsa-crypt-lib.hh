@@ -3,6 +3,7 @@
 #include <gmpxx.h>
 #include <tuple>  // std::tuple
 #include <iostream>
+#include <vector>
 
 class RsaKeys {
  public:
@@ -13,6 +14,7 @@ class RsaKeys {
   mpz_class n() { return n_; }
   mpz_class e() { return e_; }
   mpz_class totient() { return totient_; }
+  mpz_class d() { return d_;}
   mp_bitcnt_t bits() { return bits_; }
 
   // generates two random primes and checks coprimality
@@ -36,13 +38,17 @@ class RsaKeys {
   const mpz_class get_gcd(mpz_class p, mpz_class q) const;
 
   //computer e (euclidean extended algorithm)
-  const mpz_class compute_d(mpz_class e, mpz_class totient) const;
+  mpz_class compute_d(mpz_class e, mpz_class totient);
 
+  std::vector<mpz_class> extended_euclidean(mpz_class a, mpz_class b);
+
+  mpz_class calculate_d(mpz_class totient, mpz_class e);
  private:
   // data members
   mpz_class n_;
   mpz_class e_;
   mpz_class totient_;
+  mpz_class d_;
   mp_bitcnt_t bits_;
 
   // private member helper functions

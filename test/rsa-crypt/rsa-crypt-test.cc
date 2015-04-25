@@ -9,5 +9,6 @@ TEST(RSACrypt, RsaKeysConstructor) {
 
   EXPECT_EQ(my_keys.e(), my_keys.totient());
 
+}
 
 

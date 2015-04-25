@@ -1,5 +1,37 @@
 #include "stego-crypt-util.hh"
 
+bool set_file_type(File_type* ftype, const std::string& arg) {
+  std::string lower_arg = std::move(arg);
+  std::transform(lower_arg.begin(), lower_arg.end(), lower_arg.begin(),
+                 ::tolower);
+  if (lower_arg == "wav") {
+    *ftype = File_type::WAV;
+  } else if (lower_arg == "bmp") {
+    *ftype = File_type::BMP;
+  } else {
+    std::cerr << "Unknown type: " << arg << std::endl;
+    return false;
+  }
+  return true;
+}
+
+void print_help() {
+  print_usage();
+  std::cout << std::endl
+            << "Long         short  desc\n"
+            << "--help       -h     show this screen\n"
+            << "--input      -i     location of input file to embed message in\n"
+            << "--message    -m     location of file containing the message\n"
+            << "--output     -o     location of output stego file\n"
+            << "--type       -t     indicate type of media (wav or bmp)\n"
+            << "--verbose    -v     verbosely describe steg process\n";
+}
+
+void print_usage() {
+  std::cout << "usage: munchkinsteg [-hv] [-i inputfile]\n"
+            << "                    [-m messagefile] [-o outputfile] [-t wav | bmp]\n";
+}
+
 Error_code read_args(int argc, char* argv[], Arguments* args) {
   int c;
 
@@ -71,36 +103,4 @@ void process_error_code(Error_code err_code) {
   case Error_code::SUCCESS:
     break;
   }
-}
-
-bool set_file_type(File_type* ftype, const std::string& arg) {
-  std::string lower_arg = std::move(arg);
-  std::transform(lower_arg.begin(), lower_arg.end(), lower_arg.begin(),
-                 ::tolower);
-  if (lower_arg == "wav") {
-    *ftype = File_type::WAV;
-  } else if (lower_arg == "bmp") {
-    *ftype = File_type::BMP;
-  } else {
-    std::cerr << "Unknown type: " << arg << std::endl;
-    return false;
-  }
-  return true;
-}
-
-void print_help() {
-  print_usage();
-  std::cout << std::endl
-            << "Long         short  desc\n"
-            << "--help       -h     show this screen\n"
-            << "--input      -i     location of input file to embed message in\n"
-            << "--message    -m     location of file containing the message\n"
-            << "--output     -o     location of output stego file\n"
-            << "--type       -t     indicate type of media (wav or bmp)\n"
-            << "--verbose    -v     verbosely describe steg process\n";
-}
-
-void print_usage() {
-  std::cout << "usage: munchkinsteg [-hv] [-i inputfile]\n"
-            << "                    [-m messagefile] [-o outputfile] [-t wav | bmp]\n";
 }

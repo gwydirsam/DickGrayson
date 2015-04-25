@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <iostream>
+#include <cassert>
 #include "embedding_agent.hh"
 
 //// constructors
@@ -26,11 +27,13 @@ void Embedding_agent::embed_and_save(const std::string& msg) {
   int height = outbmp.get_height();
 
   bool done = false;
+  int k = 0;
   for (int i = 0; i < height && !done; ++i) {
     for (int j = 0; j < width && !done; ++j) {
-      outbmp.pixel_set_mask(j, i, set_masks[i + j]);
-      outbmp.pixel_unset_mask(j, i, unset_masks[i + j]);
-      unsigned next_index = i + j + 1;
+      outbmp.pixel_set_mask(j, i, set_masks[k]);
+      outbmp.pixel_unset_mask(j, i, unset_masks[k]);
+      unsigned next_index = k + 1;
+      ++k;
       if (next_index >= set_masks.size()) {
         done = true;
       }
@@ -63,6 +66,7 @@ std::vector<unsigned> Embedding_agent::message_to_masks(const std::string& msg, 
     }
     masks.push_back(mask);
   }
+  assert(masks.size() == msg_bits.size() / 8);
   return masks;
 }
 
@@ -75,6 +79,10 @@ std::vector<bool> Embedding_agent::message_to_bits(const std::string& msg) {
       bits.push_back(bit && 0x1);
     }
   }
+  for (auto bit : bits) {
+    std::cout << bit;
+  }
+  std::cout << std::endl;
   return bits;
 }
 

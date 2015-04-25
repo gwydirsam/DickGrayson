@@ -1,4 +1,5 @@
 #include "stego-crypt-util.hh"
+#include <dgimg/dgimg.hh>
 
 bool set_file_type(File_type* ftype, const std::string& arg) {
   std::string lower_arg = std::move(arg);
@@ -15,20 +16,50 @@ bool set_file_type(File_type* ftype, const std::string& arg) {
   return true;
 }
 
+std::string message_from_file(const std::string& fname) {
+  std::string msg;
+  std::ifstream ifs(fname);
+  std::ostringstream oss;
+  oss << ifs.rdbuf();
+  msg = oss.str();
+  return msg;
+}
+
+void message_to_file(const std::string& msg, const std::string& fname) {
+  std::ofstream ofs(fname);
+  ofs << msg;
+}
+
+void print_psnr(const std::string& fname_a, const std::string& fname_b) {
+  dgbmp bmp_a(fname_a);
+  dgbmp bmp_b(fname_b);
+  double psnr = bmp_a.peak_signal_noise_ratio(bmp_b);
+  std::cout << "Peak signal to noise ratio: " << psnr << std::endl;
+}
+
+bool is_file_accessible(const std::string& fname) {
+  std::ifstream ifs(fname);
+  if (ifs.good()) {
+    return true;
+  }
+  return false;
+}
+
 void print_help() {
   print_usage();
   std::cout << std::endl
             << "Long         short  desc\n"
+            << "--extract    -e     extract a message instead of embedding\n"
             << "--help       -h     show this screen\n"
-            << "--input      -i     location of input file to embed message in\n"
-            << "--message    -m     location of file containing the message\n"
-            << "--output     -o     location of output stego file\n"
+            << "--input      -i     location of input file to embed/extract message in\n"
+            << "--message    -m     location of file containing the message to embed\n"
+            << "--output     -o     location of output stego file or extracted message file\n"
             << "--type       -t     indicate type of media (wav or bmp)\n"
-            << "--verbose    -v     verbosely describe steg process\n";
+            << "--verbose    -v     verbosely describe steg process\n\n";
 }
 
 void print_usage() {
-  std::cout << "usage: munchkinsteg [-hv] [-i inputfile]\n"
+  std::cout << "usage: munchkinsteg [-ehv] [-i inputfile]\n"
             << "                    [-m messagefile] [-o outputfile] [-t wav | bmp]\n";
 }
 
@@ -40,6 +71,7 @@ Error_code read_args(int argc, char* argv[], Arguments* args) {
     {
       {"verbose", no_argument, NULL, 'v'},
       {"help", no_argument, NULL, 'h'},
+      {"extract", no_argument, NULL, 'e'},
       {"input", required_argument, NULL, 'i'},
       {"output", required_argument, NULL, 'o'},
       {"message", required_argument, NULL, 'm'},
@@ -61,6 +93,9 @@ Error_code read_args(int argc, char* argv[], Arguments* args) {
     case 'h':
       print_help();
       return Error_code::HELP_ARG;
+    case 'e':
+      args->extract = true;
+      break;
     case 'i':
       args->input_fname = optarg;
       break;
@@ -83,24 +118,43 @@ Error_code read_args(int argc, char* argv[], Arguments* args) {
       return Error_code::UNKNOWN_ARG;
     }
   }
+  if (args->ftype == File_type::UNSPECIFIED) {
+    return Error_code::UNSPECIFIED_TYPE;
+  }
+  if (args->input_fname.empty()) {
+    return Error_code::MISSING_INPUT;
+  }
+  if (args->output_fname.empty()) {
+    return Error_code::MISSING_OUTPUT;
+  }
+  if (!is_file_accessible(args->input_fname) ||
+     (!args->extract && !is_file_accessible(args->message_fname))) {
+    return Error_code::INACCESSIBLE_FILE;
+  }
   return Error_code::SUCCESS;
 }
 
 void process_error_code(Error_code err_code) {
   switch (err_code) {
-  case Error_code::UNKNOWN_ARG:
-    exit(EXIT_FAILURE); // getopt_long already displayed error message
+  case Error_code::UNSPECIFIED_TYPE:
+    std::cerr << "error: unspecified type.\n";
     break;
-  case Error_code::UNKNOWN_TYPE:
-    exit(EXIT_FAILURE); // set_file_type already displayed error message
+  case Error_code::MISSING_INPUT:
+    std::cerr << "error: must specify an input file.\n";
     break;
-  case Error_code::MISSING_ARG:
-    exit(EXIT_FAILURE); // getopt_long already displayed error message
+  case Error_code::MISSING_OUTPUT:
+    std::cerr << "error: must specify an output file.\n"
+              << "(Note the output is a media file when embedding, "
+              << "but a file containing a message when extracting)\n";
+    break;
+  case Error_code::INACCESSIBLE_FILE:
+    std::cerr << "error: could not open file for reading.\n";
     break;
   case Error_code::HELP_ARG:
     exit(EXIT_SUCCESS);
-    break;
   case Error_code::SUCCESS:
-    break;
+    return;
   }
+  print_usage();
+  exit(EXIT_FAILURE);
 }

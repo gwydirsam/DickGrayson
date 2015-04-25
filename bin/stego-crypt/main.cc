@@ -5,20 +5,21 @@
 #include <getopt.h>
 #include <dgtype/dgtype.hh>
 
-void print_help();
-void print_usage();
-
 enum class File_type {
   BMP,
   WAV,
   UNSPECIFIED
 };
 
+void print_help();
+void print_usage();
+bool set_file_type(File_type* ftype, const std::string& arg);
+
 int main(int argc, char *argv[]) {
   bool verbose = false;
   std::string input_fname;
   std::string output_fname;
-  std::string message;
+  std::string message_fname;
   File_type ftype = File_type::UNSPECIFIED;
 
   int c;
@@ -50,18 +51,18 @@ int main(int argc, char *argv[]) {
       print_help();
       return 0;
     case 'i':
-      std::cout << "input: " << optarg << std::endl;
+      input_fname = optarg;
       break;
     case 'o':
-      std::cout << "output: " << optarg << std::endl;
+      output_fname = optarg;
       break;
     case 'm':
-      std::cout << "message: " << optarg << std::endl;
+      message_fname = optarg;
       break;
     case 't':
-      ftype = File_type::BMP;
-      ftype = File_type::WAV; // TODO set ftype according to optarg
-      std::cout << "type: " << optarg << std::endl;
+      if (!set_file_type(&ftype, optarg)) {
+        return 1;
+      }
       break;
     case ':':
       print_usage();
@@ -71,10 +72,22 @@ int main(int argc, char *argv[]) {
       return 1;
     }
   }
-  if (ftype == File_type::UNSPECIFIED && verbose) {
-    std::cout << "This won't print, just need to shut up compiler warnings\n";
+  if (ftype == File_type::WAV) {
+    std::cout << "WAV files not yet supported\n";
   }
   return 0;
+}
+
+bool set_file_type(File_type* ftype, const std::string& arg) {
+  if (arg == "wav") {
+    *ftype = File_type::WAV;
+  } else if (arg == "bmp") {
+    *ftype = File_type::BMP;
+  } else {
+    std::cerr << "Unknown type: " << arg << std::endl;
+    return false;
+  }
+  return true;
 }
 
 void print_help() {

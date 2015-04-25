@@ -79,10 +79,6 @@ std::vector<bool> Embedding_agent::message_to_bits(const std::string& msg) {
       bits.push_back(bit && 0x1);
     }
   }
-  for (auto bit : bits) {
-    std::cout << bit;
-  }
-  std::cout << std::endl;
   return bits;
 }
 

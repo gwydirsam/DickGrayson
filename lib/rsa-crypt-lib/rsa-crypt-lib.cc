@@ -41,6 +41,19 @@ const std::tuple<mpz_class, mpz_class> RsaKeys::generate_keys() const {
   return std::make_tuple(p.get_mpz_class(), q.get_mpz_class());
 }
 
+const mpz_class RsaKeys::compute_d(mpz_class e, mpz_class totient) const{
+  mpz_class b0 = totient, t, q;
+  mpz_class x0 = 0; 
+  mpz_class x1 = 1;
+  if(totient == 1) return 1;
+  while ( e > 1 ) {
+    q = e / totient;
+    t = totient, totient = e % totient, e = t;
+    t = x0, x0 = x1 - q * x0, x1 = t;
+  }
+  if(x1 < 0) x1 += b0;
+  return x1;   
+}
 // helper function to get gcd
 const mpz_class RsaKeys::get_gcd(mpz_class p, mpz_class q) const {
   mpz_class gcd = 1;

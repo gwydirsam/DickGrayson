@@ -119,18 +119,30 @@ inline bool RsaKeys::is_coprime(mpz_class p, mpz_class q) const {
 
 const mpz_class RsaKeys::compute_e(mpz_class totient) const {
   // TODO: check that 1<e<theta_n and check for primality to release exponent
-  // value 'e'
-  // sam: generate_random_value() returns an mpz_class not an int
-  //      also this function returns an mpz_class!
-  // int e = generate_random_value();
-  // mpz_class e = generate_random_value();
 
   // why not use dgrandominteger...this is what it's for
-  dgrandint e(bits_);
-  while ((e.get_mpz_class() < totient) ||
-         !is_coprime(e.get_mpz_class(), totient)) {
-     std::cerr<<e.get_mpz_class()<< " is not coprime with "<<totient<<std::endl;
-    e.reroll();
+  dgrandprime e(bits_);
+  if(bits_ > 17){
+    return 65537;
   }
-  return e.get_mpz_class();
+  else{
+    for(int i = 0; i < 9; ++i){
+      if(is_coprime(e.get_mpz_class(), totient)){
+        return e.get_mpz_class();
+      }
+      else{
+        e.reroll();
+      }
+    } 
+  }
+  std::cerr<<"no coprime values";
+  return 0;
 }
+ /* while (!is_coprime(e.get_mpz_class(), totient)) {
+     std::cerr<<e.get_mpz_class()<< " is not coprime with totient value: "<<totient<<std::endl;
+     std::cerr<<e.get_mpz_class()<<std::endl;
+    e.reroll();
+    }*/
+  //return e.get_mpz_class();
+  //return e = 65537 for now
+  

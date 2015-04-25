@@ -99,8 +99,7 @@ double BMP::mean_squared_error(const BMP& other) const {
       squared_errors_sum += squared_error;
     }
   }
-  return (double)squared_errors_sum /
-         (get_num_pixels() * other.get_num_pixels());
+  return (double)squared_errors_sum / (get_width() * get_height());
 }
 
 // source: peak signal to noise ratio wiki, returns psnr in decibels

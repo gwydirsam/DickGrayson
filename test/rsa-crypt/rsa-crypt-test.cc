@@ -6,9 +6,6 @@
 
 TEST(RSACrypt, RsaKeysConstructor) {
   RsaKeys my_keys(8);
-
   EXPECT_EQ(my_keys.e(), my_keys.totient());
-
 }
-
 

@@ -25,16 +25,16 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   std::cerr<<"VALUE_OF q is : "<<p<<std::endl;
   // compute n
   this->n_ = compute_n(p, q);
-  std::cerr<<"VALUE_OF n is : " << n() << std::endl;
+  std::cerr<<"VALUE_OF n is : " << n_ << std::endl;
   // compute totient
   this->totient_ = compute_totient(p,q);
-  std::cerr<<"VALUE_OF totient is : " << totient() << std::endl; 
+  std::cerr<<"VALUE_OF totient is : " << totient_ << std::endl; 
   // compute e
   this->e_ = compute_e(this->totient_);
-  std::cerr<<"VALUE_OF e is : " << e() << std::endl;
+  std::cerr<<"VALUE_OF e is : " << e_ << std::endl;
   //compute d
- // this ->d_ = compute_d(this->totient, this->e);
-  //std::cerr<<"VALUE_OF d is : " << d() << std::endl;
+  this ->d_ = compute_d(totient_, e_);
+  std::cerr<<"VALUE_OF d is : " << d_ << std::endl;
 }
 
 // helper function to check for primality

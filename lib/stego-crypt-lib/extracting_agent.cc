@@ -49,6 +49,10 @@ std::vector<bool> Extracting_agent::extract_bits_from_pixel(int x, int y) const 
 }
 
 bool Extracting_agent::is_last_byte_terminate(const std::vector<bool>& bits) const {
+  if (bits.size() % 8 != 0) {
+    // we want to make sure we are not checking in between bytes
+    return false;
+  }
   int consecutive_zeroes = 0;
   unsigned size = bits.size();
   for (int i = size; i>= 0 && i > size - 8; --i) {

@@ -4,14 +4,26 @@
 #include <dgcrypto/dgcrypto.hh>
 #include <rsa-crypt-lib/rsa-crypt-lib.hh>
 
-// TEST(RSACrypt, RsaKeysConstructor) {
-//   RsaKeys my_keys(8);
+TEST(RSACrypt, RsaKeysConstructor17) {
+  RsaKeys my_keys(16);
+  EXPECT_GT(my_keys.totient(), my_keys.e());
+}
 
-//   EXPECT_EQ(my_keys.e(), my_keys.totient());
+TEST(RSACrypt, RsaKeysConstructor75) {
+  RsaKeys my_keys(24);
+  EXPECT_GT(my_keys.totient(), my_keys.e());
 
-// }
+}
 
-TEST(RSACryptStub, oneEqualsOne) {
-  int one = 1;
-  EXPECT_EQ(1, one);
+TEST(RSACrypt, RsaKeysConstructor512) {
+  RsaKeys my_keys(512);
+  EXPECT_GT(my_keys.totient(), my_keys.e());
+
+}
+
+
+TEST(RSACrypt, RsaKeysConstructor1024) {
+  RsaKeys my_keys(1024);
+  EXPECT_GT(my_keys.totient(), my_keys.e());
+
 }

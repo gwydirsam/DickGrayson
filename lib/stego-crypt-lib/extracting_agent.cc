@@ -31,6 +31,9 @@ std::string Extracting_agent::bits_to_string(const std::vector<bool>& bits) cons
       int index = i + 7 - j;
       c |= (bits[index] << j);
     }
+    if (c == 0x0) {
+      return str;
+    }
     str += (char)c;
   }
   return str;
@@ -50,8 +53,10 @@ std::vector<bool> Extracting_agent::extract_bits_from_pixel(int x, int y) const 
 
 bool Extracting_agent::is_last_byte_terminate(const std::vector<bool>& bits) const {
   int consecutive_zeroes = 0;
-  unsigned size = bits.size();
-  for (int i = size; i>= 0 && i > size - 8; --i) {
+  unsigned start = bits.size();
+  unsigned mod = start % 8;
+  start -= mod;
+  for (int i = start; i>= 0 && i > start - 8; --i) {
     if (!bits[i]) {
       ++consecutive_zeroes;
     } else {

@@ -29,7 +29,7 @@ enum class Error_code {
 };
 
 struct Arguments {
-  bool verbose;
+  bool verbose = false;
   bool extract = false; // if false, we embed
   std::string input_fname;
   std::string output_fname;
@@ -39,14 +39,17 @@ struct Arguments {
 
 void print_help();
 void print_usage();
+// prints str to stdout if condition is true
+void print_if(std::string str, bool condition);
+
 bool set_file_type(File_type* ftype, const std::string& arg);
+
+// loads entire file contents into the return string
 std::string message_from_file(const std::string& fname);
+// saves msg out to the file
 void message_to_file(const std::string& msg, const std::string& fname);
-void print_psnr(const std::string& in_fname, const std::string& out_fname);
+bool is_file_accessible(const std::string& fname);
 
 // Reads command line arguments and stores them in args
 Error_code read_args(int argc, char* argv[], Arguments* args);
-
 void process_error_code(Error_code err_code);
-
-bool is_file_accessible(const std::string& fname);

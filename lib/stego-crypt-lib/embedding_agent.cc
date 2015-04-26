@@ -1,6 +1,5 @@
 #include <cstdint>
 #include <iostream>
-#include <cassert>
 #include "embedding_agent.hh"
 
 //// constructors
@@ -66,7 +65,6 @@ std::vector<unsigned> Embedding_agent::message_to_masks(const std::string& msg, 
     }
     masks.push_back(mask);
   }
-  assert(masks.size() == msg_bits.size() / 8);
   return masks;
 }
 
@@ -76,7 +74,7 @@ std::vector<bool> Embedding_agent::message_to_bits(const std::string& msg) {
     uint8_t c = msg[i];
     for (int j = 7; j >= 0; --j) {
       unsigned bit = (c >> j) & 0x1;
-      bits.push_back(bit && 0x1);
+      bits.push_back(bit == 0x1u);
     }
   }
   return bits;

@@ -43,18 +43,18 @@ std::vector<bool> Extracting_agent::extract_bits_from_pixel(int x, int y) const 
   std::vector<bool> bits;
   unsigned num_bits = inbmp.get_bpp() / 8;
   unsigned pixel = inbmp.get_pixel(x, y);
-  for (int i = 0; i < num_bits; ++i) {
+  for (unsigned i = 0; i < num_bits; ++i) {
     unsigned bit = 0;
-    bit |= (pixel >> (i * 8)) & 0x1;
-    bits.push_back(bit && 0x1);
+    bit |= (pixel >> (i * 8)) & 0x1u;
+    bits.push_back(bit == 0x1u);
   }
   return bits;
 }
 
 bool Extracting_agent::is_last_byte_terminate(const std::vector<bool>& bits) const {
   int consecutive_zeroes = 0;
-  unsigned start = bits.size();
-  unsigned mod = start % 8;
+  int start = bits.size();
+  int mod = start % 8;
   start -= mod;
   for (int i = start; i>= 0 && i > start - 8; --i) {
     if (!bits[i]) {

@@ -16,8 +16,7 @@ bool set_file_type(File_type* ftype, const std::string& arg) {
   return true;
 }
 
-std::string message_from_file(const std::string& fname) {
-  std::string msg;
+std::string message_from_file(const std::string& fname) {std::string msg;
   std::ifstream ifs(fname);
   std::ostringstream oss;
   oss << ifs.rdbuf();
@@ -149,6 +148,10 @@ void process_error_code(Error_code err_code) {
   case Error_code::HELP_ARG:
     print_help();
     exit(EXIT_SUCCESS);
+  case Error_code::UNKNOWN_ARG:
+  case Error_code::UNKNOWN_TYPE:
+  case Error_code::MISSING_ARG:
+    break;
   case Error_code::SUCCESS:
     return;
   }

@@ -5,12 +5,12 @@
 #include <rsa-crypt-lib/rsa-crypt-lib.hh>
 
 TEST(RSACrypt, RsaKeysConstructor17) {
-  RsaKeys my_keys(17);
+  RsaKeys my_keys(16);
   EXPECT_GT(my_keys.totient(), my_keys.e());
 }
 
 TEST(RSACrypt, RsaKeysConstructor75) {
-  RsaKeys my_keys(75);
+  RsaKeys my_keys(24);
   EXPECT_GT(my_keys.totient(), my_keys.e());
 
 }

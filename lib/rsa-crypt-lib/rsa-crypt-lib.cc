@@ -21,20 +21,19 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   std::tuple<mpz_class, mpz_class> keys = generate_keys();
   mpz_class q = std::get<0>(keys);
   mpz_class p = std::get<1>(keys);
-  std::cerr<<"VALUE_OF p is : "<<q<<std::endl;
-  std::cerr<<"VALUE_OF q is : "<<p<<std::endl;
+
   // compute n
   this->n_ = compute_n(p, q);
-  std::cerr<<"VALUE_OF n is : " << n() << std::endl;
   // compute totient
   this->totient_ = compute_totient(p,q);
-  std::cerr<<"VALUE_OF totient is : " << totient() << std::endl; 
   // compute e
   this->e_ = compute_e(this->totient_);
-  std::cerr<<"VALUE_OF e is : " << e() << std::endl;
   //compute d
- // this ->d_ = compute_d(this->totient, this->e);
-  //std::cerr<<"VALUE_OF d is : " << d() << std::endl;
+  this ->d_ = calculate_d(totient_, e_);
+  //public key
+  std::cerr<<"Public key is : "<<n_ <<""<<e_<<std::endl;
+  //priate key
+  std::cerr<<"Private key is : "<<p<<q<<d_<<std::endl;
 }
 
 // helper function to check for primality

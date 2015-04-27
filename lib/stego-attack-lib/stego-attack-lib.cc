@@ -4,14 +4,7 @@
 // Run: ./stego-attack-lib <original image file> <new image file>
 
 #include "stego-attack-lib.hh"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
-#include <fcntl.h>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <openssl/md5.h>
+
 
 
 // Compare results; cannot use strcmp() because it requires signed char*
@@ -38,7 +31,7 @@ unsigned long getSizeByFD(int fd) {
 }
 
 // Gets a single file's hash and stores it in the parameter result
-void getMD5Hash(char* filename, unsigned char* result) {
+void getMD5Hash(char* filename, unsigned char* result, bool print) {
   int fileDesc;
   unsigned long fileSize;
   char* fileBuffer;
@@ -66,24 +59,21 @@ bool isEncrypted(char* img1, char* img2, bool print) {
 
   getMD5Hash(img1, result1, print);
   getMD5Hash(img2, result2, print);
-
   if (compareHashVals(result1, result2)) return true;
+
   else return false;
-
-
-  printMD5Sum(result);
-  printf("  %s\n", filename);
 }
 
-// int main(int argc, char *argv[]) {
-//    if(argc != 3) { 
-//            printf("Must specify the files\n");
-//            exit(-1);
-//    }
-//
-//    if (isEncrypted(argv[1],argv[2],true)) {
-//        printf("Hashes do not match: There is a message embedded!\n");
-//    }
-//    else printf("Hashes match: There is no embedded message.\n");
-//     return 0;
-// }
+ int main(int argc, char *argv[]) {
+   if(argc != 3) { 
+		printf("Must specify the files\n");
+        exit(-1);
+	}
+   
+   if (isEncrypted(argv[1],argv[2],true)) {
+       printf("Hashes do not match: There is a message embedded!\n");
+	}
+   else printf("Hashes match: There is no embedded message.\n");
+   
+   return 0;
+}

@@ -1,7 +1,7 @@
 #pragma once
 // only files who ABSOLUTELY need this header
 // can include it!
-#ifdef __DEFINING_EXCEPTIONS
+#ifdef DEFINING_EXCEPTIONS
 
 #include <exception>
 #include <string>

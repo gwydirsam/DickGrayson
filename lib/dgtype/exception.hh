@@ -1,5 +1,5 @@
 #pragma once
-#define __DEFINING_EXCEPTIONS
+#define DEFINING_EXCEPTIONS
 
 #include "exception_util.hh"
 
@@ -18,11 +18,11 @@ namespace Type {
 //
 // type is Invalid_format_exception
 
-DEFINE_DGTYPE_EXCEPT(Invalid_format);
-DEFINE_DGTYPE_EXCEPT(Inaccessible_file);
+DEFINE_DGTYPE_EXCEPT(Invalid_format)
+DEFINE_DGTYPE_EXCEPT(Inaccessible_file)
 
 }
 }
 
 #undef DEFINE_DGTYPE_EXCEPT
-#undef __DEFINING_EXCEPTIONS
+#undef DEFINING_EXCEPTIONS

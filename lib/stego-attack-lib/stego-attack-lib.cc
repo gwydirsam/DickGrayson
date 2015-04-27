@@ -1,7 +1,7 @@
 // Kyle Wilson 
 // Test Driven Scrumbags
-// Compile: gcc -o md5attack md5attack.cpp -lcrypt -w
-// Run: ./md5attack <original image file> <new image file>
+// Compile: gcc -o stego-attack-lib stego-attack-lib.cc -lcrypt -w
+// Run: ./stego-attack-lib <original image file> <new image file>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -10,17 +10,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <md5.h>
+#include <openssl/md5.h>
 
-unsigned char result1[MD5_DIGEST_LENGTH];
-unsigned char result2[MD5_DIGEST_LENGTH];
 
 // Compare results; cannot use strcmp() because it requires signed char*
 int compareHashVals(unsigned char* string1, unsigned char* string2) {
-	int i;
-	for(i=0; i<MD5_DIGEST_LENGTH; i++)
-		if (string1[i]!=string2[i]) return 1;
-	return 0;
+    int i;
+    for(i=0; i<MD5_DIGEST_LENGTH; i++)
+        if (string1[i]!=string2[i]) return 1;
+    return 0;
 }
 
 // Print the MD5 sum as hex-digits.
@@ -39,8 +37,8 @@ unsigned long getSizeByFD(int fd) {
 }
 
 // Gets a single file's hash and stores it in the parameter result
-void getMD5Hash(char* filename, unsigned char* result) {
-	int fileDesc;
+void getMD5Hash(char* filename, unsigned char* result, bool print) {
+    int fileDesc;
     unsigned long fileSize;
     char* fileBuffer;
 
@@ -53,8 +51,22 @@ void getMD5Hash(char* filename, unsigned char* result) {
     MD5((unsigned char*) fileBuffer, fileSize, result);
     munmap(fileBuffer, fileSize); 
 
-    printMD5Sum(result);
-    printf("  %s\n", filename);
+    if (print) {
+        printMD5Sum(result);
+        printf("  %s\n", filename);
+    }
+
+}
+
+bool isEncrypted(char* img1, char* img2, bool print) {
+    unsigned char result1[MD5_DIGEST_LENGTH];
+    unsigned char result2[MD5_DIGEST_LENGTH];
+
+    getMD5Hash(img1, result1, print);
+    getMD5Hash(img2, result2, print);
+
+    if (compareHashVals(result1, result2)) return true;
+    else return false;
 
 }
 
@@ -64,11 +76,9 @@ int main(int argc, char *argv[]) {
             printf("Must specify the files\n");
             exit(-1);
     }
-    getMD5Hash(argv[1], result1);
-    getMD5Hash(argv[2], result2);
 
-    if (compareHashVals(result1, result2)) {
-    	printf("Hashes do not match: There is a message embedded!\n");
+    if (isEncrypted(argv[1],argv[2],true)) {
+        printf("Hashes do not match: There is a message embedded!\n");
     }
     else printf("Hashes match: There is no embedded message.\n");
 

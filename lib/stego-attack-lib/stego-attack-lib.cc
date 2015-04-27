@@ -62,16 +62,16 @@ bool isEncrypted(char* img1, char* img2, bool print) {
   else return false;
 }
 
- int main(int argc, char *argv[]) {
-   if(argc != 3) { 
-		printf("Must specify the files\n");
-        exit(-1);
-	}
+ // int main(int argc, char *argv[]) {
+   // if(argc != 3) { 
+		// printf("Must specify the files\n");
+        // exit(-1);
+	// }
    
-   if (isEncrypted(argv[1],argv[2],true)) {
-       printf("Hashes do not match: There is a message embedded!\n");
-	}
-   else printf("Hashes match: There is no embedded message.\n");
+   // if (isEncrypted(argv[1],argv[2],true)) {
+       // printf("Hashes do not match: There is a message embedded!\n");
+	// }
+   // else printf("Hashes match: There is no embedded message.\n");
    
-   return 0;
-}
+   // return 0;
+// }

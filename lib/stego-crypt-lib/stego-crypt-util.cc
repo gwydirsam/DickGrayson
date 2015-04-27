@@ -1,5 +1,5 @@
 #include "stego-crypt-util.hh"
-#include <dgimg/dgimg.hh>
+#include <dgtype/dgtype.hh>
 
 bool set_file_type(File_type* ftype, const std::string& arg) {
   std::string lower_arg = std::move(arg);
@@ -27,14 +27,6 @@ std::string message_from_file(const std::string& fname) {std::string msg;
 void message_to_file(const std::string& msg, const std::string& fname) {
   std::ofstream ofs(fname);
   ofs << msg;
-}
-
-bool is_file_accessible(const std::string& fname) {
-  std::ifstream ifs(fname);
-  if (ifs.good()) {
-    return true;
-  }
-  return false;
 }
 
 void print_help() {

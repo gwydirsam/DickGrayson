@@ -48,7 +48,6 @@ bool set_file_type(File_type* ftype, const std::string& arg);
 std::string message_from_file(const std::string& fname);
 // saves msg out to the file
 void message_to_file(const std::string& msg, const std::string& fname);
-bool is_file_accessible(const std::string& fname);
 
 // Reads command line arguments and stores them in args
 Error_code read_args(int argc, char* argv[], Arguments* args);

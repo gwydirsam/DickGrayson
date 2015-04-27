@@ -1,12 +1,34 @@
 #include <gtest/gtest.h>
-//#include <sndfile.h>
+#include <dgtype/dgtype.hh>
 
-TEST(sndStub, oneEqualsone) {
-  int one = 1;
-  EXPECT_EQ(1, one);
+TEST(Wav, InvalidFormatException) {
+  EXPECT_THROW(dgwav wav("../../test/dgsnd/badformat.mp3"),
+               dgtype::Invalid_format_exception);
 }
 
-TEST(sndStub, libSndFileOpen) {
-  int two = 2;
-  EXPECT_EQ(2, two);
+TEST(Wav, InaccessibleFileException) {
+  EXPECT_THROW(dgwav wav("imaginary.wav"),
+               dgtype::Inaccessible_file_exception);
+}
+
+TEST(Wav, SampleSetMask) {
+  dgwav wav("../../test/dgsnd/test.wav");
+  unsigned first_sample = wav.get_sample(0);
+
+  wav.sample_set_mask(0, 0xFFFFu);
+  EXPECT_EQ(0xFFFFu, wav.get_sample(0));
+
+  wav.sample_set_mask(0, 0x0u);
+  EXPECT_EQ(first_sample, wav.get_sample(0));
+}
+
+TEST(Wav, SampleUnsetMask) {
+  dgwav wav("../../test/dgsnd/test.wav");
+  unsigned first_sample = wav.get_sample(0);
+
+  wav.sample_set_mask(0, 0xFFFFu);
+  EXPECT_EQ(0x0u, wav.get_sample(0));
+
+  wav.sample_set_mask(0, 0x0u);
+  EXPECT_EQ(first_sample, wav.get_sample(0));
 }

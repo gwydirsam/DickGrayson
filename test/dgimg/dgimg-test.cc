@@ -1,17 +1,18 @@
 #include <gtest/gtest.h>
 #include <fstream>
+#include <dgtype/dgtype.hh>
 #include <dgimg/dgimg.hh>
 
 ////// BMP TESTS
 
 TEST(Bmp, InvalidFormatException) {
   ASSERT_THROW(dgbmp png("../../test/dgimg/badformat.png"),
-               dgbmp::Invalid_format_exception);
+               dgtype::Invalid_format_exception);
 }
 
 TEST(Bmp, InaccessibleFileException) {
   ASSERT_THROW(dgbmp bmp("../../test/dgimg/imaginary.bmp"),
-               dgbmp::Inaccessible_file_exception);
+               dgtype::Inaccessible_file_exception);
 }
 
 TEST(Bmp, PixelSetMask) {

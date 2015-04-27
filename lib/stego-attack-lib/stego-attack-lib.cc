@@ -5,8 +5,6 @@
 
 #include "stego-attack-lib.hh"
 
-
-
 // Compare results; cannot use strcmp() because it requires signed char*
 int compareHashVals(unsigned char* string1, unsigned char* string2) {
   int i;

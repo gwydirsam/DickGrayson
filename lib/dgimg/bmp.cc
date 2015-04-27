@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iostream>
 #include <algorithm>
+#include <dgtype/dgtype.hh>
 #include "bmp.hh"
 
 namespace DG {
@@ -35,10 +36,10 @@ static unsigned normalize_mask(unsigned mask, int bpp) {
 void BMP::open(const std::string& fname) {
   std::ifstream ifs(fname.c_str());
   if (!ifs.good()) {
-    throw inaccessible_file;
+    throw Type::Inaccessible_file("BMP");
   }
   if (!data.ReadFromFile(fname.c_str())) {
-    throw invalid_format;
+    throw Type::Invalid_format("BMP");
   }
 }
 

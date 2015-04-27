@@ -17,18 +17,6 @@ namespace Image {
 
 class BMP {
  public:
-  struct Invalid_format_exception : public std::exception {
-    virtual const char* what() const throw() {
-      return "BMP: Invalid_format_exception";
-    }
-  } invalid_format;
-
-  struct Inaccessible_file_exception : public std::exception {
-    virtual const char* what() const throw() {
-      return "BMP: Inaccessible_file_exception";
-    }
-  } inaccessible_file;
-
   BMP() {SetEasyBMPwarningsOff();}
   BMP(const std::string& fname) :BMP() { open(fname); }
 

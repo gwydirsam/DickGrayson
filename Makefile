@@ -23,11 +23,12 @@ endif
 CMAKE := $(shell which cmake)
 CMAKE_GENERATOR ?= "Unix Makefiles"
 #CMAKE_GENERATOR ?= Ninja
+#CMAKE_GENERATOR ?= Xcode
 
+FIND := $(shell which find)
 LCOV := $(shell which lcov)
 GCOV := $(shell which gcov)
 GENHTML := $(shell which genhtml)
-COVERALLS-LCOV := $(shell which coveralls-lcov)
 
 PROJECT_DIR := $(CURDIR)
 BUILD_DIR := $(PROJECT_DIR)/build
@@ -55,6 +56,17 @@ DEBUG_TEST_BINS := $(wildcard $(DEBUG_DIR)/test/*-test)
 				test-all test-build test-debug $(DEBUG_TEST_BINS) \
 				install-better-defaults install-cmake install-gmp xcode xcode-all \
 				xcode-debug xcode-build ninja ninja-all ninja-debug ninja-build test-gmp
+
+all xcode-all xcode xcode-build xcode-debug ninja-all \
+ninja ninja-build ninja-debug release build debug compile create-build-list::
+	@for dir in $(shell $(FIND) $(PROJECT_DIR)/lib -mindepth 1 -type d); do \
+		$(FIND) $$dir -name '*.cc' > $$dir/build_list.cmake; \
+	done
+	@$(FIND) bin -mindepth 1 -type d | cut -d '/' -f 2 > $(PROJECT_DIR)/bin/bin_list.cmake
+	@$(FIND) test -mindepth 1 -type d | cut -d '/' -f 2 > $(PROJECT_DIR)/test/test_list.cmake
+	@$(FIND) $(PROJECT_DIR)/bin -name '*.cc' > $(PROJECT_DIR)/bin/build_list.cmake
+	@$(FIND) $(PROJECT_DIR)/lib -name '*.cc' > $(PROJECT_DIR)/lib/build_list.cmake
+	@$(FIND) $(PROJECT_DIR)/test -name '*.cc' > $(PROJECT_DIR)/test/build_list.cmake
 
 all::
 	@echo ======================================
@@ -103,6 +115,24 @@ install-deps install-ccache::
 	@(cd share/scripts; bash install-ccache.sh)
 	@echo ======================================
 	@echo Done Installing Better Defaults
+	@echo ======================================
+
+install-deps install-libsndfile::
+	@echo ======================================
+	@echo Start Installing libsndfile
+	@echo ======================================
+	@(cd share/scripts; bash install-libsndfile.sh)
+	@echo ======================================
+	@echo Done Installing libsndfile
+	@echo ======================================
+
+install-openssl::
+	@echo ======================================
+	@echo Start Installing OpenSSL
+	@echo ======================================
+	@(cd share/scripts; bash install-openssl.sh)
+	@echo ======================================
+	@echo Done Installing OpenSSL
 	@echo ======================================
 
 install-deps install-cmake::
@@ -207,13 +237,13 @@ coverage::
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --directory $(DEBUG_DIR) --capture --initial --output-file coverage.info --gcov-tool $(GCOV)
 	-@$(MAKE) run-all
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --directory $(DEBUG_DIR) --capture --output-file coverage.info --gcov-tool $(GCOV)
-	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --remove coverage.info 'test/*' '/usr/*' --output-file coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --remove coverage.info 'include/*' 'test/*' '/usr/*' --output-file coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(LCOV) --list coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) mkdir -p $(DEBUG_DIR)/html
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(GENHTML) $(DEBUG_DIR)/coverage.info -o $(DEBUG_DIR)/html
 
 upload-coverage:: coverage
-	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(COVERALLS-LCOV) --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
+	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(shell which coveralls-lcov) --repo-token zhZo6XJnHCSiPtFKhLuFulVvgZgvwMsm2 coverage.info
 	-@$(CMAKE) -E chdir $(DEBUG_DIR) $(MAKE) -C $(DEBUG_DIR) coveralls
 
 run-all:: all
@@ -228,21 +258,23 @@ run-all test-all test test-build:: build
 	@echo ======================================
 
 run-all test-all test test-build test-rsa-crypt:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/rsa-crypt-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/rsa-crypt-test --gtest_color=yes
 run-all test-all test test-build test-rsa-attack:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/rsa-attack-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/rsa-attack-test --gtest_color=yes
 run-all test-all test test-build test-stego-crypt:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/stego-crypt-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/stego-crypt-test --gtest_color=yes
 run-all test-all test test-build test-stego-attack:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/stego-attack-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/stego-attack-test --gtest_color=yes
 run-all test-all test test-build test-dgcrypto:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgcrypto-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/dgcrypto-test --gtest_color=yes
 run-all test-all test test-build test-dgtype:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgtype-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/dgtype-test --gtest_color=yes
 run-all test-all test test-build test-dgimg:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/dgimg-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/dgimg-test --gtest_color=yes
+run-all test-all test test-build test-dgsnd:: build
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/dgsnd-test --gtest_color=yes
 run-all test-all test test-build test-libgnump:: build
-	@$(CMAKE) -E chdir $(BUILD_DIR) $(BUILD_DIR)/test/libgnump-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(BUILD_DIR)/test $(BUILD_DIR)/test/libgnump-test --gtest_color=yes
 
 run-all test-all test test-build:: build
 	@echo ======================================
@@ -255,21 +287,23 @@ run-all test-all test-debug:: debug
 	@echo ======================================
 
 run-all test-all test-debug test-debug-rsa-crypt:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/rsa-crypt-test --gtest_color=yes
 run-all test-all test-debug test-debug-rsa-attack:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/rsa-attack-test --gtest_color=yes
 run-all test-all test-debug test-debug-stego-crypt:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/stego-crypt-test --gtest_color=yes
 run-all test-all test-debug test-debug-stego-attack:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/stego-attack-test --gtest_color=yes
 run-all test-all test-debug test-debug-dgcrypto:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/dgcrypto-test --gtest_color=yes
 run-all test-all test-debug test-debug-dgtype:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
 run-all test-all test-debug test-debug-dgimg:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+run-all test-all test-debug test-debug-dgsnd:: debug
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/dgsnd-test --gtest_color=yes
 run-all test-all test-debug test-debug-libgnump:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/test $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
 run-all test-all test-debug:: debug
 	@echo ======================================
@@ -282,13 +316,15 @@ run-all:: debug
 	@echo ======================================
 
 run-all run-debug-rsa-crypt:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/bin/rsa-crypt
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-crypt
 run-all run-debug-rsa-attack:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/bin/rsa-attack
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-attack --attack chinese_rt
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-attack --attack factoring
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-attack --help
 run-all run-debug-stego-crypt:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/bin/stego-crypt
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/stego-crypt
 run-all run-debug-stego-attack:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR) $(DEBUG_DIR)/bin/stego-attack
+	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/stego-attack
 
 run-all:: debug
 	@echo ======================================
@@ -301,6 +337,7 @@ all::
 	@echo ======================================
 
 clean-all clean clean-release clean-build::
+	-@$(FIND) . -name '*.gcda' -delete
 ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(BUILD_DIR) clean
 else
@@ -308,6 +345,7 @@ else
 endif
 
 clean-all clean-debug::
+	-@$(FIND) . -name '*.gcda' -delete
 ifeq ($(CMAKE_GENERATOR), Ninja)
 	@ninja -C $(DEBUG_DIR) clean
 else
@@ -319,6 +357,12 @@ clean-force clean-build-dirs::
 
 cppcheck::
 	cppcheck -j4 --enable=all lib/ bin/
+
+clang-format::
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) lib -name '*.hh'`
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) lib -name '*.cc'`
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) bin -name '*.cc'`
+	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) test -name '*.cc'`
 
 valgrind-all:: debug
 	@echo ======================================
@@ -339,6 +383,8 @@ valgrind-all valgrind-test-dgtype valgrind-test-debug-dgtype::
 	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgtype-test --gtest_color=yes
 valgrind-all valgrind-test-dgimg valgrind-test-debug-dgimg::
 	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgimg-test --gtest_color=yes
+valgrind-all valgrind-test-dgsnd valgrind-test-debug-dgsnd::
+	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/dgsnd-test --gtest_color=yes
 valgrind-all valgrind-test-libgnump valgrind-test-debug-libgnump::
 	valgrind --tool=memcheck --dsymutil=yes $(DEBUG_DIR)/test/libgnump-test --gtest_color=yes
 
@@ -381,6 +427,7 @@ help-all::
 	$(info make test-dgcrypto           - run (release build) dgcrypto test)
 	$(info make test-dgtype             - run (release build) dgtype test)
 	$(info make test-dgimg              - run (release build) dgimg test)
+	$(info make test-dgsnd              - run (release build) dgsnd test)
 	$(info make test-libgnump           - run (release build) gmp library test)
 	$(info make test-debug-rsa-crypt    - run (debug build) rsa-crypt test)
 	$(info make test-debug-rsa-attack   - run (debug build) rsa-attack test)
@@ -389,6 +436,7 @@ help-all::
 	$(info make test-debug-dgcrypto     - run (debug build) dgcrypto test)
 	$(info make test-debug-dgtype       - run (debug build) dgtype test)
 	$(info make test-debug-dgimg        - run (debug build) dgimg test)
+	$(info make test-debug-dgsnd        - run (debug build) dgsnd test)
 	$(info make test-debug-libgnump     - run (debug build) gmp library test)
 help help-all::
 	$(info )

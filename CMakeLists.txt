@@ -8,7 +8,7 @@ set(CMAKE_CONFIGURATION_TYPES Debug Release)
 
 # turn colors on for makefiles
 SET(CMAKE_COLOR_MAKEFILE ON)
-# turn on verbose for makesfiles
+# turn on for verbose makesfiles
 SET(CMAKE_VERBOSE_MAKEFILE OFF)
 
 # tests are on by default
@@ -34,8 +34,19 @@ set(STEGO_ATTACK_LIB stego-attack-lib)
 
 ## library names
 set(IMAGE_LIB dgimg)
+set(SOUND_LIB dgsnd)
 set(CRYPTO_LIB dgcrypto)
 set(TYPE_LIB dgtype)
+
+## list of binaries
+list(APPEND PROJECT_BIN_LIST ${RSA_CRYPT} ${RSA_ATTACK} ${STEGO_CRYPT} ${STEGO_ATTACK})
+## list of libraries
+# binary specific libraries
+list(APPEND PROJECT_BIN_LIB_LIST ${RSA_CRYPT_LIB} ${RSA_ATTACK_LIB} ${STEGO_CRYPT_LIB} ${STEGO_ATTACK_LIB})
+# project internal libraries
+list(APPEND PROJECT_INTERNAL_LIB_LIST ${IMAGE_LIB} ${SOUND_LIB} ${CRYPTO_LIB} ${TYPE_LIB})
+# project internal and binary specific libraries
+list(APPEND PROJECT_COMBINED_LIB_LIST ${PROJECT_BIN_LIB_LIST} ${PROJECT_INTERNAL_LIB_LIST})
 
 ## locations
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/bin)
@@ -65,17 +76,24 @@ if(GMP_FOUND)
   list(APPEND PROJECT_GLOBAL_LIBS ${GMP_LIBRARIES} ${GMPXX_LIBRARIES})
 endif()
 
+# find OpenSSL
+find_package(OpenSSL REQUIRED)
+if(OPENSSL_FOUND)
+  include_directories(${OPENSSL_INCLUDE_DIR})
+  list(APPEND PROJECT_GLOBAL_LIBS ${OPENSSL_CRYPTO_LIBRARY})
+endif()
+
 ## set some compiler flags
 #  note DEBUG is set for debug build
 #       NDEBUG is set for release build
 if(${CMAKE_COMPILER_IS_GNUCXX})
   ## gcc/g++ flags
   # c++
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread -lcrypt")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread")
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -DNDEBUG")
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -Wall -Wextra -DDEBUG")
   # c
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -pthread -lcrypt")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -pthread")
   set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall -Wextra -DDEBUG")
   set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O0 -Wall -Wextra -DDEBUG")
   if(COVERALLS)
@@ -94,7 +112,7 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -DNDEBUG")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -Wall -Wextra -DDEBUG")
     # c
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -pthread -lcrypt")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -pthread")
     set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall -Wextra -DDEBUG")
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O0 -Wall -Wextra -DDEBUG")
     if(COVERALLS)
@@ -108,7 +126,7 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     endif()
   else()
     # linux clang flags (use libstdc++)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -stdlib=libstdc++ -pthread -lcrypt")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -stdlib=libstdc++ -pthread")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -DNDEBUG")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -Wall -Wextra -DDEBUG")
     if(COVERALLS)

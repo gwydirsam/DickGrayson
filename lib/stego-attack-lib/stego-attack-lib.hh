@@ -25,3 +25,12 @@ void getMD5Hash(char* filename, unsigned char* result);
 // Determines whether or not two files have the same md5 hash
 bool isEncrypted(char* img1, char* img2, bool print);
 
+// Get encrypted message from wav using Martin's library
+ 
+// Get encrypted message from bmp using Martin's library
+
+// TEST INTERFACE //
+
+// Randomize wav LSBs
+
+// Randomize bmp LSBs

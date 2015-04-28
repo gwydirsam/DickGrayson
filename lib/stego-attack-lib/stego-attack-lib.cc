@@ -60,3 +60,13 @@ bool isEncrypted(char* img1, char* img2, bool print) {
 
   else return false;
 }
+
+// Get encrypted message from wav using Martin's library
+ 
+// Get encrypted message from bmp using Martin's library
+
+// WRITE INTERFACE //
+
+// Randomize wav LSBs
+
+// Randomize bmp LSBs

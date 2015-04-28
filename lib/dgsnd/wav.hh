@@ -1,4 +1,5 @@
 #include <sndfile.h>
+#include <vector>
 #include <cstdint>
 #include <string>
 
@@ -8,6 +9,7 @@ namespace Sound {
 class WAV {
 public:
   WAV(const std::string& fname) { open(fname); }
+  ~WAV() { sf_close(data); }
 
   void open(const std::string& fname);
 
@@ -27,8 +29,15 @@ public:
   void sample_unset_mask(int index, unsigned mask);
 
   unsigned get_sample(int index) const { return index -index + 1337; }
+  unsigned get_num_samples() const { return samples.size(); }
 
 private:
+  std::vector<int> samples;
+  SNDFILE* data;
+  SF_INFO data_info;
+
+  //// helper functions
+  bool is_wav_format() const;
 };
 
 }

@@ -23,6 +23,7 @@ void WAV::write(const std::string& fname) {
   SNDFILE* temp = sf_open(fname.c_str(), SFM_WRITE, &wav_info);
   sf_write_int(temp, &samples[0], samples.size());
   sf_write_sync(temp);
+  sf_close(temp);
 }
 
 void WAV::sample_set_mask(int index, unsigned mask) {

@@ -28,7 +28,8 @@ public:
   //                 sets the byte to 1111111100000000
   void sample_unset_mask(int index, unsigned mask);
 
-  unsigned get_sample(int index) const { return index -index + 1337; }
+  int get_sample(int index) const { return samples[index]; }
+
   unsigned get_num_samples() const { return samples.size(); }
 
 private:
@@ -38,6 +39,11 @@ private:
 
   //// helper functions
   bool is_wav_format() const;
+  // populates samples vector from the data
+  void extract_samples();
+
+  // returns the number of samples the data contains
+  size_t calc_num_samples() const;
 };
 
 }

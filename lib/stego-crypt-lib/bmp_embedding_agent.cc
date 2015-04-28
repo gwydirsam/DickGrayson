@@ -1,6 +1,6 @@
 #include "bmp_embedding_agent.hh"
 
-inline void BMP_embedding_agent::embed() {
+void BMP_embedding_agent::embed() {
   int width = outbmp.get_width();
   int height = outbmp.get_height();
 
@@ -19,11 +19,11 @@ inline void BMP_embedding_agent::embed() {
   }
 }
 
-inline void BMP_embedding_agent::save() const {
+void BMP_embedding_agent::save() const {
   outbmp.write(outbmp_fname);
 }
 
-inline std::vector<unsigned> BMP_embedding_agent::message_to_masks(const std::string& msg, Mask_type mask_type) {
+std::vector<unsigned> BMP_embedding_agent::message_to_masks(const std::string& msg, Mask_type mask_type) {
   std::vector<unsigned> masks;
   std::vector<bool> msg_bits = message_to_bits(msg);
 
@@ -48,7 +48,7 @@ inline std::vector<unsigned> BMP_embedding_agent::message_to_masks(const std::st
   return masks;
 }
 
-inline bool BMP_embedding_agent::check_msg_bmp_capacity(const std::string& msg) {
+bool BMP_embedding_agent::check_msg_media_capacity(const std::string& msg) {
   unsigned num_bits = msg.length() * 8;
   unsigned subpixels_per_pixel = inbmp.get_bpp() / 8;
   unsigned num_pixels = inbmp.get_num_pixels();

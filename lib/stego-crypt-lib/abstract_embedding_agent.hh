@@ -32,7 +32,7 @@ protected:
   virtual std::vector<unsigned> message_to_masks(const std::string& msg, Mask_type mask_type) = 0;
 
   // returns true when the message can fit within the bmp
-  virtual bool check_msg_bmp_capacity(const std::string& msg) = 0;
+  virtual bool check_msg_media_capacity(const std::string& msg) = 0;
 
   // embeds message into the outbmp
   virtual void embed() = 0;

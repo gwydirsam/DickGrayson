@@ -7,7 +7,7 @@
 //// public member functions
 
 void Abstract_embedding_agent::embed_and_save(const std::string& msg) {
-  if (!check_msg_bmp_capacity(msg)) {
+  if (!check_msg_media_capacity(msg)) {
     throw msg_too_long;
   }
 

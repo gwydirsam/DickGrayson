@@ -15,8 +15,6 @@ public:
     }
   } msg_too_long;
 
-  Abstract_embedding_agent() { }
-
   // Embeds msg into output and writes the bmp out to disk
   void embed_and_save(const std::string& msg);
 

@@ -17,7 +17,7 @@ protected:
                                                  , Mask_type mask_type) override;
 
   // returns true when the message can fit within the bmp
-  virtual bool check_msg_bmp_capacity(const std::string& msg) override;
+  virtual bool check_msg_media_capacity(const std::string& msg) override;
 
   // embeds message into the outbmp
   virtual void embed() override;

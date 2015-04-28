@@ -12,7 +12,7 @@ cache:
     - $HOME/.ccache
     - $HOME/local
     - vendor/bundle
-# force travis to use containe
+# force travis to use container
 sudo: false
 
 # install gcc-4.9
@@ -21,7 +21,7 @@ addons:
     sources:
     - ubuntu-toolchain-r-test
     packages:
-    # - libsndfile
+    # - libsndfile # not in package white-list
     - valgrind
     # - openssl
     - gcc-4.9

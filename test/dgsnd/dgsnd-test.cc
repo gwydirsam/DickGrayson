@@ -11,6 +11,13 @@ TEST(Wav, InaccessibleFileException) {
                dgtype::Inaccessible_file_exception);
 }
 
+TEST(Wav, Write) {
+  dgwav wav("../../test/dgsnd/test.wav");
+  wav.write("../../test/dgsnd/write-test.wav");
+  dgwav wav2("../../test/dgsnd/write-test.wav");
+  EXPECT_EQ(wav, wav2);
+}
+
 TEST(Wav, SampleSetMask) {
   dgwav wav("../../test/dgsnd/test.wav");
   unsigned first_sample = wav.get_sample(0);

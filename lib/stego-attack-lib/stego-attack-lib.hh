@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <iostream>
 #include <openssl/md5.h>
 
 // Compare results; cannot use strcmp() because it requires signed char*

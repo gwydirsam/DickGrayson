@@ -9,7 +9,6 @@ namespace Sound {
 class WAV {
 public:
   WAV(const std::string& fname) { open(fname); }
-  ~WAV() { sf_close(data); }
 
   bool operator==(const WAV& other) const {
     return (this == &other ||
@@ -39,15 +38,15 @@ public:
 
 private:
   std::vector<int> samples;
-  SNDFILE* data;
-  SF_INFO data_info;
+  SF_INFO wav_info;
 
   //// helper functions
   bool is_wav_format() const;
-  // populates samples vector from the data
-  void extract_samples();
+  // populates samples vector from the wav
+  void extract_samples(SNDFILE* wav);
 
-  // returns the number of samples the data contains
+  // returns the number of samples
+  // in the wav indicated by wav_info
   size_t calc_num_samples() const;
 };
 

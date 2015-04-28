@@ -43,7 +43,7 @@ void BMP::open(const std::string& fname) {
   }
 }
 
-void BMP::write(const std::string& fname) {
+void BMP::write(const std::string& fname) const {
   data.WriteToFile(fname.c_str());
 }
 

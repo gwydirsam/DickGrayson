@@ -11,6 +11,11 @@ public:
   WAV(const std::string& fname) { open(fname); }
   ~WAV() { sf_close(data); }
 
+  bool operator==(const WAV& other) const {
+    return (this == &other ||
+            samples == other.samples);
+  }
+
   void open(const std::string& fname);
 
   // write wav out to the file fname

@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
   if (args.ftype == File_type::BMP) {
     if (!args.extract) {
       print_if("-- Loading the embedding agent\n", args.verbose);
-      Embedding_agent embedder(args.input_fname, args.output_fname);
+      BMP_embedding_agent embedder(args.input_fname, args.output_fname);
       print_if("-- Loading message from disk\n", args.verbose);
       std::string message = message_from_file(args.message_fname);
       print_if("-- Embedding and saving to disk\n", args.verbose);

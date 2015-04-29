@@ -37,7 +37,7 @@ class RsaKeys {
   // get gcd
   const mpz_class get_gcd(mpz_class p, mpz_class q) const;
  
-  mpz_class string encode(std::string message, mpz_class d, mpz_class n);
+  std::string encode(std::string message, mpz_class d, mpz_class n);
 
   //computer e (euclidean extended algorithm)
   mpz_class compute_d(mpz_class e, mpz_class totient);
@@ -45,6 +45,8 @@ class RsaKeys {
   std::vector<mpz_class> extended_euclidean(mpz_class a, mpz_class b);
 
   mpz_class calculate_d(mpz_class totient, mpz_class e);
+  
+  mpz_class my_pow(mpz_class a, mpz_class b);
   
   static inline bool is_base64(unsigned char c) { return (isalnum(c) || (c == '+') || (c == '/'));} 
  private:

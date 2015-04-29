@@ -33,12 +33,13 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   //public key
   //std::string private_key = n_ + "" + e_;
   //std::string public_key = p + "" + q + "" + d_;
+  std::cerr<<encode("Hello World hello world", 10, 10);
 
   //private key
   //std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
 }
 
-std::string encode(std::string message){
+std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n){
   std::string num_value;
   mpz_class cipher;
   if(message.length() < 20){
@@ -59,18 +60,27 @@ std::string encode(std::string message){
             count = 0;
             //add cipher encrypt
             mpz_class ascii = std::stol(temp_string,0, 10);
-            //cipher = pow(ascii, 5);    
+            std::cout<<"THE ASCII VALUE IS : "<<ascii;
+            cipher = my_pow(ascii, e) % n;    
             //add n to cipther encrypt
+            std::string cipher_string = cipher +"/n";
             //add cipherencrypt + n to num_value
-            //reset temp_string
-            temp_string += "n";
-            
+            num_value += cipher_string;
+            //reset temp_string 
             temp_string = ""; 
             
           }
      }
     return num_value;
   }
+}
+
+mpz_class RsaKeys::my_pow(mpz_class a, mpz_class b){
+  mpz_class result = 0;
+  for(int i = 0; i < b; i++){
+    result += result*a;  
+  }
+  return result;
 }
 // helper function to check for primality
 // generates two random primes and checks coprimality

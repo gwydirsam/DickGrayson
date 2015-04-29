@@ -31,11 +31,47 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   //compute d
   this ->d_ = calculate_d(totient_, e_);
   //public key
-  std::cerr<<"Public key is : "<<n_ <<""<<e_<<std::endl;
-  //priate key
-  std::cerr<<"Private key is : "<<p<<q<<d_<<std::endl;
+  //std::string private_key = n_ + "" + e_;
+  //std::string public_key = p + "" + q + "" + d_;
+
+  //private key
+  //std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
 }
 
+std::string encode(std::string message){
+  std::string num_value;
+  mpz_class cipher;
+  if(message.length() < 20){
+    for(int i = 0; i < message.length(); ++i){
+      int temp = (char) message.at(i); 
+      num_value += std::to_string(temp); 
+    }
+    return num_value;
+  }
+  else{
+      int count = 0;   
+      std::string temp_string;
+      for(int i = 0; i < message.length(); ++i){
+        int temp = (int)  message.at(i);
+        temp_string += std::to_string(temp);           
+        count++;   
+          if(count == 20){
+            count = 0;
+            //add cipher encrypt
+            mpz_class ascii = std::stol(temp_string,0, 10);
+            //cipher = pow(ascii, 5);    
+            //add n to cipther encrypt
+            //add cipherencrypt + n to num_value
+            //reset temp_string
+            temp_string += "n";
+            
+            temp_string = ""; 
+            
+          }
+     }
+    return num_value;
+  }
+}
 // helper function to check for primality
 // generates two random primes and checks coprimality
 const std::tuple<mpz_class, mpz_class> RsaKeys::generate_keys() const {
@@ -144,4 +180,5 @@ const mpz_class RsaKeys::compute_e(mpz_class totient) const {
     }*/
   //return e.get_mpz_class();
   //return e = 65537 for now
-  
+
+

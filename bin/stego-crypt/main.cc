@@ -6,34 +6,31 @@ int main(int argc, char* argv[]) {
   Error_code err_code = read_args(argc, argv, &args);
   process_error_code(err_code);
 
+  File_type file_type = file_type_of(args.input_fname);
+
   std::unique_ptr<Abstract_embedding_agent> embedder;
   std::unique_ptr<Abstract_extracting_agent> extractor;
 
-  if (args.ftype == File_type::BMP) {
-    if (!args.extract) {
-      embedder = std::make_unique<BMP_embedding_agent>(args.input_fname,
-                                                       args.output_fname);
-    } else {
-      extractor = std::make_unique<BMP_extracting_agent>(args.input_fname);
-    }
-    std::cout << "-- Done";
-  } else { // args.ftype == File_type::WAV
-    /* ***still need to implement WAV embedding and extracting agents
-    if (!args.extract) {
-      embedder = std::make_unique<WAV_embedding_agent>(args.input_fname,
-                                                       args.output_fname);
-    } else {
-      extractor = std::make_unique<WAV_extracting_agent>(args.input_fname);
-    }*/
-    std::cout << "WAV files not yet supported\n";
-  }
-
+  std::cout << "-- Running\n";
   if (!args.extract) {
+    print_if("-- Loading the embedding agent\n", args.verbose);
+    embedder = which_embedding_agent(file_type, args.input_fname, args.output_fname);
+
+    print_if("-- Loading message from disk\n", args.verbose);
     std::string message = message_from_file(args.message_fname);
+
+    print_if("-- Embedding and saving to disk\n", args.verbose);
     embedder->embed_and_save(message);
   } else {
+    print_if("-- Loading the extracting agent\n", args.verbose);
+    extractor = which_extracting_agent(file_type, args.input_fname);
+
+    print_if("-- Extracting the message\n", args.verbose);
     std::string message = extractor->extract();
+
+    print_if("-- Saving message to disk\n", args.verbose);
     message_to_file(message, args.output_fname);
   }
+  std::cout << "-- Done\n";
   return 0;
 }

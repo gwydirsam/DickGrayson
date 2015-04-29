@@ -46,9 +46,7 @@ bool WAV::is_format_supported() const {
   int wav_mask = wav_info.format & SF_FORMAT_WAV;
   int pcm16_mask = wav_info.format & SF_FORMAT_PCM_16;
   bool is_wav = wav_mask == SF_FORMAT_WAV;
-  assert(is_wav);
   bool is_pcm16 = pcm16_mask == SF_FORMAT_PCM_16;
-  assert(is_pcm16);
   return is_wav && is_pcm16;
 }
 

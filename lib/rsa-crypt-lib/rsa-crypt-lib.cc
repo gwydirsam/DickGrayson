@@ -33,8 +33,9 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   // public key
   // std::string private_key = n_ + "" + e_;
   // std::string public_key = p + "" + q + "" + d_;
-  std::cerr << encode("Hello World hello world", 10, 10);
-
+  this->encode_ = encode("Hello World hello world", e(), n());
+  
+  
   // private key
   // std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
 }
@@ -62,7 +63,7 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
         std::cout << "THE ASCII VALUE IS : " << ascii;
         cipher = my_pow(ascii, e) % n;
         // add n to cipther encrypt
-        std::string cipher_string = cipher.get_str() + "/n";
+        std::string cipher_string = cipher.get_str() + "n";
         // add cipherencrypt + n to num_value
         num_value += cipher_string;
         // reset temp_string
@@ -73,12 +74,39 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
   }
 }
 
+//pow didn't work so had to generate my own
 mpz_class RsaKeys::my_pow(mpz_class a, mpz_class b) {
   mpz_class result = 0;
   for (int i = 0; i < b; i++) {
     result += result * a;
   }
   return result;
+}
+ 
+std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
+  std::string base = cryptText;
+  std::string part = "";
+  vector<std::string> partition;
+  mpz_class nCount = 0;
+  for(int i = 0; i < base.length(); ++i){
+    if(base.at(i) == "n"){
+      partition.push_back(part);
+      nCount++;
+      part = "";
+    }
+    else {
+      part += base.at(i);
+    }
+    if(nCount == 0) partition.push_back(part);
+    
+    std::string buffer = "";
+    for(int i = 0; i < partition.size(); ++i){
+      mpz_class cTxt = partition.at(i);
+      mp_cass pTxt = my_pow(cTxt, d) % n;
+      buffer += pTxt.get_str();
+    }
+   
+  }
 }
 // helper function to check for primality
 // generates two random primes and checks coprimality

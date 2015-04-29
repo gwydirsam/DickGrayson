@@ -27,3 +27,10 @@ TEST(RSACrypt, RsaKeysConstructor1024) {
   EXPECT_GT(my_keys.totient(), my_keys.e());
 
 }
+
+TEST(RSACrypt, RsaDecodeEncode1) {
+  RsaKeys my_keys(512);
+  std::cerr<<"Encoded value"<<my_keys.encode_result()<<std::endl;
+  EXPECT_EQ(my_keys.totient(), my_keys.e());
+
+}

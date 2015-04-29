@@ -25,60 +25,58 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   // compute n
   this->n_ = compute_n(p, q);
   // compute totient
-  this->totient_ = compute_totient(p,q);
+  this->totient_ = compute_totient(p, q);
   // compute e
   this->e_ = compute_e(this->totient_);
-  //compute d
-  this ->d_ = calculate_d(totient_, e_);
-  //public key
-  //std::string private_key = n_ + "" + e_;
-  //std::string public_key = p + "" + q + "" + d_;
-  std::cerr<<encode("Hello World hello world", 10, 10);
+  // compute d
+  this->d_ = calculate_d(totient_, e_);
+  // public key
+  // std::string private_key = n_ + "" + e_;
+  // std::string public_key = p + "" + q + "" + d_;
+  std::cerr << encode("Hello World hello world", 10, 10);
 
-  //private key
-  //std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
+  // private key
+  // std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
 }
 
-std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n){
+std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
   std::string num_value;
   mpz_class cipher;
-  if(message.length() < 20){
-    for(int i = 0; i < message.length(); ++i){
-      int temp = (char) message.at(i); 
-      num_value += std::to_string(temp); 
+  if (message.length() < 20) {
+    for (int i = 0; i < message.length(); ++i) {
+      int temp = (char)message.at(i);
+      num_value += std::to_string(temp);
+    }
+    return num_value;
+  } else {
+    int count = 0;
+    std::string temp_string;
+    for (std::size_t i = 0; i < message.length(); ++i) {
+      int temp = (int)message.at(i);
+      temp_string += std::to_string(temp);
+      count++;
+      if (count == 20) {
+        count = 0;
+        // add cipher encrypt
+        mpz_class ascii = std::stol(temp_string, 0, 10);
+        std::cout << "THE ASCII VALUE IS : " << ascii;
+        cipher = my_pow(ascii, e) % n;
+        // add n to cipther encrypt
+        std::string cipher_string = cipher.get_str() + "/n";
+        // add cipherencrypt + n to num_value
+        num_value += cipher_string;
+        // reset temp_string
+        temp_string = "";
+      }
     }
     return num_value;
   }
-  else{
-      int count = 0;   
-      std::string temp_string;
-      for(int i = 0; i < message.length(); ++i){
-        int temp = (int)  message.at(i);
-        temp_string += std::to_string(temp);           
-        count++;   
-          if(count == 20){
-            count = 0;
-            //add cipher encrypt
-            mpz_class ascii = std::stol(temp_string,0, 10);
-            std::cout<<"THE ASCII VALUE IS : "<<ascii;
-            cipher = my_pow(ascii, e) % n;    
-            //add n to cipther encrypt
-            std::string cipher_string = cipher +"/n";
-            //add cipherencrypt + n to num_value
-            num_value += cipher_string;
-            //reset temp_string 
-            temp_string = ""; 
-            
-          }
-     }
-    return num_value;
-  }
 }
 
-mpz_class RsaKeys::my_pow(mpz_class a, mpz_class b){
+mpz_class RsaKeys::my_pow(mpz_class a, mpz_class b) {
   mpz_class result = 0;
-  for(int i = 0; i < b; i++){
-    result += result*a;  
+  for (int i = 0; i < b; i++) {
+    result += result * a;
   }
   return result;
 }
@@ -87,14 +85,14 @@ mpz_class RsaKeys::my_pow(mpz_class a, mpz_class b){
 const std::tuple<mpz_class, mpz_class> RsaKeys::generate_keys() const {
   dgrandprime p(bits_);
   dgrandprime q(bits_);
-  
-  //p and q don't need to be coprime
+
+  // p and q don't need to be coprime
   /*while (!is_coprime(p.get_mpz_class(), q.get_mpz_class())) {
     q.reroll();
   }*/
 
-  //std::cerr << "VALUE_OF p is : " << p << std::endl;
-  //std::cerr << "VALUE_OF q is : " << q << std::endl;
+  // std::cerr << "VALUE_OF p is : " << p << std::endl;
+  // std::cerr << "VALUE_OF q is : " << q << std::endl;
 
   return std::make_tuple(p.get_mpz_class(), q.get_mpz_class());
 }
@@ -167,28 +165,25 @@ const mpz_class RsaKeys::compute_e(mpz_class totient) const {
 
   // why not use dgrandominteger...this is what it's for
   dgrandprime e(bits_);
-  if(bits_ > 17){
+  if (bits_ > 17) {
     return 65537;
-  }
-  else{
-    for(int i = 0; i < 9; ++i){
-      if(is_coprime(e.get_mpz_class(), totient)){
+  } else {
+    for (int i = 0; i < 9; ++i) {
+      if (is_coprime(e.get_mpz_class(), totient)) {
         return e.get_mpz_class();
-      }
-      else{
+      } else {
         e.reroll();
       }
-    } 
+    }
   }
-  std::cerr<<"no coprime values";
+  std::cerr << "no coprime values";
   return 0;
 }
- /* while (!is_coprime(e.get_mpz_class(), totient)) {
-     std::cerr<<e.get_mpz_class()<< " is not coprime with totient value: "<<totient<<std::endl;
-     std::cerr<<e.get_mpz_class()<<std::endl;
-    e.reroll();
-    }*/
-  //return e.get_mpz_class();
-  //return e = 65537 for now
-
-
+/* while (!is_coprime(e.get_mpz_class(), totient)) {
+    std::cerr<<e.get_mpz_class()<< " is not coprime with totient value:
+   "<<totient<<std::endl;
+    std::cerr<<e.get_mpz_class()<<std::endl;
+   e.reroll();
+   }*/
+// return e.get_mpz_class();
+// return e = 65537 for now

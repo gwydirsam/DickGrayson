@@ -3,19 +3,14 @@
 #include <vector>
 #include <dgimg/dgimg.hh>
 
-class Extracting_agent {
+class Abstract_extracting_agent {
  public:
-  Extracting_agent() = delete;
-  Extracting_agent(const std::string& inbmp_fname);
 
-  std::string extract() const;
+  virtual std::string extract() const = 0;
 
- private:
-  dgbmp inbmp;
-
+ protected:
   //// helper functions
 
-  std::vector<bool> extract_bits_from_pixel(int x, int y) const;
   bool is_last_byte_terminate(const std::vector<bool>& bits) const;
   std::string bits_to_string(const std::vector<bool>& bits) const;
 };

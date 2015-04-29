@@ -31,17 +31,45 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   // compute d
   this->d_ = calculate_d(totient_, e_);
   // public key
-  // std::string private_key = n_ + "" + e_;
-  // std::string public_key = p + "" + q + "" + d_;
   this->encode_ = encode("Hello World hello world", e(), n());
    //std::cout<<"result of my_pow : "<<my_pow(2,8)<<std::endl; 
-  
+  this-> decode_ = decode(encode_result(), d(), n()); 
   // private key
   // std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
 }
 
 std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
-  std::string num_value;
+  std::string inter = "";
+  mpz_class cipher;
+  std::string result = "";
+  if(message.length() > 20){
+    
+    int k = 0;
+    int i = 0;
+    while(i < message.length()){
+      while(i < message.length() && k < 20){
+        
+        mpz_class temp = (int) message.at(i);
+        inter = temp.get_str();
+        i++;
+        k++; 
+      }
+      mpz_class pTxt = mpz_class(inter);
+      cipher = my_pow(pTxt, e) % n;
+      result += cipher.get_str() + 'n';
+      inter = "";
+      k = 0;
+    }
+  std::cout<<"result is : "<<result<<std::endl;
+  return result;
+  } else{
+    for( int i = 0; i < message.length(); ++i) {
+      mpz_class temp = (int) message.at(i);
+      result += temp.get_str();
+    }
+  }
+}
+  /*std::string num_value;
   mpz_class cipher;
   if (message.length() < 20) {
     for (int i = 0; i < message.length(); ++i) {
@@ -55,17 +83,15 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
     for (std::size_t i = 0; i < message.length(); ++i) {
       int temp = (int)message.at(i);
       temp_string += std::to_string(temp);
-      std::cout<<"temp_string is : "<< temp_string<<std::endl;
       count++;
       if (count == 20) {
         count = 0;
         // add cipher encrypt
         mpz_class ascii = mpz_class(temp_string);
-        std::cout << "THE ASCII VALUE IS : " << ascii<<std::endl;
-        cipher = my_pow(ascii, e);
-        std::cout<<"cipher vaue is : " <<cipher<<std::endl;
+        cipher = my_pow(ascii, e)%n;
         // add n to cipther encrypt
         std::string cipher_string = cipher.get_str() + 'n';
+        std::cout<<"cipher_string is : "<< cipher_string<<std::endl;
         // add cipherencrypt + n to num_value
         num_value += cipher_string;
         std::cout <<"Num_value is " << num_value<<std::endl;
@@ -73,36 +99,27 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
         temp_string = "";
       }
     }
+    std::cout<<num_value;
     return num_value;
   }
-}
+}*/
 
 //pow didn't work so had to generate my own
 mpz_class RsaKeys::my_pow(mpz_class base, mpz_class exp) {
-bool flag=0;
-if(exp<0) {flag=1;exp*=-1;}
-mpz_class result = 1;
-while (exp)
-{
-    if (exp & 1)
-        result *= base;
-    exp >>= 1;
-    base *= base;
+  mpz_class result = 1;
+    for(mpz_class i = 0; i < exp; ++i){
+      result = result*base;
+    }
+ return result; 
 }
-if(flag==0)
-return result;
-else
-return (1/result);
-
-
-}
- 
 std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
+  std::cout<<"DECODING....."<<std::endl;
   std::string base = cryptText;
   std::string part = "";
   std::vector<std::string> partition;
   mpz_class nCount = 0;
   for(int i = 0; i < base.length(); ++i){
+    
     if(base.at(i) == 'n'){
       partition.push_back(part);
       nCount++;
@@ -121,6 +138,7 @@ std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
     }
    
   }
+ return part;
 }
 // helper function to check for primality
 // generates two random primes and checks coprimality

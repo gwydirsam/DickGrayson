@@ -31,11 +31,11 @@ TEST(RSACrypt, RsaKeysConstructor1024) {
 TEST(RSACrypt, RsaDecodeEncode1) {
   RsaKeys my_keys(512);
   std::cerr<<"Encoded value"<<my_keys.encode_result()<<std::endl;
-  EXPECT_EQ(my_keys.totient(), my_keys.e());
+  EXPECT_EQ("Hello World hello world", my_keys.decoded_result());
 }
  TEST(RSACrypt, RsaDecodeEncode2) {
   RsaKeys my_keys(512);
   std::cerr<<"Encoded value"<<my_keys.encode_result()<<std::endl;
-  std::cerr<<"decoded result"<<my_keys.decode_result()<<std::endl;
-  EXPECT_EQ(my_keys.totient(), my_keys.e());
+  std::cerr<<"decoded result"<<my_keys.decoded_result()<<std::endl;
+  EXPECT_EQ("Hello World hello world", my_keys.decoded_result());
 }

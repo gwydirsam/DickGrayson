@@ -1,5 +1,8 @@
 #include <cstdint>
 #include "abstract_extracting_agent.hh"
+#include "bmp_extracting_agent.hh"
+#include "wav_extracting_agent.hh"
+#include "file_io.hh"
 
 std::string Abstract_extracting_agent::bits_to_string(const std::vector<bool>& bits) const {
   std::string str;
@@ -30,4 +33,17 @@ bool Abstract_extracting_agent::is_last_byte_terminate(const std::vector<bool>& 
     }
   }
   return consecutive_zeroes == 8;
+}
+
+std::unique_ptr<Abstract_extracting_agent> which_extracting_agent(std::string inmedia_fname) {
+  std::unique_ptr<Abstract_extracting_agent> extractor;
+
+  File_type type = file_type_of(inmedia_fname);
+
+  if (type == File_type::BMP) {
+    extractor = std::make_unique<BMP_extracting_agent>(inmedia_fname);
+  } else {
+    extractor = std::make_unique<WAV_extracting_agent>(inmedia_fname);
+  }
+  return extractor;
 }

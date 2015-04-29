@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <stego-crypt-lib/stego-crypt-lib.hh>
+#include <memory>
 
 struct Messages {
   std::string shortmsg = "The quick brown fox jumped over the lazy dog.";
@@ -13,46 +14,67 @@ struct Locations {
   std::string stegowav = "../../test/stego-crypt/test-stego.wav";
 } locations;
 
-::testing::AssertionResult BMP_is_message_uncompromised(std::string test_string, std::string testbmp, std::string stegobmp) {
-  BMP_embedding_agent embedder(testbmp, stegobmp);
-  embedder.embed_and_save(test_string);
+enum class Media_type {
+  WAV, BMP
+};
 
-  BMP_extracting_agent extractor(stegobmp);
-  std::string extracted_string = extractor.extract();
+::testing::AssertionResult is_message_uncompromised(std::string test_string,
+                                                    std::string in_fname,
+                                                    std::string stego_fname,
+                                                    Media_type type
+                                                    ) {
+  std::unique_ptr<Abstract_embedding_agent> embedder;
+  std::unique_ptr<Abstract_extracting_agent> extractor;
 
-  if (test_string == extracted_string) {
-    return ::testing::AssertionSuccess();
+  if (type == Media_type::BMP) {
+    embedder = std::make_unique<BMP_embedding_agent>(in_fname, stego_fname);
   } else {
-    return ::testing::AssertionFailure() << "Extracted string was \"" << extracted_string << '\"';
+    embedder = std::make_unique<WAV_embedding_agent>(in_fname, stego_fname);
   }
-}
 
-::testing::AssertionResult WAV_is_message_uncompromised(std::string test_string, std::string testwav, std::string stegowav) {
-  WAV_embedding_agent embedder(testwav, stegowav);
-  embedder.embed_and_save(test_string);
+  embedder->embed_and_save(test_string);
 
-  WAV_extracting_agent extractor(stegowav);
-  std::string extracted_string = extractor.extract();
+  if (type == Media_type::BMP) {
+    extractor = std::make_unique<BMP_extracting_agent>(stego_fname);
+  } else {
+    extractor = std::make_unique<WAV_extracting_agent>(stego_fname);
+  }
+
+  std::string extracted_string = extractor->extract();
 
   if (test_string == extracted_string) {
     return ::testing::AssertionSuccess();
   } else {
-    return ::testing::AssertionFailure() << "Extracted string was \"" << extracted_string << '\"';
+    return ::testing::AssertionFailure() << "Extracted string was \""
+                                         << extracted_string << '\"';
   }
 }
 
 TEST(StegoCryptBMP, LSBShort) {
-  EXPECT_TRUE(BMP_is_message_uncompromised(messages.shortmsg, locations.testbmp, locations.stegobmp));
+  EXPECT_TRUE(is_message_uncompromised(messages.shortmsg,
+                                       locations.testbmp,
+                                       locations.stegobmp,
+                                       Media_type::BMP));
 }
 
 TEST(StegoCryptBMP, LSBLong) {
-  EXPECT_TRUE(BMP_is_message_uncompromised(messages.longmsg, locations.testbmp, locations.stegobmp));
+  EXPECT_TRUE(is_message_uncompromised(messages.longmsg,
+                                       locations.testbmp,
+                                       locations.stegobmp,
+                                       Media_type::BMP));
 }
 
 TEST(StegoCryptWAV, LSBShort) {
-  EXPECT_TRUE(WAV_is_message_uncompromised(messages.shortmsg, locations.testwav, locations.stegowav));
+  EXPECT_TRUE(is_message_uncompromised(messages.shortmsg,
+                                       locations.testwav,
+                                       locations.stegowav,
+                                       Media_type::WAV));
 }
 
 TEST(StegoCryptWAV, LSBLong) {
-  EXPECT_TRUE(WAV_is_message_uncompromised(messages.longmsg, locations.testwav, locations.stegowav));
+  EXPECT_TRUE(is_message_uncompromised(messages.longmsg,
+                                       locations.testwav,
+                                       locations.stegowav,
+                                       Media_type::WAV));
 }
+

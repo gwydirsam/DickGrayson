@@ -1,26 +1,66 @@
 #include <gtest/gtest.h>
 #include <stego-crypt-lib/stego-crypt-lib.hh>
+#include <memory>
+
+struct Messages {
+  std::string shortmsg = "The quick brown fox jumped over the lazy dog.";
+  std::string longmsg = "This is my message.  I like my message.  My message is totally amazing.  You can not tell\nme that my message is not amazing.  You have to admit my message is really amazing.";
+} messages;
+
+struct Locations {
+  std::string testbmp = "../../test/stego-crypt/test.bmp";
+  std::string stegobmp = "../../test/stego-crypt/test-stego.bmp";
+  std::string testwav = "../../test/stego-crypt/test.wav";
+  std::string stegowav = "../../test/stego-crypt/test-stego.wav";
+} locations;
+
+::testing::AssertionResult is_message_uncompromised(std::string test_string,
+                                                    std::string in_fname,
+                                                    std::string stego_fname,
+                                                    File_type type
+                                                    ) {
+  std::unique_ptr<Abstract_embedding_agent> embedder;
+  std::unique_ptr<Abstract_extracting_agent> extractor;
+
+  embedder = which_embedding_agent(type, in_fname, stego_fname);
+  embedder->embed_and_save(test_string);
+
+  extractor = which_extracting_agent(type, stego_fname);
+  std::string extracted_string = extractor->extract();
+
+  if (test_string == extracted_string) {
+    return ::testing::AssertionSuccess();
+  } else {
+    return ::testing::AssertionFailure() << "Extracted string was \""
+                                         << extracted_string << '\"';
+  }
+}
 
 TEST(StegoCryptBMP, LSBShort) {
-  std::string test_string = "The quick brown fox jumped over the lazy dog.";
-  Embedding_agent embedder("../../test/stego-crypt/test.bmp",
-                           "../../test/stego-crypt/test-stego.bmp");
-  embedder.embed_and_save(test_string);
-
-  Extracting_agent extractor("../../test/stego-crypt/test-stego.bmp");
-  std::string extracted_string = extractor.extract();
-
-  EXPECT_EQ(test_string, extracted_string);
+  EXPECT_TRUE(is_message_uncompromised(messages.shortmsg,
+                                       locations.testbmp,
+                                       locations.stegobmp,
+                                       File_type::BMP));
 }
 
 TEST(StegoCryptBMP, LSBLong) {
-  std::string test_string = "This is my message.  I like my message.  My message is totally amazing.  You can not tell\nme that my message is not amazing.  You have to admit my message is really amazing.";
-  Embedding_agent embedder("../../test/stego-crypt/test.bmp",
-                           "../../test/stego-crypt/test-stego.bmp");
-  embedder.embed_and_save(test_string);
-
-  Extracting_agent extractor("../../test/stego-crypt/test-stego.bmp");
-  std::string extracted_string = extractor.extract();
-
-  EXPECT_EQ(test_string, extracted_string);
+  EXPECT_TRUE(is_message_uncompromised(messages.longmsg,
+                                       locations.testbmp,
+                                       locations.stegobmp,
+                                       File_type::BMP));
 }
+
+TEST(StegoCryptWAV, LSBShort) {
+  EXPECT_TRUE(is_message_uncompromised(messages.shortmsg,
+                                       locations.testwav,
+                                       locations.stegowav,
+                                       File_type::WAV));
+}
+
+TEST(StegoCryptWAV, LSBLong) {
+  EXPECT_TRUE(is_message_uncompromised(messages.longmsg,
+                                       locations.testwav,
+                                       locations.stegowav,
+                                       File_type::WAV));
+}
+

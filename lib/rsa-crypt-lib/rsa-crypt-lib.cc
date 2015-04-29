@@ -34,7 +34,7 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   // std::string private_key = n_ + "" + e_;
   // std::string public_key = p + "" + q + "" + d_;
   this->encode_ = encode("Hello World hello world", e(), n());
-  
+   //std::cout<<"result of my_pow : "<<my_pow(2,8)<<std::endl; 
   
   // private key
   // std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
@@ -55,17 +55,20 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
     for (std::size_t i = 0; i < message.length(); ++i) {
       int temp = (int)message.at(i);
       temp_string += std::to_string(temp);
+      std::cout<<"temp_string is : "<< temp_string<<std::endl;
       count++;
       if (count == 20) {
         count = 0;
         // add cipher encrypt
         mpz_class ascii = mpz_class(temp_string);
-        std::cout << "THE ASCII VALUE IS : " << ascii;
-        cipher = my_pow(ascii, e) % n;
+        std::cout << "THE ASCII VALUE IS : " << ascii<<std::endl;
+        cipher = my_pow(ascii, e);
+        std::cout<<"cipher vaue is : " <<cipher<<std::endl;
         // add n to cipther encrypt
         std::string cipher_string = cipher.get_str() + 'n';
         // add cipherencrypt + n to num_value
         num_value += cipher_string;
+        std::cout <<"Num_value is " << num_value<<std::endl;
         // reset temp_string
         temp_string = "";
       }
@@ -75,12 +78,23 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
 }
 
 //pow didn't work so had to generate my own
-mpz_class RsaKeys::my_pow(mpz_class a, mpz_class b) {
-  mpz_class result = 0;
-  for (int i = 0; i < b; i++) {
-    result += result * a;
-  }
-  return result;
+mpz_class RsaKeys::my_pow(mpz_class base, mpz_class exp) {
+bool flag=0;
+if(exp<0) {flag=1;exp*=-1;}
+mpz_class result = 1;
+while (exp)
+{
+    if (exp & 1)
+        result *= base;
+    exp >>= 1;
+    base *= base;
+}
+if(flag==0)
+return result;
+else
+return (1/result);
+
+
 }
  
 std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){

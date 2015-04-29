@@ -32,5 +32,10 @@ TEST(RSACrypt, RsaDecodeEncode1) {
   RsaKeys my_keys(512);
   std::cerr<<"Encoded value"<<my_keys.encode_result()<<std::endl;
   EXPECT_EQ(my_keys.totient(), my_keys.e());
-
+}
+ TEST(RSACrypt, RsaDecodeEncode2) {
+  RsaKeys my_keys(512);
+  std::cerr<<"Encoded value"<<my_keys.encode_result()<<std::endl;
+  std::cerr<<"decoded result"<<my_keys.decode_result()<<std::endl;
+  EXPECT_EQ(my_keys.totient(), my_keys.e());
 }

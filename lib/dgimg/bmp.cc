@@ -43,8 +43,8 @@ void BMP::open(const std::string& fname) {
   }
 }
 
-void BMP::write(const std::string& fname) {
-  data.WriteToFile(fname.c_str());
+void BMP::write(const std::string& fname) const {
+  CONST_CALL_1(data, WriteToFile, fname.c_str());
 }
 
 void BMP::pixel_set_mask(int x, int y, unsigned mask) {

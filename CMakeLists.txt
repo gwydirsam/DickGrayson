@@ -69,6 +69,12 @@ if(CMAKE_USE_PTHREADS_INIT)
   list(APPEND PROJECT_GLOBAL_LIBS ${CMAKE_THREAD_LIBS_INIT})
 endif()
 
+find_package(LibSndFile REQUIRED)
+if(LIBSNDFILE_FOUND)
+  include_directories(${LIBSNDFILE_INCLUDE_DIR})
+  list(APPEND PROJECT_GLOBAL_LIBS ${LIBSNDFILE_LIBRARY})
+endif()
+
 # find gmp
 find_package(GMP REQUIRED)
 if(GMP_FOUND)

@@ -1,5 +1,6 @@
+#include <dgtype/dgtype.hh>
+#include <algorithm>
 #include "stego-crypt-util.hh"
-#include <dgimg/dgimg.hh>
 
 bool set_file_type(File_type* ftype, const std::string& arg) {
   std::string lower_arg = std::move(arg);
@@ -22,43 +23,75 @@ std::string message_from_file(const std::string& fname) {std::string msg;
   oss << ifs.rdbuf();
   msg = oss.str();
   return msg;
-}
-
-void message_to_file(const std::string& msg, const std::string& fname) {
+} void message_to_file(const std::string& msg, const std::string& fname) {
   std::ofstream ofs(fname);
   ofs << msg;
 }
 
-bool is_file_accessible(const std::string& fname) {
-  std::ifstream ifs(fname);
-  if (ifs.good()) {
-    return true;
-  }
-  return false;
-}
-
 void print_help() {
-  print_usage();
+  print_usage(true);
+  std::cout << "Media types supported:\n  - Windows BMP\n  - PCM 16-bit WAV\n";
   std::cout << std::endl
-            << "Long         short  desc\n"
-            << "--extract    -e     extract a message instead of embedding\n"
-            << "--help       -h     show this screen\n"
-            << "--input      -i     location of input file to embed/extract message in\n"
-            << "--message    -m     location of file containing the message to embed\n"
-            << "--output     -o     location of output stego file or extracted message file\n"
-            << "--type       -t     indicate type of media (wav or bmp)\n"
-            << "--verbose    -v     verbosely describe steg process\n\n";
+            << "Long       short  desc\n"
+            << "--extract  -e     extract a message instead of embedding\n"
+            << "--help     -h     show this screen\n"
+            << "--input    -i     location of input bmp/wav file to embed in or extract from\n"
+            << "--message  -m     location of file containing the message to embed\n"
+            << "--output   -o     location of output stego file or extracted message file\n"
+            << "--verbose  -v     verbosely describe stego process\n\n";
 }
 
-void print_usage() {
-  std::cout << "usage: munchkinsteg [-ehv] [-i inputfile]\n"
-            << "                    [-m messagefile] [-o outputfile] [-t wav | bmp]\n";
+void print_usage(bool help) {
+  std::cout << "usage: munchkinsteg [hv] [-i <wav|bmp file> -o <wav|bmp file> -m <message file>]\n"
+            << "                    ~OR~ [-e -i <wav|bmp file> -o <message file>]\n\n";
+  if (!help) {
+    std::cout << "NOTE: The supported media types are:\n  - Windows BMP\n  - PCM 16-bit WAV\n";
+  }
 }
 
 void print_if(std::string str, bool condition) {
   if (condition) {
     std::cout << str;
   }
+}
+
+File_type file_type_of(const std::string& fname) {
+  int extension_pos = fname.find_last_of('.');
+  if (extension_pos != -1) {
+    std::string extension = fname.substr(extension_pos + 1);
+    std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+    if (extension == "wav") {
+      return File_type::WAV;
+    } else if (extension == "bmp") {
+      return File_type::BMP;
+    }
+  }
+  return File_type::UNKNOWN;
+}
+
+std::unique_ptr<Abstract_embedding_agent> which_embedding_agent(File_type type, std::string inmedia_fname,
+                                                                std::string outmedia_fname) {
+  std::unique_ptr<Abstract_embedding_agent> embedder;
+
+  if (type == File_type::BMP) {
+    embedder =
+      std::make_unique<BMP_embedding_agent>(inmedia_fname, outmedia_fname);
+  } else {
+    embedder =
+      std::make_unique<WAV_embedding_agent>(inmedia_fname, outmedia_fname);
+  }
+  return embedder;
+}
+
+std::unique_ptr<Abstract_extracting_agent> which_extracting_agent(File_type type, std::string inmedia_fname) {
+  std::unique_ptr<Abstract_extracting_agent> extractor;
+
+  if (type == File_type::BMP) {
+    extractor = std::make_unique<BMP_extracting_agent>(inmedia_fname);
+  } else {
+    extractor = std::make_unique<WAV_extracting_agent>(inmedia_fname);
+  }
+  return extractor;
 }
 
 Error_code read_args(int argc, char* argv[], Arguments* args) {
@@ -73,12 +106,11 @@ Error_code read_args(int argc, char* argv[], Arguments* args) {
       {"input", required_argument, NULL, 'i'},
       {"output", required_argument, NULL, 'o'},
       {"message", required_argument, NULL, 'm'},
-      {"type", required_argument, NULL, 't'},
       {0, 0, 0, 0}
     };
 
     int option_index = 0;
-    c = getopt_long (argc, argv, "evhi:o:m:t:",
+    c = getopt_long (argc, argv, "evhi:o:m:",
                      long_options, &option_index);
     if (c == -1) {
       break;
@@ -102,19 +134,15 @@ Error_code read_args(int argc, char* argv[], Arguments* args) {
     case 'm':
       args->message_fname = optarg;
       break;
-    case 't':
-      if (!set_file_type(&args->ftype, optarg)) {
-        return Error_code::UNKNOWN_TYPE;
-      }
-      break;
     case ':':
       return Error_code::MISSING_ARG;
     case '?':
       return Error_code::UNKNOWN_ARG;
     }
   }
-  if (args->ftype == File_type::UNSPECIFIED) {
-    return Error_code::UNSPECIFIED_TYPE;
+  if (file_type_of(args->input_fname) == File_type::UNKNOWN ||
+      (!args->extract && file_type_of(args->output_fname) == File_type::UNKNOWN)) {
+    return Error_code::UNKNOWN_TYPE;
   }
   if (args->input_fname.empty()) {
     return Error_code::MISSING_INPUT;
@@ -131,9 +159,6 @@ Error_code read_args(int argc, char* argv[], Arguments* args) {
 
 void process_error_code(Error_code err_code) {
   switch (err_code) {
-  case Error_code::UNSPECIFIED_TYPE:
-    std::cerr << "error: unspecified type.\n";
-    break;
   case Error_code::MISSING_INPUT:
     std::cerr << "error: must specify an input file.\n";
     break;

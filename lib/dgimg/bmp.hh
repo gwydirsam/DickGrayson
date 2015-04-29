@@ -8,9 +8,11 @@
 // typedef the EasyBMP BMP class to Easy_bmp
 typedef BMP Easy_bmp;
 
-// EasyBMP library doesn't declare some functions const, this allows us to use
+// EasyBMP declares some functions const, this allows us to use
 // those functions even on const objects
-#define CONST_CALL(obj, func) const_cast<decltype(obj)*>(&obj)->func()
+#define CONST_FUNC(obj, func) const_cast<decltype(obj)*>(&obj)->func
+#define CONST_CALL(obj, func) CONST_FUNC(obj, func)()
+#define CONST_CALL_1(obj, func, arg) CONST_FUNC(obj, func)(arg) // pass arg to func
 
 namespace DG {
 namespace Image {
@@ -24,7 +26,7 @@ class BMP {
   void open(const std::string& fname);
 
   // saves the bmp data out to the file fname
-  void write(const std::string& fname);
+  void write(const std::string& fname) const;
 
   // masks a pixel with the specified mask
   // setting bits to 1 if they are not already 1

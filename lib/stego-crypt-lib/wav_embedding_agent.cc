@@ -20,5 +20,5 @@ bool WAV_embedding_agent::check_msg_media_capacity(const std::string& msg) {
   // TODO: implement
   // do fun things until we implement function for real
   std::move(msg);
-  return false;
+  return true;
 }

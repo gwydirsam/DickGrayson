@@ -102,3 +102,4 @@ Session.vim
 /test/stego-crypt/test-stego.bmp
 /lib/dgsnd/build_list.cmake
 /test/dgsnd/write-test.wav
+/test/stego-crypt/test-stego.wav

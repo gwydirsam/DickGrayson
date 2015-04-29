@@ -14,7 +14,7 @@ class RsaKeys {
   mpz_class n() { return n_; }
   mpz_class e() { return e_; }
   mpz_class totient() { return totient_; }
-  mpz_class d() { return d_;}
+  mpz_class d() { return d_; }
   mp_bitcnt_t bits() { return bits_; }
 
   // generates two random primes and checks coprimality
@@ -36,19 +36,22 @@ class RsaKeys {
 
   // get gcd
   const mpz_class get_gcd(mpz_class p, mpz_class q) const;
- 
+
   std::string encode(std::string message, mpz_class d, mpz_class n);
 
-  //computer e (euclidean extended algorithm)
+  // computer e (euclidean extended algorithm)
   mpz_class compute_d(mpz_class e, mpz_class totient);
 
   std::vector<mpz_class> extended_euclidean(mpz_class a, mpz_class b);
 
   mpz_class calculate_d(mpz_class totient, mpz_class e);
-  
+
   mpz_class my_pow(mpz_class a, mpz_class b);
-  
-  static inline bool is_base64(unsigned char c) { return (isalnum(c) || (c == '+') || (c == '/'));} 
+
+  static inline bool is_base64(unsigned char c) {
+    return (isalnum(c) || (c == '+') || (c == '/'));
+  }
+
  private:
   // data members
   mpz_class n_;

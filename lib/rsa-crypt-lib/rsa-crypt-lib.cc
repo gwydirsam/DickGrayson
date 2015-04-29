@@ -60,7 +60,6 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n){
             count = 0;
             //add cipher encrypt
             mpz_class ascii = std::stol(temp_string,0, 10);
-            std::cout<<"THE ASCII VALUE IS : "<<ascii;
             cipher = my_pow(ascii, e) % n;    
             //add n to cipther encrypt
             std::string cipher_string = cipher +"/n";

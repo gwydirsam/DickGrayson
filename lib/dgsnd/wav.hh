@@ -39,11 +39,13 @@ public:
   unsigned get_num_samples() const { return samples.size(); }
 
 private:
-  std::vector<int> samples;
+  std::vector<short> samples;
   SF_INFO wav_info;
 
   //// helper functions
-  bool is_wav_format() const;
+
+  // we only support the PCM 16-bit WAV format
+  bool is_format_supported() const;
   // populates samples vector from the wav
   void extract_samples(SNDFILE* wav);
 

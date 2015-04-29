@@ -126,7 +126,7 @@ install-deps install-libsndfile::
 	@echo Done Installing libsndfile
 	@echo ======================================
 
-install-openssl::
+install-deps install-openssl::
 	@echo ======================================
 	@echo Start Installing OpenSSL
 	@echo ======================================

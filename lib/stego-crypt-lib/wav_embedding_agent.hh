@@ -12,10 +12,9 @@ public:
 protected:
   //// protected helper functions
 
-  // Takes a message and returns a list of bit masks based on the
-  // bits per pixel (bpp) of the input wav
-  virtual std::vector<unsigned> message_to_masks(const std::string& msg
-                                                 , Mask_type mask_type) override;
+  // Takes a message and returns a list of bit masks
+  virtual std::vector<unsigned> message_to_masks(const std::string& msg,
+                                                 Mask_type mask_type) override;
 
   // returns true when the message can fit within the wav
   virtual bool check_msg_media_capacity(const std::string& msg) override;

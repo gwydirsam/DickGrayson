@@ -59,11 +59,11 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
       if (count == 20) {
         count = 0;
         // add cipher encrypt
-        mpz_class ascii = std::stol(temp_string, 0, 10);
+        mpz_class ascii = mpz_class(temp_string);
         std::cout << "THE ASCII VALUE IS : " << ascii;
         cipher = my_pow(ascii, e) % n;
         // add n to cipther encrypt
-        std::string cipher_string = cipher.get_str() + "n";
+        std::string cipher_string = cipher.get_str() + 'n';
         // add cipherencrypt + n to num_value
         num_value += cipher_string;
         // reset temp_string
@@ -86,10 +86,10 @@ mpz_class RsaKeys::my_pow(mpz_class a, mpz_class b) {
 std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
   std::string base = cryptText;
   std::string part = "";
-  vector<std::string> partition;
+  std::vector<std::string> partition;
   mpz_class nCount = 0;
   for(int i = 0; i < base.length(); ++i){
-    if(base.at(i) == "n"){
+    if(base.at(i) == 'n'){
       partition.push_back(part);
       nCount++;
       part = "";
@@ -101,8 +101,8 @@ std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
     
     std::string buffer = "";
     for(int i = 0; i < partition.size(); ++i){
-      mpz_class cTxt = partition.at(i);
-      mp_cass pTxt = my_pow(cTxt, d) % n;
+      mpz_class cTxt = mpz_class(partition.at(i));
+      mpz_class pTxt = my_pow(cTxt, d) % n;
       buffer += pTxt.get_str();
     }
    

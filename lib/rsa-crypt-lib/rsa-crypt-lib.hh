@@ -17,6 +17,7 @@ class RsaKeys {
   mpz_class d() { return d_; }
   mp_bitcnt_t bits() { return bits_; }
   std::string encode_result() { return encode_; }
+  std::string decode_result() { return decode_; }
 
   // generates two random primes and checks coprimality
   // mpz_class generate_key() const;
@@ -42,7 +43,7 @@ class RsaKeys {
   std::string encode(std::string message, mpz_class d, mpz_class n);
 
   //decodes message
-  std::string decode(std::string cryptText);
+  std::string decode(std::string cryptText, mpz_class d, mpz_class n);
   // computer e (euclidean extended algorithm)
   mpz_class compute_d(mpz_class e, mpz_class totient);
 
@@ -64,6 +65,7 @@ class RsaKeys {
   mpz_class d_;
   mp_bitcnt_t bits_;
   std::string encode_;
+  std::string decode_;
 
   // private member helper functions
   // helper function to check for primality

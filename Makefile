@@ -358,7 +358,10 @@ clean-force clean-build-dirs::
 cppcheck::
 	cppcheck --enable=all lib/ bin/
 
-clang-format::
+# clang-format::
+# 	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `git ls-files -m | egrep '(cc|hh|h|cpp)$'`
+
+clang-format-all::
 	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) lib -name '*.hh'`
 	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) lib -name '*.cc'`
 	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) bin -name '*.cc'`

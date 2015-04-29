@@ -20,7 +20,7 @@ public:
   void open(const std::string& fname);
 
   // write wav out to the file fname
-  void write(const std::string& fname);
+  void write(const std::string& fname) const;
 
   // masks a sample with the specified mask
   // setting bits to 1 if they are not already 1

@@ -19,8 +19,9 @@ void WAV::open(const std::string& fname) {
   sf_close(temp);
 }
 
-void WAV::write(const std::string& fname) {
-  SNDFILE* temp = sf_open(fname.c_str(), SFM_WRITE, &wav_info);
+void WAV::write(const std::string& fname) const {
+  SF_INFO temp_info = wav_info;
+  SNDFILE* temp = sf_open(fname.c_str(), SFM_WRITE, &temp_info);
   sf_write_int(temp, &samples[0], samples.size());
   sf_write_sync(temp);
   sf_close(temp);

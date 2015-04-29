@@ -127,6 +127,7 @@ TEST_F(HarderCrackingRSATest, calculateD) {
 }
 
 TEST_F(HarderCrackingRSATest, applyPrivateKey) {
+  //string encrypted_message = encrypt_message(p, q, "attack at dawn");
   string encrypted_message = "attack at dawn";
 
   mpz_class totient = rsatk::calculate_totient(p, q);
@@ -136,6 +137,9 @@ TEST_F(HarderCrackingRSATest, applyPrivateKey) {
 
   EXPECT_EQ(m, decrypted_message);
 }
+
+
+
 
 //
 // TEST(known_totient, simple){
@@ -151,3 +155,19 @@ TEST_F(HarderCrackingRSATest, applyPrivateKey) {
   generate_n_primes(1000000);
   }
 */
+
+//class Attacks : public ::testing::Test {
+//protected:
+//virtual void SetUp() {
+    //// the reason for this nonstandard initialization is discussed
+    //// http://stackoverflow.com/a/9844465
+    //n = p * q;
+//}
+//mpz_class p =
+//12131072439211271897323671531612440428472427633701410925634549312301964373042085619324197365322416866541017057361365214171711713797974299334871062829803541_mpz;
+//mpz_class q =
+//12027524255478748885956220793734512128733387803682075433653899983955179850988797899869146900809131611153346817050832096022160146366346391812470987105415233_mpz;
+//mpz_class e = 65537;
+//string m = "attack at dawn";
+//mpz_class n;
+//};

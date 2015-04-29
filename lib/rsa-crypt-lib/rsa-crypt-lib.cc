@@ -34,8 +34,6 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   // std::string private_key = n_ + "" + e_;
   // std::string public_key = p + "" + q + "" + d_;
   this->encode_ = encode("Hello World hello world", e(), n());
-  
-  
   // private key
   // std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
 }

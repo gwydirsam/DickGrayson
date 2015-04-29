@@ -1,3 +1,5 @@
+#pragma once
+
 #include "abstract_embedding_agent.hh"
 #include <dgsnd/dgsnd.hh>
 

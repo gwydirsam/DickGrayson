@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include <dgimg/dgimg.hh>
 #include "abstract_extracting_agent.hh"

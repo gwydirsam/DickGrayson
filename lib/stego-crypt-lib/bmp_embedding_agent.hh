@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include "abstract_embedding_agent.hh"
 #include <dgimg/dgimg.hh>

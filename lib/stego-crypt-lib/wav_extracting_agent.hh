@@ -1,3 +1,5 @@
+#pragma once
+
 #include <dgsnd/dgsnd.hh>
 #include "abstract_extracting_agent.hh"
 

@@ -14,32 +14,18 @@ struct Locations {
   std::string stegowav = "../../test/stego-crypt/test-stego.wav";
 } locations;
 
-enum class Media_type {
-  WAV, BMP
-};
-
 ::testing::AssertionResult is_message_uncompromised(std::string test_string,
                                                     std::string in_fname,
                                                     std::string stego_fname,
-                                                    Media_type type
+                                                    File_type type
                                                     ) {
   std::unique_ptr<Abstract_embedding_agent> embedder;
   std::unique_ptr<Abstract_extracting_agent> extractor;
 
-  if (type == Media_type::BMP) {
-    embedder = std::make_unique<BMP_embedding_agent>(in_fname, stego_fname);
-  } else {
-    embedder = std::make_unique<WAV_embedding_agent>(in_fname, stego_fname);
-  }
-
+  embedder = which_embedding_agent(type, in_fname, stego_fname);
   embedder->embed_and_save(test_string);
 
-  if (type == Media_type::BMP) {
-    extractor = std::make_unique<BMP_extracting_agent>(stego_fname);
-  } else {
-    extractor = std::make_unique<WAV_extracting_agent>(stego_fname);
-  }
-
+  extractor = which_extracting_agent(type, stego_fname);
   std::string extracted_string = extractor->extract();
 
   if (test_string == extracted_string) {
@@ -54,27 +40,27 @@ TEST(StegoCryptBMP, LSBShort) {
   EXPECT_TRUE(is_message_uncompromised(messages.shortmsg,
                                        locations.testbmp,
                                        locations.stegobmp,
-                                       Media_type::BMP));
+                                       File_type::BMP));
 }
 
 TEST(StegoCryptBMP, LSBLong) {
   EXPECT_TRUE(is_message_uncompromised(messages.longmsg,
                                        locations.testbmp,
                                        locations.stegobmp,
-                                       Media_type::BMP));
+                                       File_type::BMP));
 }
 
 TEST(StegoCryptWAV, LSBShort) {
   EXPECT_TRUE(is_message_uncompromised(messages.shortmsg,
                                        locations.testwav,
                                        locations.stegowav,
-                                       Media_type::WAV));
+                                       File_type::WAV));
 }
 
 TEST(StegoCryptWAV, LSBLong) {
   EXPECT_TRUE(is_message_uncompromised(messages.longmsg,
                                        locations.testwav,
                                        locations.stegowav,
-                                       Media_type::WAV));
+                                       File_type::WAV));
 }
 

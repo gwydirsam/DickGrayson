@@ -23,7 +23,7 @@ void WAV::open(const std::string& fname) {
 void WAV::write(const std::string& fname) const {
   SF_INFO temp_info = wav_info;
   SNDFILE* temp = sf_open(fname.c_str(), SFM_WRITE, &temp_info);
-  sf_writef_short(temp, &samples[0], samples.size());
+  sf_write_short(temp, &samples[0], samples.size());
   //sf_write_sync(temp);
   sf_close(temp);
 }
@@ -55,7 +55,7 @@ bool WAV::is_format_supported() const {
 void WAV::extract_samples(SNDFILE* wav) {
   size_t num_samples = calc_num_samples();
   std::unique_ptr<short> temp_array(new short[num_samples]);
-  sf_readf_short(wav, temp_array.get(), num_samples);
+  sf_read_short(wav, temp_array.get(), num_samples);
   samples = std::vector<short>(temp_array.get(),
                              temp_array.get() + num_samples);
 }

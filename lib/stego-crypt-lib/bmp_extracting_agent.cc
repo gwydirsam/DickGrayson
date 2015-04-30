@@ -16,7 +16,7 @@ std::string BMP_extracting_agent::extract() const {
       }
     }
   }
-  return msg;
+  return bits_to_string(msg_bits);
 }
 
 std::vector<bool> BMP_extracting_agent::extract_bits_from_pixel(int x, int y) const {

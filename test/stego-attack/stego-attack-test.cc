@@ -15,24 +15,23 @@ TEST(md5Comparison, compareHashVals) {
 }
 
 TEST(MD5ComparisonImage, differentFiles) {
-  bool result = isEncrypted("../../test/stego-attack/fluffy1.png", "../../test/stego-attack/fluffy2.png", false);
-  EXPECT_EQ(true, result);
+  EXPECT_TRUE(isEncrypted("../../test/stego-attack/fluffy1.png", "../../test/stego-attack/fluffy2.png", false));
 }
 
 TEST(MD5ComparisonImage, sameFileSameName) {
-  EXPECT_EQ(false, isEncrypted("../../test/stego-attack/fluffy1.png","../../test/stego-attack/fluffy1.png", false));
+  EXPECT_FALSE(isEncrypted("../../test/stego-attack/fluffy1.png","../../test/stego-attack/fluffy1.png", false));
 }
 
 TEST(MD5ComparisonImage, sameFileDifferentName) {
-  EXPECT_EQ(false, isEncrypted("../../test/stego-attack/fluffy1.png","../../test/stego-attack/fluffy3.png", false));
+  EXPECT_FALSE(isEncrypted("../../test/stego-attack/fluffy1.png","../../test/stego-attack/fluffy3.png", false));
 }
 
 TEST(MD5ComparisonAudio, differentFiles) {
-  EXPECT_EQ(true, isEncrypted("../../test/stego-attack/clarinocrypt.wav","../../test/stego-attack/claricrypt.wav", false));
+  EXPECT_TRUE(isEncrypted("../../test/stego-attack/clarinocrypt.wav","../../test/stego-attack/claricrypt.wav", false));
 }
 
 TEST(MD5ComparisonAudio, sameFiles) {
-  EXPECT_EQ(false, isEncrypted("../../test/stego-attack/clarinocrypt.wav","../../test/stego-attack/clarinocrypt.wav", false));
+  EXPECT_FALSE(isEncrypted("../../test/stego-attack/clarinocrypt.wav","../../test/stego-attack/clarinocrypt.wav", false));
 }
 
 TEST(InterfaceStub, example) {

@@ -9,6 +9,7 @@
 #include <cstring>
 #include <iostream>
 #include <openssl/md5.h>
+#include "../stego-crypt-lib/stego-crypt-lib.hh"
 
 // Compare results; cannot use strcmp() because it requires signed char*
 int compareHashVals(unsigned char* string1, unsigned char* string2);
@@ -26,11 +27,15 @@ void getMD5Hash(char* filename, unsigned char* result);
 bool isEncrypted(char* img1, char* img2, bool print);
 
 // Get encrypted message from wav using Martin's library
+std::string retrieveWAVMessage();
  
 // Get encrypted message from bmp using Martin's library
+std::string retrieveBMPMessage();
 
 // TEST INTERFACE //
 
 // Randomize wav LSBs
+void scrambleWAV();
 
 // Randomize bmp LSBs
+void scrambleBMP();

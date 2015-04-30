@@ -1,8 +1,6 @@
 // Kyle Wilson 
 // Test Driven Scrumbags
 // stego-attack-lib.cc
-// Detects whether or not two images' md5 hash values are the same
-// and returns a bool with the result using isEncrypted
 
 #include "stego-attack-lib.hh"
 
@@ -62,11 +60,29 @@ bool isEncrypted(char* img1, char* img2, bool print) {
 }
 
 // Get encrypted message from wav using Martin's library
+std::string retrieveWAVMessage() {
+  // If isEncrypted, use Extracting_agent to get message
+  // Else, return empty string
+  return ""; 
+}
  
 // Get encrypted message from bmp using Martin's library
+std::string retrieveBMPMessage() { 
+  // If isEncrypted, use Extracting_agent to get message
+  // Else, return empty string
+  return ""; 
+}
 
 // WRITE INTERFACE //
 
 // Randomize wav LSBs
+void scrambleWAV() {
+  // Calculate number of embeddable characters using WAV::get_num_samples() / 8
+  // Generate a random string of that size and embed it in the image using an Embedding_agent and embed_and_save()
+}
 
 // Randomize bmp LSBs
+void scrambleBMP() {
+  // Calculate number of embeddable characters using ( BMP::get_num_pixels() * BMP::get_bpp() ) / 8
+  // Generate a random string of that size and embed it in the image using an Embedding_agent and embed_and_save()
+  }

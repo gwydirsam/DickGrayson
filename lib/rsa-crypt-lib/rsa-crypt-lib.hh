@@ -34,7 +34,7 @@ class RsaKeys {
   }
 
   // generates exponent (e) where 1 < e < theta_n and theta_n and e are coprime
-  const mpz_class compute_e(mpz_class totient) const;
+  const mpz_class compute_e(mpz_class totient);
 
   // get gcd
   const mpz_class get_gcd(mpz_class p, mpz_class q) const;

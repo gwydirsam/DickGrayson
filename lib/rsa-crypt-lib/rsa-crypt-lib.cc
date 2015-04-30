@@ -31,7 +31,7 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   // compute d
   this->d_ = calculate_d(totient_, e_);
   // public key
-  this->encode_ = encode("Hello World hello world", e(), n());
+  this->encode_ = encode("Hello World hello world this program is a piece of shit", e(), n());
    //std::cout<<"result of my_pow : "<<my_pow(2,8)<<std::endl; 
   this-> decode_ = decode(encode_result(), d(), n()); 
   // private key
@@ -67,7 +67,9 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
       mpz_class temp = (int) message.at(i);
       result += temp.get_str();
     }
+    return result;
   }
+ return "Error";
 }
   /*std::string num_value;
   mpz_class cipher;
@@ -109,17 +111,19 @@ mpz_class RsaKeys::my_pow(mpz_class base, mpz_class exp) {
   mpz_class result = 1;
     for(mpz_class i = 0; i < exp; ++i){
       result = result*base;
+      std::cout<<"Result "<<result<<" times base "<<base<<std::endl; 
     }
  return result; 
 }
+
 std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
   std::cout<<"DECODING....."<<std::endl;
+  std::cout<<"message to be decoded : "<<cryptText<<std::endl;
   std::string base = cryptText;
   std::string part = "";
   std::vector<std::string> partition;
   mpz_class nCount = 0;
   for(int i = 0; i < base.length(); ++i){
-    
     if(base.at(i) == 'n'){
       partition.push_back(part);
       nCount++;
@@ -128,31 +132,28 @@ std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
     else {
       part += base.at(i);
     }
-    if(nCount == 0) partition.push_back(part);
+  }
+  if(nCount == 0) partition.push_back(part);
     
     std::string buffer = "";
     for(int i = 0; i < partition.size(); ++i){
+      std::cout<<"getting into second for loop"<<std::endl;
       mpz_class cTxt = mpz_class(partition.at(i));
+      std::cout<<"cTxt : "<< cTxt<<std::endl;
+      std::cout<<"GOING INTO MY POW"<<std::endl;
       mpz_class pTxt = my_pow(cTxt, d) % n;
+      std::cout<<"pTxt : " <<pTxt<<std::endl;
       buffer += pTxt.get_str();
     }
-   
-  }
- return part;
+ std::cout<<"Decoded message : "<<buffer;
+ return buffer;
 }
+
 // helper function to check for primality
 // generates two random primes and checks coprimality
 const std::tuple<mpz_class, mpz_class> RsaKeys::generate_keys() const {
   dgrandprime p(bits_);
   dgrandprime q(bits_);
-
-  // p and q don't need to be coprime
-  /*while (!is_coprime(p.get_mpz_class(), q.get_mpz_class())) {
-    q.reroll();
-  }*/
-
-  // std::cerr << "VALUE_OF p is : " << p << std::endl;
-  // std::cerr << "VALUE_OF q is : " << q << std::endl;
 
   return std::make_tuple(p.get_mpz_class(), q.get_mpz_class());
 }
@@ -215,14 +216,9 @@ inline bool RsaKeys::is_coprime(mpz_class p, mpz_class q) const {
   return (get_gcd(p, q) != 1) ? false : true;
 }
 
-// const mpz_class RsaKeys::extended_euclidean_algorithm(mpz_class totient,
-// mpz_class n) const {
 
-// }
 
-const mpz_class RsaKeys::compute_e(mpz_class totient) const {
-  // TODO: check that 1<e<theta_n and check for primality to release exponent
-
+const mpz_class RsaKeys::compute_e(mpz_class totient) {
   // why not use dgrandominteger...this is what it's for
   dgrandprime e(bits_);
   if (bits_ > 17) {
@@ -239,11 +235,4 @@ const mpz_class RsaKeys::compute_e(mpz_class totient) const {
   std::cerr << "no coprime values";
   return 0;
 }
-/* while (!is_coprime(e.get_mpz_class(), totient)) {
-    std::cerr<<e.get_mpz_class()<< " is not coprime with totient value:
-   "<<totient<<std::endl;
-    std::cerr<<e.get_mpz_class()<<std::endl;
-   e.reroll();
-   }*/
-// return e.get_mpz_class();
-// return e = 65537 for now
+

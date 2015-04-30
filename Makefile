@@ -470,10 +470,12 @@ help help-all::
 	$(info ===========)
 	$(info make update                  - stash, then pull from upstream and build)
 	$(info make install-deps            - install cmake and GNU MP library)
+	$(info make install-openssl         - install openssl)
+	$(info make install-ccache          - install ccache (highly reccomended))
+	$(info make install-better-defaults - install bash and git configurations)
 help-all::
 	$(info make install-cmake           - install cmake)
 	$(info make install-gmp             - install GNU MP library)
-	$(info make install-better-defaults - install bash and git configurations)
-	$(info make install-ccache          - install ccache (highly reccomended))
+	$(info make install-libsndfile      - install libsndfile)
 help help-all::
 	@echo ""

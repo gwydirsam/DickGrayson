@@ -19,6 +19,8 @@ struct Locations {
   //// message files
   std::string msg_toolongbmp = "../../test/stego-crypt/too_long_for_bmp";
   std::string msg_nottoolongbmp = "../../test/stego-crypt/not_too_long_for_bmp";
+  std::string msg_toolongwav = "../../test/stego-crypt/too_long_for_wav";
+  std::string msg_nottoolongwav = "../../test/stego-crypt/not_too_long_for_wav";
 } locations;
 
 // This also served as an example of how to use the embedding and extracting classes
@@ -81,7 +83,12 @@ TEST(StegoCryptBMP, MsgNotTooLong) {
 }
 
 TEST(StegoCryptWAV, MsgTooLongException) {
+  std::string msg = message_from_file(locations.msg_toolongwav);
+  EXPECT_THROW(is_message_uncompromised(msg, locations.testwav, locations.stegowav),
+               Abstract_embedding_agent::Msg_too_long_for_media_exception);
 }
 
 TEST(StegoCryptWAV, MsgNotTooLong) {
+  std::string msg = message_from_file(locations.msg_nottoolongwav);
+  EXPECT_TRUE(is_message_uncompromised(msg, locations.testwav, locations.stegowav));
 }

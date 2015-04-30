@@ -4,8 +4,7 @@
 #include "args.hh"
 #include "file_io.hh"
 
-Error_code read_args(int argc, char* argv[], Arguments* args) {
-  int c;
+Error_code read_args(int argc, char* argv[], Arguments* args) {int c;
 
   while (true) {
     static struct option long_options[] =
@@ -96,6 +95,12 @@ void process_error_code(Error_code err_code) {
 
 void print_help() {
   print_usage(true);
+  std::cout << "-- Munchkinsteg help\n\n"
+            << "Munchkinsteg is a BMP and WAV file steganography utility.\n"
+            << "It can embed message files into music and image files as well as\n"
+            << "extract messages that may be embedded in a music or image file and\n"
+            << "store that message in a file.\n";
+  std::cout << std::endl;
   std::cout << "Media types supported:\n  - Windows BMP\n  - PCM 16-bit WAV\n";
   std::cout << std::endl
             << "Long       short  desc\n"

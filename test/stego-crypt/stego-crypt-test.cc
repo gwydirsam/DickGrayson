@@ -8,10 +8,19 @@ struct Messages {
 } messages;
 
 struct Locations {
+  ///// bmp files
   std::string testbmp = "../../test/stego-crypt/test.bmp";
   std::string stegobmp = "../../test/stego-crypt/test-stego.bmp";
+
+  ///// wav files
   std::string testwav = "../../test/stego-crypt/test.wav";
   std::string stegowav = "../../test/stego-crypt/test-stego.wav";
+
+  //// message files
+  std::string msg_toolongbmp = "../../test/stego-crypt/too_long_for_bmp";
+  std::string msg_nottoolongbmp = "../../test/stego-crypt/not_too_long_for_bmp";
+  std::string msg_toolongwav = "../../test/stego-crypt/too_long_for_wav";
+  std::string msg_nottoolongwav = "../../test/stego-crypt/not_too_long_for_wav";
 } locations;
 
 // This also served as an example of how to use the embedding and extracting classes
@@ -60,3 +69,26 @@ TEST(StegoCryptWAV, LSBLong) {
                                        locations.stegowav));
 }
 
+///////////// Edge case testing for Msg_too_long_for_media_exception
+
+TEST(StegoCryptBMP, MsgTooLongException) {
+  std::string msg = message_from_file(locations.msg_toolongbmp);
+  EXPECT_THROW(is_message_uncompromised(msg, locations.testbmp, locations.stegobmp),
+               Abstract_embedding_agent::Msg_too_long_for_media_exception);
+}
+
+TEST(StegoCryptBMP, MsgNotTooLong) {
+  std::string msg = message_from_file(locations.msg_nottoolongbmp);
+  EXPECT_TRUE(is_message_uncompromised(msg, locations.testbmp, locations.stegobmp));
+}
+
+TEST(StegoCryptWAV, MsgTooLongException) {
+  std::string msg = message_from_file(locations.msg_toolongwav);
+  EXPECT_THROW(is_message_uncompromised(msg, locations.testwav, locations.stegowav),
+               Abstract_embedding_agent::Msg_too_long_for_media_exception);
+}
+
+TEST(StegoCryptWAV, MsgNotTooLong) {
+  std::string msg = message_from_file(locations.msg_nottoolongwav);
+  EXPECT_TRUE(is_message_uncompromised(msg, locations.testwav, locations.stegowav));
+}

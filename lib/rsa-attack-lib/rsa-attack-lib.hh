@@ -35,6 +35,8 @@ namespace rsatk {
 
   mpz_class calculate_d(mpz_class totient, mpz_class e);
 
+  mpz_class mod(mpz_class num, mpz_class modulo);
+
   // extended_euclidean(a, b) returns three values:
   // x, y, gcd, such that ax + by = gcd(a, b)
   std::vector<mpz_class> extended_euclidean(mpz_class totient, mpz_class e);

@@ -97,16 +97,22 @@ namespace rsatk {
     mpz_class d = extended_euclidean(totient, e)[1];
     // make sure d is in our bounds
 
-    mpz_class bounded_d = d % totient;
+    mpz_class bounded_d = mod(d, totient);
+    return bounded_d;
+  }
+
+  mpz_class mod(mpz_class num, mpz_class modulo){
     // -- Function: void mpz_mod (mpz_t R, const mpz_t N, const mpz_t D)
 
     // C++ mod arithmetic not suitable if d is negative
     // http://stackoverflow.com/a/12089637
-    if (bounded_d < 0) {
-      bounded_d = bounded_d + totient;
+    mpz_class bounded = num % modulo;
+
+    if(bounded < 0) {
+      bounded = bounded + modulo;
     }
 
-    return bounded_d;
+    return bounded;
   }
 
   // extended_euclidean(a, b) returns three values:

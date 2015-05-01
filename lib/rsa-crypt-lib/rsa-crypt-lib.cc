@@ -73,7 +73,7 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
     mpz_class pTxt = mpz_class(inter);
     std::cout<<"pTxt"<<pTxt<<std::endl;
     //cipher = my_pow(pTxt, e) %n;
-    mpz_ui_pow_ui(cipher.get_mpz_t(), pTxt, e); 
+    mpz_ui_pow_ui(cipher.get_mpz_t(), pTxt.get_mpz_t(), e.get_mpz_t()); 
     result = cipher.get_str();
  
     return result;

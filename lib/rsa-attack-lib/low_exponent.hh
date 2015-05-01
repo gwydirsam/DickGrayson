@@ -5,4 +5,6 @@
 
 namespace lowexp {
   mpz_class low_exponent_attack(rsatk::RSA_data m_1, rsatk::RSA_data m_2, rsatk::RSA_data m_3);
+  bool lowexp_valid(rsatk::RSA_data m_1, rsatk::RSA_data m_2, rsatk::RSA_data m_3);
 }
+

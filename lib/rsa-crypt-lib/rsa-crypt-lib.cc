@@ -38,6 +38,7 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   // std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
 }
 
+//encodes message
 std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
   std::string inter = "";
   mpz_class cipher;
@@ -71,53 +72,18 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
   }
  return "Error";
 }
-  /*std::string num_value;
-  mpz_class cipher;
-  if (message.length() < 20) {
-    for (int i = 0; i < message.length(); ++i) {
-      int temp = (char)message.at(i);
-      num_value += std::to_string(temp);
-    }
-    return num_value;
-  } else {
-    int count = 0;
-    std::string temp_string;
-    for (std::size_t i = 0; i < message.length(); ++i) {
-      int temp = (int)message.at(i);
-      temp_string += std::to_string(temp);
-      count++;
-      if (count == 20) {
-        count = 0;
-        // add cipher encrypt
-        mpz_class ascii = mpz_class(temp_string);
-        cipher = my_pow(ascii, e)%n;
-        // add n to cipther encrypt
-        std::string cipher_string = cipher.get_str() + 'n';
-        std::cout<<"cipher_string is : "<< cipher_string<<std::endl;
-        // add cipherencrypt + n to num_value
-        num_value += cipher_string;
-        std::cout <<"Num_value is " << num_value<<std::endl;
-        // reset temp_string
-        temp_string = "";
-      }
-    }
-    std::cout<<num_value;
-    return num_value;
-  }
-}*/
-
 //pow didn't work so had to generate my own
 mpz_class RsaKeys::my_pow(mpz_class base, mpz_class exp) {
   mpz_class result = 1;
     for(mpz_class i = 0; i < exp; ++i){
       result = result*base;
-      std::cout<<"Result "<<result<<" times base "<<base<<std::endl; 
     }
  return result; 
 }
 
 std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
-  std::cout<<"DECODING....."<<std::endl;
+  std::cout<<"D is : "<< d<<std::endl;
+  std::cout<<"N is : "<<n<<std::endl;
   std::cout<<"message to be decoded : "<<cryptText<<std::endl;
   std::string base = cryptText;
   std::string part = "";
@@ -137,16 +103,34 @@ std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
     
     std::string buffer = "";
     for(int i = 0; i < partition.size(); ++i){
-      std::cout<<"getting into second for loop"<<std::endl;
       mpz_class cTxt = mpz_class(partition.at(i));
       std::cout<<"cTxt : "<< cTxt<<std::endl;
-      std::cout<<"GOING INTO MY POW"<<std::endl;
       mpz_class pTxt = my_pow(cTxt, d) % n;
       std::cout<<"pTxt : " <<pTxt<<std::endl;
       buffer += pTxt.get_str();
     }
- std::cout<<"Decoded message : "<<buffer;
- return buffer;
+ 
+  std::string buffer2 = "";
+  int cnt = 0; 
+  std::string output = "";
+ 
+  for(int i = 0; i < buffer.length(); ++i){
+    buffer2 = ""; 
+    if(buffer.at(i) == '1'){
+      buffer2 += buffer.at(i); 
+      i++;
+      buffer2 += buffer.at(i);
+      i++;
+      buffer2 += buffer.at(i);
+    }
+    else {
+      buffer2 += buffer.at(i);
+      i++;
+      buffer2 += buffer.at(i);
+    }
+   output = (char) stoi(buffer2);
+  } 
+  return output;
 }
 
 // helper function to check for primality

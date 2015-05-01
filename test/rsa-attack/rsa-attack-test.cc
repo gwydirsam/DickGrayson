@@ -5,6 +5,7 @@
 #include <string>
 
 #include <rsa-attack-lib/rsa-attack-lib.hh>
+#include <rsa-attack-lib/low_exponent.hh>
 
 using namespace std;
 
@@ -156,18 +157,43 @@ TEST_F(HarderCrackingRSATest, applyPrivateKey) {
   }
 */
 
-//class Attacks : public ::testing::Test {
-//protected:
-//virtual void SetUp() {
-    //// the reason for this nonstandard initialization is discussed
-    //// http://stackoverflow.com/a/9844465
-    //n = p * q;
-//}
-//mpz_class p =
-//12131072439211271897323671531612440428472427633701410925634549312301964373042085619324197365322416866541017057361365214171711713797974299334871062829803541_mpz;
-//mpz_class q =
-//12027524255478748885956220793734512128733387803682075433653899983955179850988797899869146900809131611153346817050832096022160146366346391812470987105415233_mpz;
-//mpz_class e = 65537;
-//string m = "attack at dawn";
-//mpz_class n;
-//};
+class LowExpAttacks : public ::testing::Test {
+protected:
+  virtual void SetUp() {
+    mpz_powm(c_1.get_mpz_t(), m.get_mpz_t(), e.get_mpz_t(), n_1.get_mpz_t());
+    mpz_powm(c_2.get_mpz_t(), m.get_mpz_t(), e.get_mpz_t(), n_2.get_mpz_t());
+    mpz_powm(c_3.get_mpz_t(), m.get_mpz_t(), e.get_mpz_t(), n_3.get_mpz_t());
+
+    r_1.C = c_1;
+    r_2.C = c_2;
+    r_3.C = c_3;
+
+    r_1.n = n_1;
+    r_2.n = n_2;
+    r_3.n = n_3;
+
+    r_1.e = e;
+    r_2.e = e;
+    r_3.e = e;
+  }
+  rsatk::RSA_data r_1;
+  rsatk::RSA_data r_2;
+  rsatk::RSA_data r_3;
+
+  mpz_class e = 3;
+  mpz_class m = 102;
+
+  mpz_class n_1 = 377;
+  mpz_class n_2 = 391;
+  mpz_class n_3 = 589;
+
+  mpz_class c_1;
+  mpz_class c_2;
+  mpz_class c_3;
+};
+
+TEST_F(LowExpAttacks, decryption){
+  mpz_class decrypted = lowexp::low_exponent_attack(r_1, r_2, r_3);
+  EXPECT_EQ(m, decrypted);
+}
+//TEST(Mod, functionTest);

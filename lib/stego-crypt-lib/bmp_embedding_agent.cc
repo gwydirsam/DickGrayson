@@ -52,5 +52,5 @@ bool BMP_embedding_agent::check_msg_media_capacity(const std::string& msg) {
   unsigned num_bits = msg.length() * 8;
   unsigned subpixels_per_pixel = inbmp.get_bpp() / 8;
   unsigned num_pixels = inbmp.get_num_pixels();
-  return num_bits < subpixels_per_pixel * num_pixels;
+  return num_bits <= subpixels_per_pixel * num_pixels;
 }

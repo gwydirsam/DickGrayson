@@ -31,7 +31,7 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   // compute d
   this->d_ = calculate_d(totient_, e_);
   // public key
-  this->encode_ = encode("Hello World hello world this program is a piece of shit", e(), n());
+  this->encode_ = encode("Hello", e(), n());
    //std::cout<<"result of my_pow : "<<my_pow(2,8)<<std::endl; 
   this-> decode_ = decode(encode_result(), d(), n()); 
   // private key
@@ -56,7 +56,8 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
         k++; 
       }
       mpz_class pTxt = mpz_class(inter);
-      cipher = my_pow(pTxt, e) % n;
+     // cipher = my_pow(pTxt, e) % n;
+      mpz_ui_pow_ui(cipher.get_mpz_t(), pTxt, e);
       result += cipher.get_str() + 'n';
       inter = "";
       k = 0;
@@ -66,8 +67,15 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
   } else{
     for( int i = 0; i < message.length(); ++i) {
       mpz_class temp = (int) message.at(i);
-      result += temp.get_str();
+      inter += temp.get_str();
+           
     }
+    mpz_class pTxt = mpz_class(inter);
+    std::cout<<"pTxt"<<pTxt<<std::endl;
+    //cipher = my_pow(pTxt, e) %n;
+    mpz_ui_pow_ui(cipher.get_mpz_t(), pTxt, e); 
+    result = cipher.get_str();
+ 
     return result;
   }
  return "Error";
@@ -111,11 +119,10 @@ std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
     }
  
   std::string buffer2 = "";
-  int cnt = 0; 
   std::string output = "";
  
   for(int i = 0; i < buffer.length(); ++i){
-    buffer2 = ""; 
+    buffer2 = "";
     if(buffer.at(i) == '1'){
       buffer2 += buffer.at(i); 
       i++;
@@ -128,7 +135,8 @@ std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
       i++;
       buffer2 += buffer.at(i);
     }
-   output = (char) stoi(buffer2);
+    std::cout<<"Buffer 2 value : "<<buffer2<<std::endl;
+   output += (char) stoi(buffer2);
   } 
   return output;
 }

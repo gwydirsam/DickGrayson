@@ -396,6 +396,11 @@ valgrind-all::
 	@echo Finished Running Valgrind
 	@echo ======================================
 
+install::
+	$(MAKE) install-deps
+	$(MAKE) install-openssl
+	$(MAKE) release
+
 help help-all::
 	$(info )
 	$(info $(PROJECT_NAME) Help)
@@ -470,12 +475,12 @@ help help-all::
 	$(info ===========)
 	$(info make update                  - stash, then pull from upstream and build)
 	$(info make install-deps            - install cmake and GNU MP library)
-	$(info make install-openssl         - install openssl)
 	$(info make install-ccache          - install ccache (highly reccomended))
 	$(info make install-better-defaults - install bash and git configurations)
 help-all::
 	$(info make install-cmake           - install cmake)
 	$(info make install-gmp             - install GNU MP library)
 	$(info make install-libsndfile      - install libsndfile)
+	$(info make install-openssl         - install openssl)
 help help-all::
 	@echo ""

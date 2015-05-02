@@ -43,13 +43,15 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
   std::string inter = "";
   mpz_class cipher;
   std::string result = "";
+  //if the message is greater than 20 characters
   if(message.length() > 20){
     
     int k = 0;
     int i = 0;
     while(i < message.length()){
+      //gets 20 chars in message and adds a 'n' to the end after passing through formula 
       while(i < message.length() && k < 20){
-        
+        //converts to ascii value 
         mpz_class temp = (int) message.at(i);
         inter = temp.get_str();
         i++;
@@ -57,7 +59,7 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
       }
       mpz_class pTxt = mpz_class(inter);
      // cipher = my_pow(pTxt, e) % n;
-      mpz_ui_pow_ui(cipher.get_mpz_t(), pTxt, e);
+      mpz_powm_sec(cipher.get_mpz_t(), pTxt, e, n);
       result += cipher.get_str() + 'n';
       inter = "";
       k = 0;
@@ -65,6 +67,7 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
   std::cout<<"result is : "<<result<<std::endl;
   return result;
   } else{
+    //if message is less than 20 chars just go ahead and stick in formula
     for( int i = 0; i < message.length(); ++i) {
       mpz_class temp = (int) message.at(i);
       inter += temp.get_str();
@@ -73,7 +76,7 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
     mpz_class pTxt = mpz_class(inter);
     std::cout<<"pTxt"<<pTxt<<std::endl;
     //cipher = my_pow(pTxt, e) %n;
-    mpz_ui_pow_ui(cipher.get_mpz_t(), pTxt.get_mpz_t(), e.get_mpz_t()); 
+    mpz_powm_sec(cipher.get_mpz_t(), pTxt.get_mpz_t(), e.get_mpz_t(), n); 
     result = cipher.get_str();
  
     return result;
@@ -81,6 +84,7 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
  return "Error";
 }
 //pow didn't work so had to generate my own
+//piece of crap, takes too long. doesn't work
 mpz_class RsaKeys::my_pow(mpz_class base, mpz_class exp) {
   mpz_class result = 1;
     for(mpz_class i = 0; i < exp; ++i){
@@ -89,6 +93,7 @@ mpz_class RsaKeys::my_pow(mpz_class base, mpz_class exp) {
  return result; 
 }
 
+//makes a vector of partitions
 std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
   std::cout<<"D is : "<< d<<std::endl;
   std::cout<<"N is : "<<n<<std::endl;
@@ -97,6 +102,7 @@ std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
   std::string part = "";
   std::vector<std::string> partition;
   mpz_class nCount = 0;
+  //traverses string and puts everything befor n in formula to convert back to ascii
   for(int i = 0; i < base.length(); ++i){
     if(base.at(i) == 'n'){
       partition.push_back(part);
@@ -113,7 +119,9 @@ std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
     for(int i = 0; i < partition.size(); ++i){
       mpz_class cTxt = mpz_class(partition.at(i));
       std::cout<<"cTxt : "<< cTxt<<std::endl;
-      mpz_class pTxt = my_pow(cTxt, d) % n;
+      //mpz_class pTxt = my_pow(cTxt, d) % n;
+      mpz_class pTxt;
+      mpz_powm_sec(pTxt, cTxt, d, n);
       std::cout<<"pTxt : " <<pTxt<<std::endl;
       buffer += pTxt.get_str();
     }
@@ -121,6 +129,9 @@ std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
   std::string buffer2 = "";
   std::string output = "";
  
+  //because if way ascii table setup, if ascii starts with one
+  //taake the next two digits to convert back to letter
+  //if ascii starts with anything else, take next one
   for(int i = 0; i < buffer.length(); ++i){
     buffer2 = "";
     if(buffer.at(i) == '1'){

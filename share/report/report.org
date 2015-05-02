@@ -54,19 +54,19 @@ messages using the RSA encryption algorithm and embed and extract messages
 * Division of Labor
 ** Sam Gwydir 
 - Responsibilities :: Build Tools, Travis-CI, Coveralls, Miscellaneous
-- Contribution :: 25%
+- Contribution :: 20%
 ** Martin Fracker
 - Responsibilities :: Steganography Embedding/Extraction
-- Contribution :: 25%
+- Contribution :: 20%
 ** Christopher Findeisen
 - Responsibilities :: RSA Attacks
-- Contribution :: 25%
+- Contribution :: 20%
 ** Rafael Moreno
 - Responsibilities :: RSA Encryption/Decryption
-- Contribution :: 25%
+- Contribution :: 20%
 ** Kyle Wilson
 - Responsibilities :: Steganography Attacks
-- Contribution :: 25%
+- Contribution :: 20%
 * Conclusion
 * Sprint Reports
 

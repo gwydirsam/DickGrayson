@@ -1,0 +1,72 @@
+#+TITLE: Project Report: DickGrayson
+#+AUTHOR: Sam Gwydir & Martin Fracker & Christopher Findeisen \\ Rafael Moreno & Kyle Wilson
+#+DATE: <2015-05-03 Sun>
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t c:nil
+#+OPTIONS: creator:comment d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t
+#+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:t
+#+OPTIONS: todo:t |:t
+#+CREATOR: Emacs 24.5.1 (Org mode 8.2.10)
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+OPTIONS: texht:t
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS:
+#+LATEX_HEADER:
+#+LATEX_HEADER_EXTRA:
+
+\pagebreak
+
+#+BEGIN_COMMENT
+The board of Munchkin Incorporated expects to receive a final report of your
+work and a brief presentation demonstrating the tools you built. The report
+should include details about how you solved each problem in this project,
+especially with regard to Test-Driven Development and Agile Programming. Your
+report also should also include the division of labor, specifying who did what
+and the value of that contribution to the overall project. Attached to the
+report, you should submit copies of your weekly Sprint progress reports,
+complete with Backlogs, Burndown charts, and Sprint Status Checks. Your
+presentation during the final exam should last no more than 10 minutes and
+should clearly demonstrate your usage of Test-Driven Development and Agile
+Programming, as well as the correct operation of your tools. Stay true to the
+Agile methodology, do not submit or demo something which is not yet finished.
+#+END_COMMENT
+
+* Introduction
+/DickGrayson/ is a collection of tools that allow a user to encrypt and decrypt
+messages using the RSA encryption algorithm and embed and extract messages
+(either plaintext or ciphertext) from BMP images and WAV audio files.
+
+* Tools
+- =munchkincrypt= :: RSA Encryption
+- =dorothy= :: RSA Attacks
+- =munchkinsteg= :: Steganography
+- =toto= :: Steganography Attacks
+
+* Agline Programming
+* Test-Driven Development
+* RSA Encryption
+* Steganography
+** BMP Image Files
+** WAV Audio Files
+* Division of Labor
+** Sam Gwydir 
+- Responsibilities :: Build Tools, Travis-CI, Coveralls, Miscellaneous
+- Contribution :: 25%
+** Martin Fracker
+- Responsibilities :: Steganography Embedding/Extraction
+- Contribution :: 25%
+** Christopher Findeisen
+- Responsibilities :: RSA Attacks
+- Contribution :: 25%
+** Rafael Moreno
+- Responsibilities :: RSA Encryption/Decryption
+- Contribution :: 25%
+** Kyle Wilson
+- Responsibilities :: Steganography Attacks
+- Contribution :: 25%
+* Conclusion
+* Sprint Reports
+

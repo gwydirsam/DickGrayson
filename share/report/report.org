@@ -45,12 +45,16 @@ messages using the RSA encryption algorithm and embed and extract messages
 - =munchkinsteg= :: Steganography
 - =toto= :: Steganography Attacks
 
-* Agline Programming
+* Agile Programming
+** Problems Encountered
 * Test-Driven Development
+** Problems Encountered
 * RSA Encryption
+** Problems Encountered
 * Steganography
 ** BMP Image Files
 ** WAV Audio Files
+** Problems Encountered
 * Division of Labor
 ** Sam Gwydir 
 - Responsibilities :: Build Tools, Travis-CI, Coveralls, Miscellaneous

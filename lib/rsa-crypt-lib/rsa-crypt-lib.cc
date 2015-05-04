@@ -59,7 +59,7 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
       }
       mpz_class pTxt = mpz_class(inter);
      // cipher = my_pow(pTxt, e) % n;
-      mpz_powm_sec(cipher.get_mpz_t(), pTxt, e, n);
+      mpz_powm_sec(cipher.get_mpz_t(), pTxt.get_mpz_t(), e.get_mpz_t(), n.get_mpz_t());
       result += cipher.get_str() + 'n';
       inter = "";
       k = 0;
@@ -76,7 +76,7 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
     mpz_class pTxt = mpz_class(inter);
     std::cout<<"pTxt"<<pTxt<<std::endl;
     //cipher = my_pow(pTxt, e) %n;
-    mpz_powm_sec(cipher.get_mpz_t(), pTxt.get_mpz_t(), e.get_mpz_t(), n); 
+    mpz_powm_sec(cipher.get_mpz_t(), pTxt.get_mpz_t(), e.get_mpz_t(), n.get_mpz_t()); 
     result = cipher.get_str();
  
     return result;
@@ -121,7 +121,7 @@ std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
       std::cout<<"cTxt : "<< cTxt<<std::endl;
       //mpz_class pTxt = my_pow(cTxt, d) % n;
       mpz_class pTxt;
-      mpz_powm_sec(pTxt, cTxt, d, n);
+      mpz_powm_sec(pTxt.get_mpz_t(), cTxt.get_mpz_t(), d.get_mpz_t(), n.get_mpz_t());
       std::cout<<"pTxt : " <<pTxt<<std::endl;
       buffer += pTxt.get_str();
     }

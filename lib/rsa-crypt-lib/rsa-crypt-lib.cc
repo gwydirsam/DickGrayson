@@ -31,7 +31,7 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   // compute d
   this->d_ = calculate_d(totient_, e_);
   // public key
-  this->encode_ = encode("Hello", e(), n());
+  this->encode_ = encode("Hello my name is Rafa", e(), n());
    //std::cout<<"result of my_pow : "<<my_pow(2,8)<<std::endl; 
   this-> decode_ = decode(encode_result(), d(), n()); 
   // private key
@@ -61,6 +61,7 @@ std::string RsaKeys::encode(std::string message, mpz_class e, mpz_class n) {
      // cipher = my_pow(pTxt, e) % n;
       mpz_powm_sec(cipher.get_mpz_t(), pTxt.get_mpz_t(), e.get_mpz_t(), n.get_mpz_t());
       result += cipher.get_str() + 'n';
+      std::cout<<"RESULT : "<<std::cout<<result<<std::endl; 
       inter = "";
       k = 0;
     }
@@ -95,9 +96,8 @@ mpz_class RsaKeys::my_pow(mpz_class base, mpz_class exp) {
 
 //makes a vector of partitions
 std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
-  std::cout<<"D is : "<< d<<std::endl;
-  std::cout<<"N is : "<<n<<std::endl;
   std::cout<<"message to be decoded : "<<cryptText<<std::endl;
+  std::cout<<"value of n is : "<<n<<std::endl;  
   std::string base = cryptText;
   std::string part = "";
   std::vector<std::string> partition;
@@ -115,16 +115,15 @@ std::string RsaKeys::decode(std::string cryptText, mpz_class d, mpz_class n){
   }
   if(nCount == 0) partition.push_back(part);
     
-    std::string buffer = "";
-    for(int i = 0; i < partition.size(); ++i){
-      mpz_class cTxt = mpz_class(partition.at(i));
-      std::cout<<"cTxt : "<< cTxt<<std::endl;
-      //mpz_class pTxt = my_pow(cTxt, d) % n;
-      mpz_class pTxt;
-      mpz_powm_sec(pTxt.get_mpz_t(), cTxt.get_mpz_t(), d.get_mpz_t(), n.get_mpz_t());
-      std::cout<<"pTxt : " <<pTxt<<std::endl;
-      buffer += pTxt.get_str();
-    }
+  std::string buffer = "";
+  for(int i = 0; i < partition.size(); ++i){
+    mpz_class cTxt = mpz_class(partition.at(i));
+    std::cout<<"cTxt : "<< cTxt<<std::endl;
+    mpz_class pTxt;
+    mpz_powm_sec(pTxt.get_mpz_t(), cTxt.get_mpz_t(), d.get_mpz_t(), n.get_mpz_t());
+    std::cout<<"pTxt : " <<pTxt<<std::endl;
+    buffer += pTxt.get_str();
+  }
  
   std::string buffer2 = "";
   std::string output = "";

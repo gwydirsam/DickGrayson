@@ -42,7 +42,7 @@ void getMD5Hash(char* filename, unsigned char* hash, bool print) {
 
   if (print) {
     printMD5Sum(hash);
-	std::cout << filename << std::endl;
+	std::cout << ": " << filename << std::endl;
   }
 
 }
@@ -60,29 +60,48 @@ bool isEncrypted(char* img1, char* img2, bool print) {
 }
 
 // Get encrypted message from wav using Martin's library
-std::string retrieveWAVMessage() {
-  // If isEncrypted, use Extracting_agent to get message
-  // Else, return empty string
-  return ""; 
+std::string retrieveMessage(std::string orig, std::string alt) {
+  // Throw exceptions in error cases if necessary
+  if (isEncrypted((char*)orig.c_str(), (char*)alt.c_str(), false)) {
+      std::unique_ptr<Abstract_extracting_agent> extractor;
+      extractor = which_extracting_agent(alt);
+      return extractor->extract();
+  }
+  else return "";
 }
  
-// Get encrypted message from bmp using Martin's library
-std::string retrieveBMPMessage() { 
-  // If isEncrypted, use Extracting_agent to get message
-  // Else, return empty string
-  return ""; 
-}
-
 // WRITE INTERFACE //
+// in interface, if extract is called on file w/ extension != '.wav' && '.bmp'
+// return error message (maybe not)
 
 // Randomize wav LSBs
-void scrambleWAV() {
-  // Calculate number of embeddable characters using WAV::get_num_samples() / 8
-  // Generate a random string of that size and embed it in the image using an Embedding_agent and embed_and_save()
+// 1) How to get length
+// 2) Can I use same file for both embedder params (yes)
+
+std::string scrambleLSB(std::string file) {
+  // Catch exceptions and throw error
+  // Inaccessable_file_exception
+  // Invalid_format_exception
+  int length = 0; 
+  if (file_type_of(file) == File_type::WAV) {
+    dgwav origWAV(file);
+    length = origWAV.get_num_samples() / 8;
+  }
+  else if (file_type_of(file) == File_type::BMP) {
+    dgbmp origBMP(file);
+    length = (origBMP.get_num_pixels() * origBMP.get_bpp()) / 64;
+  }
+  else return "";
+  char temp[length];
+  srand(time(NULL));
+  for (int i = 0; i < length; i++) {
+    temp[i] = 1 + rand()%126; // generate basic ASCII character (1-126)
+  }
+  temp[length] = 0;
+  std::string randomChars = temp;
+  std::unique_ptr<Abstract_embedding_agent> embedder;
+  embedder = which_embedding_agent(file, file);
+  embedder->embed_and_save(randomChars);
+  return randomChars;
 }
 
-// Randomize bmp LSBs
-void scrambleBMP() {
-  // Calculate number of embeddable characters using ( BMP::get_num_pixels() * BMP::get_bpp() ) / 8
-  // Generate a random string of that size and embed it in the image using an Embedding_agent and embed_and_save()
-  }

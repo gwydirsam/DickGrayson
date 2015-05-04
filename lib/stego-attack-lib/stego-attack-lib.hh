@@ -4,10 +4,13 @@
 #include <sys/stat.h>
 #include <sys/mman.h>
 #include <fcntl.h>
+#include <time.h>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <random>
+#include <memory>
 #include <openssl/md5.h>
 #include "../stego-crypt-lib/stego-crypt-lib.hh"
 
@@ -26,16 +29,8 @@ void getMD5Hash(char* filename, unsigned char* result);
 // Determines whether or not two files have the same md5 hash
 bool isEncrypted(char* img1, char* img2, bool print);
 
-// Get encrypted message from wav using Martin's library
-std::string retrieveWAVMessage();
- 
-// Get encrypted message from bmp using Martin's library
-std::string retrieveBMPMessage();
+// Get encrypted message from bmp or wav using Martin's library
+std::string retrieveMessage(std::string orig, std::string alt);
 
-// TEST INTERFACE //
-
-// Randomize wav LSBs
-void scrambleWAV();
-
-// Randomize bmp LSBs
-void scrambleBMP();
+// Randomize wav LSBs	
+std::string scrambleLSB(std::string file);

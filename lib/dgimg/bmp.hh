@@ -38,10 +38,6 @@ class BMP {
   // eg masking 11111111 with 00001111 sets the byte to 11110000
   void pixel_unset_mask(int x, int y, unsigned mask);
 
-  unsigned max_pixel_value() const;
-  double mean_squared_error(const BMP& other) const;
-  double peak_signal_noise_ratio(const BMP& other) const;
-
   //// getters
 
   const Easy_bmp& get_data() const { return data; }

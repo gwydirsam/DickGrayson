@@ -74,42 +74,5 @@ unsigned BMP::get_pixel(int x, int y) const {
   return ret;
 }
 
-unsigned BMP::max_pixel_value() const {
-  unsigned max = std::numeric_limits<unsigned>::min();
-  int width = get_width();
-  int height = get_height();
-  for (int i = 0; i < width; ++i) {
-    for (int j = 0; j < height; ++j) {
-      unsigned pixel_value = get_pixel(i, j);
-      if (pixel_value > max) {
-        max = pixel_value;
-      }
-    }
-  }
-  return max;
-}
-
-// source peak signal to noise ratio wiki
-double BMP::mean_squared_error(const BMP& other) const {
-  int width = get_width();
-  int height = get_height();
-  int squared_errors_sum = 0;
-  for (int i = 0; i < width; ++i) {
-    for (int j = 0; j < height; ++j) {
-      int squared_error = (get_pixel(i, j) - other.get_pixel(i, j)) << 1;
-      squared_errors_sum += squared_error;
-    }
-  }
-  return (double)squared_errors_sum / (get_width() * get_height());
-}
-
-// source: peak signal to noise ratio wiki, returns psnr in decibels
-double BMP::peak_signal_noise_ratio(const BMP& other) const {
-  unsigned max_val = max_pixel_value();
-  double mse = mean_squared_error(other);
-  double psnr = 20 * log10(max_val) - 10 * log10(mse);
-  return psnr;
-}
-
 }
 }

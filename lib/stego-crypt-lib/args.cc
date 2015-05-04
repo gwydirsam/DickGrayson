@@ -108,7 +108,7 @@ void print_help() {
                "--help     -h     show this screen\n"
                "--input    -i     location of input bmp/wav file to embed in or extract from\n"
                "--file     -f     location of file containing the message to embed\n"
-               "--output   -o     location to output stego file or extracted message file\n"
+               "--output   -o     location to output stego file or extract message file\n"
                "--verbose  -v     verbosely describe stego process\n\n";
 }
 

@@ -8,17 +8,38 @@
 TEST(RSACrypt, RsaKeysConstructor1024) {
   RsaKeys my_keys(512);
   EXPECT_GT(my_keys.totient(), my_keys.e());
-
+}
+TEST(RSACrypt, RSAEncrypt){
+  RsaKeys my_keys(512);
+  std::string message = "attack at dawn";
+  std::string encrypted = my_keys.encrypt_message(message);
+  EXPECT_NE(message, encrypted);
+  EXPECT_EQ(message, my_keys.decrypt_message(encrypted));
 }
 
-TEST(RSACrypt, RsaDecodeEncode1) {
-  RsaKeys my_keys(1024);
-  //std::cerr<<"Encoded value"<<my_keys.encode_result()<<std::endl;
-  EXPECT_EQ("Hello my name is Rafa", my_keys.decoded_result());
+TEST(RSACrypt, RSAEncryptUpperCase){
+  RsaKeys my_keys(512);
+  std::string message = "ATTACK AT DAWN";
+  std::string encrypted = my_keys.encrypt_message(message);
+  EXPECT_NE(message, encrypted);
+  EXPECT_EQ(message, my_keys.decrypt_message(encrypted));
 }
- TEST(RSACrypt, RsaDecodeEncode2) {
-  RsaKeys my_keys(1024);
-  //std::cerr<<"Encoded value"<<my_keys.encode_result()<<std::endl;
-  //std::cerr<<"decoded result"<<my_keys.decoded_result()<<std::endl;
-  EXPECT_EQ("Hello my name is Rafa", my_keys.decoded_result());
+
+TEST(RSACrypt, RSAOverflowTest){
+  RsaKeys my_keys(512);
+  std::string message = "a";
+  for(int i = 0; i < 100; ++i){
+    message += "aaa";
+    std::string encrypted = my_keys.encrypt_message(message);
+    EXPECT_EQ(message, my_keys.decrypt_message(encrypted));
+  }
 }
+TEST(RSACrypt, RSAEncryptMonkeyTest){
+  RsaKeys my_keys(512);
+  std::string message = "aaaaaaaaaaaaaaaaLONG ASS MSG FROM A MONKEYas;dlfjasd;fasdjgkasdfj 29835892069qf )@#(*%Y)aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa asdfasdf  sadfRO SALKFROO )(*&^)@#%& rolling face on keyboard asdfaskdfljasZBLAHABLHASDFfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+  std::string encrypted = my_keys.encrypt_message(message);
+  EXPECT_NE(message, encrypted);
+  EXPECT_EQ(message, my_keys.decrypt_message(encrypted));
+}
+

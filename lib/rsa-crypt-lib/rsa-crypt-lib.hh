@@ -12,7 +12,7 @@ class RsaKeys {
 
   // accessors
   mpz_class n() { return n_; }
-  mpz_class e() { return e_; }
+  unsigned int e() { return e_; }
   mpz_class totient() { return totient_; }
   mpz_class d() { return d_; }
   mp_bitcnt_t bits() { return bits_; }
@@ -66,7 +66,7 @@ class RsaKeys {
  private:
   // data members
   mpz_class n_;
-  mpz_class e_;
+  unsigned int e_;
   mpz_class totient_;
   mpz_class d_;
   mp_bitcnt_t bits_;

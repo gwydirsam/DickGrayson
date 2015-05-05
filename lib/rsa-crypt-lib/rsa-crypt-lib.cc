@@ -1,4 +1,5 @@
 #include "rsa-crypt-lib.hh"
+#include "../rsa-attack-lib/rsa-attack-lib.hh"
 
 #include <gmpxx.h>
 
@@ -104,10 +105,11 @@ std::string RsaKeys::decrypt_message(std::string message){
 
 
 //encodes message
-std::string RsaKeys::encrypt(std::string message, mpz_class e, mpz_class n) {
+std::string RsaKeys::encrypt(std::string message, unsigned_int e, mpz_class n) {
   mpz_class m = string_to_num(message);
   mpz_class encrypted_msg;
-  mpz_powm_sec(encrypted_msg.get_mpz_t(), m.get_mpz_t(), e.get_mpz_t(), n.get_mpz_t());
+  mpz_pow_ui(encrypted_msg.get_mpz_t(), m.get_mpz_t(), e);
+  rsatk::mod(encrypted, n);
   //return num_to_string(encrypted_msg);
   return(mpz_get_str(NULL, 10, encrypted_msg.get_mpz_t()));
 }
@@ -116,7 +118,9 @@ std::string RsaKeys::encrypt(std::string message, mpz_class e, mpz_class n) {
 std::string RsaKeys::decrypt(std::string cryptText, mpz_class d, mpz_class n){
   mpz_class m(cryptText, 10);
   mpz_class decrypted_msg;
-  mpz_powm_sec(decrypted_msg.get_mpz_t(), m.get_mpz_t(), d.get_mpz_t(), n.get_mpz_t());
+  //mpz_powm_sec(decrypted_msg.get_mpz_t(), m.get_mpz_t(), d.get_mpz_t(), n.get_mpz_t());
+  mpz_pow_ui(decrypted_msg.get_mpz_t(), m.get_mpz_t(), d);
+  rsatk::mod(decrypted, n);
 
   return num_to_string(decrypted_msg);
 }

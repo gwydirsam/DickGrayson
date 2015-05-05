@@ -29,8 +29,7 @@ and the value of that contribution to the overall project. Attached to the
 report, you should submit copies of your weekly Sprint progress reports,
 complete with Backlogs, Burndown charts, and Sprint Status Checks. Your
 presentation during the final exam should last no more than 10 minutes and
-should clearly demonstrate your usage of Test-Driven Development and Agile
-Programming, as well as the correct operation of your tools. Stay true to the
+should clearly demonstrate your usage of Test-Driven Development and Agile Programming, as well as the correct operation of your tools. Stay true to the
 Agile methodology, do not submit or demo something which is not yet finished.
 #+END_COMMENT
 
@@ -85,9 +84,27 @@ run fewer times or breaks earlier.
 * RSA Encryption
 ** Problems Encountered
 * Steganography
+Our steganography tool, Munchkinsteg, supports two different embedding media:
+8-bit Windows BMP (image), and PCM 16-bit WAV (sound). Both types of steganography
+are based on last significant bit (LSB). Before embedding the message, we append
+the null byte to it. When extracting, we stop at the null byte and return everything
+extracted minus the null byte.
 ** BMP Image Files
+Our tool supports only 8-bit Windows BMP which means only one subpixel per pixel.
+We used the EasyBMP library for interfacing with the BMP format. The LSB of each
+subpixel (and thus each pixel) contains one sequential bit of the embedded message.
 ** WAV Audio Files
+Our tool supports only PCM 16-bit WAV images. There are other types of WAV images;
+compression and rounding issues prevent LSB steganography from working correctly for
+other types of the WAV format. We used libsndfile for interfacing with the WAV format.
+The PCM 16-bit WAV format consists of an array of 16-bit sound samples. The LSB of
+each sound sample contains one sequential bit of the embedded message.
 ** Problems Encountered
+Originally we tried writing our own BMP library. We found that it was much easier
+to write an interface to EasyBMP. When we decided to implement the WAV format, we
+moved straight to the idea of writing an interface to libsndfile. At first, we didn't
+realize that only PCM 16-bit WAV would work. Once we did, we had no problem getting
+support for WAV steganography to work.
 * Division of Labor
 ** Sam Gwydir 
 - Responsibilities :: Build Tools, Travis-CI, Coveralls, Report, Presentation,

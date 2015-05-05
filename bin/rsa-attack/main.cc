@@ -7,6 +7,7 @@
 #include <getopt.h>
 
 #include <rsa-attack-lib/common_modulus.hh> // comodulus namespace
+#include <rsa-attack-lib/low_exponent.hh> // lowexp namespace
 #include <rsa-attack-lib/factorization_attack.hh> // factoratk namespace
 #include <rsa-attack-lib/rsa-attack-lib.hh> // rsatk namespace
 
@@ -46,8 +47,10 @@ bool is_everything_correct(int file_count, int aflag, bool ioerror) {
 int main(int argc, char* argv[]) {
   /* options descriptor */
   static struct option longopts[] = {{"attack", required_argument, NULL, 'a'},
-                                     {"filename", required_argument, NULL, 'f'},
-                                     {"filename2", required_argument, NULL, 'g'},
+                                     {"ciphertext", required_argument, NULL, 'c'},
+                                     {"pubkey1", required_argument, NULL, 'x'},
+                                     {"pubkey2", required_argument, NULL, 'y'},
+                                     {"pubkey3", required_argument, NULL, 'z'},
                                      {"help", no_argument, NULL, 'h'},
                                      {NULL, 0, NULL, 0}};
 
@@ -56,7 +59,9 @@ int main(int argc, char* argv[]) {
   int file_count = 0, aflag = -1, ch = 0;
   std::fstream f_1;
   std::fstream f_2;
-  while ((ch = getopt_long(argc, argv, "a:f:g:h", longopts, &option_index)) !=
+  std::fstream f_3;
+  std::fstream cipher_file;
+  while ((ch = getopt_long(argc, argv, "a:x:y:z:h", longopts, &option_index)) !=
          -1) {
     switch (ch) {
       case 'a': {
@@ -70,29 +75,42 @@ int main(int argc, char* argv[]) {
         }
         break;
       }
-    case 'f': {
+    case 'x': {
       file_count += 1;
       std::string fname = std::string(optarg);
       f_1.open(fname, std::ios::in);
       if (!f_1.is_open()) {
         ioerror = true;
-      } else {
-        //std::string line = "";
-        // this should pass to our fctn eventually
-        // for now, test it's reading the right file
-        //while (std::getline(f, line)) {
-        //<< line << '\n';
-        //}
       }
 
       break;
     }
-    case'g': {
+    case 'y': {
       file_count += 1;
 
       std::string fname = std::string(optarg);
       f_2.open(fname, std::ios::in);
       if (!f_2.is_open()) {
+        ioerror = true;
+      }
+      break;
+    }
+    case 'z': {
+      file_count += 1;
+
+      std::string fname = std::string(optarg);
+      f_3.open(fname, std::ios::in);
+      if (!f_3.is_open()) {
+        ioerror = true;
+      }
+      break;
+    }
+    case 'c': {
+      file_count += 1;
+
+      std::string fname = std::string(optarg);
+      cipher_file.open(fname, std::ios::in);
+      if (!cipher_file.is_open()) {
         ioerror = true;
       }
       break;
@@ -121,7 +139,11 @@ int main(int argc, char* argv[]) {
       comodulus::common_modulus_attack(r_1, r_2);
     }
     else if (aflag == 2) {
-      //we'll just see if this exists... -___-
+      rsatk::RSA_data r_2 = rsatk::parse_rsa_file(f_2);
+      rsatk::RSA_data r_3 = rsatk::parse_rsa_file(f_3);
+      std::string c = rsatk::read_cipher_text(cipher_file);
+      r_1.C = r_2.C = r_3.C = c;
+      lowexp::low_exponent_attack(r_1, r_2, r_3);
     }
   }
 

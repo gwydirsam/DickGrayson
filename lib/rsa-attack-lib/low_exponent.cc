@@ -28,11 +28,11 @@ namespace lowexp {
   }
 
   bool lowexp_valid(rsatk::RSA_data m_1, rsatk::RSA_data m_2, rsatk::RSA_data m_3){
-    if (m_1.C != m_2.C || m_1.C != m_3.C || m_1.C == -1) {
-      cerr << "Invalid message to use low exponent attack. All three messages must be the same." << endl;
-      return false;
-    }
-    else if(m_1.e != m_2.e || m_1.e != m_3.e || m_1.e != 3){
+    //if (m_1.C != m_2.C || m_1.C != m_3.C || m_1.C == -1) {
+    //cerr << "Invalid message to use low exponent attack. All three messages must be the same." << endl;
+    //return false;
+    //}
+    if(m_1.e != m_2.e || m_1.e != m_3.e || m_1.e != 3){
       cerr << "Invalid message to use low exponent attack. Must have an exponent of 3." << endl;
       return false;
     }

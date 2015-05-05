@@ -149,6 +149,20 @@ namespace rsatk {
     return "not implemented";
   }
   RSA_data parse_rsa_file(std::fstream& fname){
-    return RSA_data();
+    RSA_data d = RSA_data();
+    //std::string rsa_pub = "";
+    ////assert(!fname.is_open());
+    //getline(fname, rsa_pub);
+    //fname.decode_string
+    return d;
+  }
+  std::string read_cipher_text(std::fstream& fname){
+    std::string line = "";
+    std::string total_txt = "";
+    while(fname.is_open()){
+      getline(fname, line);
+      total_txt += line;
+    }
+    return total_txt;
   }
 }

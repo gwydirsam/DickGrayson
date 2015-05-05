@@ -43,4 +43,5 @@ namespace rsatk {
   std::string decrypt_message(std::string encrypted, mpz_class n, mpz_class d);
 
   RSA_data parse_rsa_file(std::fstream& fname);
+  std::string read_cipher_text(std::fstream& fname);
 }

@@ -34,7 +34,6 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   // compute d
   this->d_ = calculate_d(totient_, e_);
   // public key
-   //std::cout<<"result of my_pow : "<<my_pow(2,8)<<std::endl;
   // private key
   // std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
 }

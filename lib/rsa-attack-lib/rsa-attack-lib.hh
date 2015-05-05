@@ -35,10 +35,13 @@ namespace rsatk {
 
   mpz_class calculate_d(mpz_class totient, mpz_class e);
 
+  mpz_class mod(mpz_class num, mpz_class modulo);
+
   // extended_euclidean(a, b) returns three values:
   // x, y, gcd, such that ax + by = gcd(a, b)
   std::vector<mpz_class> extended_euclidean(mpz_class totient, mpz_class e);
   std::string decrypt_message(std::string encrypted, mpz_class n, mpz_class d);
 
   RSA_data parse_rsa_file(std::fstream& fname);
+  std::string read_cipher_text(std::fstream& fname);
 }

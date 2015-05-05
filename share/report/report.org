@@ -46,8 +46,41 @@ messages using the RSA encryption algorithm and embed and extract messages
 - =toto= :: Steganography Attacks
 
 * Agile Programming
+For this project we were to make use of the "Agile Software Development"
+ideology and in particular the "Scrum" method. In short this meant instead of
+using an ad-hoc organization method (read: none at all), we divided the
+four-week development time allocated into four "sprints". In addition we had
+five meetings, one every weekday at 15:00. On Mondays a planning meeting was
+held in which we decided on what tasks would define this weeks' sprint. In
+addition we estimated the difficulty of each card to avoid under or over
+estimating the amount of work one could accomplish in a week.
+
+The canonical way to organize and store organization information for a project
+is a white board but because we did not have access to a physical white-board we
+opted to use trello.com instead.
+
 ** Problems Encountered
 * Test-Driven Development
+Test-Driven Development is development strategy where one writes out the tests
+for a segment of code, usually a single class or header, /before/ one writes the
+code. The tests should initially all fail and then functionality should be
+implemented such that the tests pass. This ensures that one does not
+unconsciously write their tests to pass even if their code is broken.
+
+Our team also made use of travis-io.com for continuous integration. Travis
+builds each push to the git repository for all branches and pull requests.
+Travis then signals whether or not the code built and passed the tests. After it
+has built and run all the tests, Travis can tell us which tests passed or
+failed.
+
+In addition, we configured travis to build the code with code-coverage analytics
+which were then analyzed by coveralls.io. This allows us to analyze what parts
+of the codebase are being executed and how many times. This is particularly
+useful when checking what percentage of the codebase is actually being tested in
+our tests. Coverage also gives us some insight into what parts of the code are
+being "hit" hardest, e.g. a loop is being run 1,000,000 times. This sometimes
+allowed us to optimize the order of conditions in a loop such that the loop is
+run fewer times or breaks earlier.
 ** Problems Encountered
 * RSA Encryption
 ** Problems Encountered
@@ -57,7 +90,8 @@ messages using the RSA encryption algorithm and embed and extract messages
 ** Problems Encountered
 * Division of Labor
 ** Sam Gwydir 
-- Responsibilities :: Build Tools, Travis-CI, Coveralls, Miscellaneous
+- Responsibilities :: Build Tools, Travis-CI, Coveralls, Report, Presentation,
+     Designated Pair-Programmer
 - Contribution :: 20%
 ** Martin Fracker
 - Responsibilities :: Steganography Embedding/Extraction

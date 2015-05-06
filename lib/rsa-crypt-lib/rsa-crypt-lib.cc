@@ -9,7 +9,7 @@
 #include <tuple>      // std::tuple
 #include <algorithm>  // std::min
 #include <bitset>
-
+#include <fstream>
 #include <dgcrypto/dgcrypto.hh>
 
 // to use 'random' is there more specific header?
@@ -33,9 +33,13 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   // compute d
   this->d_ = calculate_d(totient_, e_);
   // public key
-   //std::cout<<"result of my_pow : "<<my_pow(2,8)<<std::endl;
   // private key
   // std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
+  std::ofstream key_file;
+  key_file.open("keys.txt"); 
+  key_file<<"Public key : "<<p<<q<<d_<<std::endl;
+  key_file<<"Private key: "<<n_<<e_<<std::endl;
+  key_file.close();
 }
 
 

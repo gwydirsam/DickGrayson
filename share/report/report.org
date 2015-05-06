@@ -82,7 +82,17 @@ allowed us to optimize the order of conditions in a loop such that the loop is
 run fewer times or breaks earlier.
 ** Problems Encountered
 * RSA Encryption
+ Rsa Key generation
+We generate large enough numbers using the gmp library. Those randomly generated p 
+and q values are then used to calculate totient, d, and e.
+ Encryption and decryption
+Encryption happens by splitting up the passed in message into blocks to keep values 
+less than the bit size of n. The blocks are converted into ascii values, and each 
+block is delimited by a "-" so that when it is passed into the decryption function, 
+we know at what increments to pass the values into the mod formula in.
 ** Problems Encountered
+Dealing with the new library was particularly challenging as well as the encryption and 
+decryption of the plaintext message.
 * Steganography
 Our steganography tool, Munchkinsteg, supports two different embedding media:
 8-bit Windows BMP (image), and PCM 16-bit WAV (sound). Both types of steganography
@@ -117,7 +127,7 @@ support for WAV steganography to work.
 - Responsibilities :: RSA Attacks
 - Contribution :: 20%
 ** Rafael Moreno
-- Responsibilities :: RSA Encryption/Decryption
+- Responsibilities :: RSA Encryption/Decryption and key generation
 - Contribution :: 20%
 ** Kyle Wilson
 - Responsibilities :: Steganography Attacks

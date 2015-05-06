@@ -11,7 +11,7 @@
 #include <tuple>      // std::tuple
 #include <algorithm>  // std::min
 #include <bitset>
-
+#include <fstream>
 #include <dgcrypto/dgcrypto.hh>
 
 
@@ -41,6 +41,11 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
   // public key
   // private key
   // std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
+  std::ofstream key_file;
+  key_file.open("keys.txt"); 
+  key_file<<"Public key : "<<p<<q<<d_<<std::endl;
+  key_file<<"Private key: "<<n_<<e_<<std::endl;
+  key_file.close();
 }
 
 

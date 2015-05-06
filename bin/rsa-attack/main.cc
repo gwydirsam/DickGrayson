@@ -43,7 +43,7 @@ bool is_everything_correct(int file_count, int aflag, bool ioerror) {
     return false;
   }
   if(aflag == 2 && file_count < 4){
-    std::cerr << "needs three public keys, and one ciphertext"
+    std::cerr << "needs three public keys, and one ciphertext";
   }
   else if (file_count == 0) {
     std::cerr << "missing argument --pubkey1 [file_to_crack]" << std::endl;

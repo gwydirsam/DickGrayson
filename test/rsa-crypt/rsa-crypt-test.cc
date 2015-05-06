@@ -28,7 +28,7 @@ TEST(RSACrypt, RSAEncryptUpperCase){
 TEST(RSACrypt, RSAOverflowTest){
   RsaKeys my_keys(512);
   std::string message = "a";
-  for(int i = 0; i < 100; ++i){
+  for(int i = 0; i < 50; ++i){
     message += "aaa";
     std::string encrypted = my_keys.encrypt_message(message);
     EXPECT_EQ(message, my_keys.decrypt_message(encrypted));
@@ -43,3 +43,12 @@ TEST(RSACrypt, RSAEncryptMonkeyTest){
   EXPECT_EQ(message, my_keys.decrypt_message(encrypted));
 }
 
+TEST(RSACrypt, OpenSSLVerification){
+  //RsaKeys my_keys(64);
+  //std::string message = "aaaaaaaaaaaaaaaaLONG ASS MSG FROM A MONKEYas;dlfjasd;fasdjgkasdfj 29835892069qf )@#(*%Y)aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa asdfasdf  sadfRO SALKFROO )(*&^)@#%& rolling face on keyboard asdfaskdfljasZBLAHABLHASDFfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+  //
+  //std::string encrypted = my_keys.encrypt_message(message);
+  //EXPECT_NE(message, encrypted);
+  //EXPECT_EQ(message, my_keys.decrypt_message(encrypted));
+  EXPECT_EQ(0,1);
+}

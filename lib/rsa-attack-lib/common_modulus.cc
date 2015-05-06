@@ -1,4 +1,5 @@
 #include "common_modulus.hh"
+#include "../rsa-crypt-lib/base64.h"
 
 namespace comodulus {
 
@@ -17,10 +18,8 @@ using namespace std;
   }
   mpz_class x = ee_result[0];
   mpz_class y = ee_result[1];
-  mpz_class E = m_1.C;  // dummy values for now. This will be the ciphertext
-  mpz_class F = m_2.C;  // dummy values for now. This will be the ciphertext
-  // long int li_x = mpz_get_si(x.get_mpz_t());  // for use in exponentiation
-  // long int li_y = mpz_get_si(y.get_mpz_t());
+  mpz_class E(m_1.C);
+  mpz_class F(m_2.C);
 
   mpz_class M_e1;
   mpz_class M_e2;

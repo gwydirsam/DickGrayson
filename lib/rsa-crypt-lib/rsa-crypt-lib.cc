@@ -1,4 +1,6 @@
+#include "base64.h"
 #include "rsa-crypt-lib.hh"
+#include "../rsa-attack-lib/rsa-attack-lib.hh"
 
 #include <gmpxx.h>
 
@@ -11,6 +13,10 @@
 #include <bitset>
 #include <fstream>
 #include <dgcrypto/dgcrypto.hh>
+
+
+//temp until we get linking in order
+
 
 // to use 'random' is there more specific header?
 // I meant #include <random> for std::random_device
@@ -64,13 +70,13 @@ std::string RsaKeys::num_to_string(mpz_class num){
 mpz_class RsaKeys::string_to_num(std::string message){
   std::string num_str = "";
   for (std::size_t i = 0; i < message.size(); ++i)
-  {
-    std::string msg_int = std::to_string((int)message[i]);
-    while(msg_int.size() < 3){//all nums should be three bit width
-      msg_int = "0" + msg_int;
+    {
+      std::string msg_int = std::to_string((int)message[i]);
+      while(msg_int.size() < 3){//all nums should be three bit width
+        msg_int = "0" + msg_int;
+      }
+      num_str.insert(0, msg_int); //will need to be reversed
     }
-    num_str.insert(0, msg_int); //will need to be reversed
-  }
 
   std::string rev = num_str;
   rev = "1" + rev; //first num is to protect our padding
@@ -83,43 +89,53 @@ std::string encode(std::string){return "just a stub";}
 
 
 std::string RsaKeys::encrypt_message(std::string message) {
+  return encrypt_message(message, e_, n_);
+}
+std::string RsaKeys::encrypt_message(std::string message, unsigned int e, mpz_class n){
   std::string split_msg = "";
-  std::string full_msg = encrypt(message.substr(0, 100), e_, n_);
+  std::string full_msg = encrypt(message.substr(0, 100), e, n);
   //if the message is longer than 100, we'll delimit it with '-'s
 
   for(std::size_t i = 100; i < message.size(); i+=100){
     split_msg = message.substr(i, 100);
-    full_msg += '-' + encrypt(split_msg, e_, n_);
+    full_msg += '-' + encrypt(split_msg, e, n);
   }
-  return full_msg;
+  //may lose a char to the null char size increase?
+  std::string b64_msg = base64_encode(full_msg.c_str(), full_msg.size());
+  return b64_msg;
 }
 
-std::string RsaKeys::decrypt_message(std::string message){
-  std::stringstream ss(message);
+std::string RsaKeys::decrypt_message(std::string message, mpz_class d, mpz_class n){
+  std::string b10_msg = base64_decode(message);
+  std::stringstream ss(b10_msg);
   std::string split_msg = "";
   std::string full_msg = "";
   while(getline(ss, split_msg, '-')){
-    full_msg += decrypt(split_msg, d_, n_);
+    full_msg += decrypt(split_msg, d, n);
   }
 
   return full_msg;
 }
-//{return decrypt(message, d_, n_); }
+std::string RsaKeys::decrypt_message(std::string message){
+  return decrypt_message(message, d_, n_);
+}
 
 
 //encodes message
-std::string RsaKeys::encrypt(std::string message, mpz_class e, mpz_class n) {
+std::string RsaKeys::encrypt(std::string message, unsigned int e, mpz_class n) {
   mpz_class m = string_to_num(message);
   mpz_class encrypted_msg;
-  mpz_powm_sec(encrypted_msg.get_mpz_t(), m.get_mpz_t(), e.get_mpz_t(), n.get_mpz_t());
+  mpz_pow_ui(encrypted_msg.get_mpz_t(), m.get_mpz_t(), e);
+  encrypted_msg = dgcrypto::mod(encrypted_msg, n);
   //return num_to_string(encrypted_msg);
   return(mpz_get_str(NULL, 10, encrypted_msg.get_mpz_t()));
 }
 
-//makes a vector of partitions
+
 std::string RsaKeys::decrypt(std::string cryptText, mpz_class d, mpz_class n){
   mpz_class m(cryptText, 10);
   mpz_class decrypted_msg;
+  //TODO: this is deprecated. We need to somehow cast d to an ui...
   mpz_powm_sec(decrypted_msg.get_mpz_t(), m.get_mpz_t(), d.get_mpz_t(), n.get_mpz_t());
 
   return num_to_string(decrypted_msg);
@@ -195,7 +211,7 @@ inline bool RsaKeys::is_coprime(mpz_class p, mpz_class q) const {
 
 
 
-const mpz_class RsaKeys::compute_e(mpz_class totient) {
+unsigned int RsaKeys::compute_e(mpz_class totient) {
   // why not use dgrandominteger...this is what it's for
   dgrandprime e(bits_);
   if (bits_ > 17) {
@@ -203,7 +219,7 @@ const mpz_class RsaKeys::compute_e(mpz_class totient) {
   } else {
     for (int i = 0; i < 9; ++i) {
       if (is_coprime(e.get_mpz_class(), totient)) {
-        return e.get_mpz_class();
+        return mpz_get_ui(e.get_mpz_class().get_mpz_t());
       } else {
         e.reroll();
       }

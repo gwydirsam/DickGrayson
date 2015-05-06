@@ -4,7 +4,9 @@
 #include <vector>
 #include <string>
 
+#include <rsa-crypt-lib/rsa-crypt-lib.hh>
 #include <rsa-attack-lib/rsa-attack-lib.hh>
+#include <rsa-attack-lib/low_exponent.hh>
 
 using namespace std;
 
@@ -82,18 +84,6 @@ TEST_F(EasyCrackingRSATest, calculateD) {
   EXPECT_EQ(expected_d, actual_d);
 }
 
-TEST_F(EasyCrackingRSATest, applyPrivateKey) {
-  string encrypted_message = "48";
-
-  mpz_class totient = rsatk::calculate_totient(p, q);
-  ASSERT_EQ(120, totient);
-  mpz_class d = rsatk::calculate_d(totient, e);
-  ASSERT_EQ(103, d);
-
-  string decrypted_message = rsatk::decrypt_message(encrypted_message, n, d);
-
-  EXPECT_EQ(m, decrypted_message);
-}
 
 class HarderCrackingRSATest : public ::testing::Test {
  protected:
@@ -127,27 +117,74 @@ TEST_F(HarderCrackingRSATest, calculateD) {
 }
 
 TEST_F(HarderCrackingRSATest, applyPrivateKey) {
-  string encrypted_message = "attack at dawn";
+  //string encrypted_message = encrypt_message(p, q, "attack at dawn");
+  string encrypted_message = RsaKeys::encrypt_message("attack at dawn", mpz_get_ui(e.get_mpz_t()), n);
 
   mpz_class totient = rsatk::calculate_totient(p, q);
   mpz_class d = rsatk::calculate_d(totient, e);
 
-  string decrypted_message = rsatk::decrypt_message(encrypted_message, n, d);
+  string decrypted_message = RsaKeys::decrypt_message(encrypted_message, d, n);
 
   EXPECT_EQ(m, decrypted_message);
 }
 
-//
-// TEST(known_totient, simple){
-// EXPECT
-//}
+class LowExpAttacks : public ::testing::Test {
+protected:
+  virtual void SetUp() {
+    mpz_powm(c_1.get_mpz_t(), m.get_mpz_t(), e.get_mpz_t(), n_1.get_mpz_t());
+    mpz_powm(c_2.get_mpz_t(), m.get_mpz_t(), e.get_mpz_t(), n_2.get_mpz_t());
+    mpz_powm(c_3.get_mpz_t(), m.get_mpz_t(), e.get_mpz_t(), n_3.get_mpz_t());
+
+    r_1.C = mpz_get_str(NULL, 10, c_1.get_mpz_t());
+    r_2.C = mpz_get_str(NULL, 10, c_2.get_mpz_t());
+    r_3.C = mpz_get_str(NULL, 10, c_3.get_mpz_t());
+
+    r_1.n = n_1;
+    r_2.n = n_2;
+    r_3.n = n_3;
+
+    r_1.e = e;
+    r_2.e = e;
+    r_3.e = e;
+  }
+  rsatk::RSA_data r_1;
+  rsatk::RSA_data r_2;
+  rsatk::RSA_data r_3;
+
+  mpz_class e = 3;
+  mpz_class m = 102;
+
+  mpz_class n_1 = 377;
+  mpz_class n_2 = 391;
+  mpz_class n_3 = 589;
+
+  mpz_class c_1;
+  mpz_class c_2;
+  mpz_class c_3;
+};
+
+TEST_F(LowExpAttacks, decryption){
+  mpz_class decrypted = lowexp::low_exponent_attack(r_1, r_2, r_3);
+  EXPECT_EQ(m, decrypted);
+}
 
 /*
-  TEST(PublicKeyReading, findE){
-  EXPECT_EQ(0,1); //dummy
-  }
+TEST(CreateTests, comod){
+std::cout << "First message: " << RsaKeys::encrypt_message("Company wide message. We will attack our Rivals at dawn!", 65539,  8884963_mpz) << std::endl;
+std::cout << "Second message: " << RsaKeys::encrypt_message("Company wide message. We will attack our Rivals at dawn!", 65537, 8884963_mpz) << std::endl;
+}
 
-  TEST(Primes, Generate){
-  generate_n_primes(1000000);
-  }
+TEST_F(EasyCrackingRSATest, applyPrivateKey) {
+  string encrypted_message = RsaKeys::encrypt_message(m, mpz_get_ui(e.get_mpz_t()), n);
+
+  mpz_class totient = rsatk::calculate_totient(p, q);
+  ASSERT_EQ(120, totient);
+  mpz_class d = rsatk::calculate_d(totient, e);
+  ASSERT_EQ(103, d);
+
+  string decrypted_message = RsaKeys::decrypt_message(encrypted_message, d, n);
+
+  EXPECT_EQ(m, decrypted_message);
+}
 */
+

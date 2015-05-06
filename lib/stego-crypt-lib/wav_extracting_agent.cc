@@ -13,7 +13,7 @@ std::string WAV_extracting_agent::extract() const {
       return bits_to_string(msg_bits);
     }
   }
-  return msg;
+  return bits_to_string(msg_bits);
 }
 
 bool WAV_extracting_agent::extract_bit_from_sample(int index) const {

@@ -31,6 +31,7 @@ use your package manager to install:
 - cmake
 - openssl
 - gmp (GNU MP)
+- libsndfile
 
 #### Automated
 The makefile included is capable of installing all of the needed dependencies, but will install them to your home folder. This is probably not what you want and is mostly intended for un-attended testing. If you are ok with this use `make install-deps`

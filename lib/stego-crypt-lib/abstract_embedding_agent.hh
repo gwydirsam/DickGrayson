@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 #include <exception>
 #include <dgimg/dgimg.hh>
@@ -48,3 +49,7 @@ private:
   // generates the set and unset masks vectors
   void generate_masks(const std::string& msg);
 };
+
+// Instantiate the correct embedding agent based on filetype
+std::unique_ptr<Abstract_embedding_agent> which_embedding_agent(std::string inmedia,
+                                                                std::string outmedia);

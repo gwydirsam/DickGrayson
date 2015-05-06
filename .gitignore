@@ -103,3 +103,5 @@ Session.vim
 /lib/dgsnd/build_list.cmake
 /test/dgsnd/write-test.wav
 /test/stego-crypt/test-stego.wav
+/share/report/auto/
+/share/report/report.tex

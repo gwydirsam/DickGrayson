@@ -1,6 +1,10 @@
+#include <memory>
 #include <cstdint>
 #include <iostream>
 #include "abstract_embedding_agent.hh"
+#include "bmp_embedding_agent.hh"
+#include "wav_embedding_agent.hh"
+#include "file_io.hh"
 
 //// constructors
 
@@ -34,4 +38,20 @@ std::vector<bool> Abstract_embedding_agent::message_to_bits(const std::string& m
     }
   }
   return bits;
+}
+
+std::unique_ptr<Abstract_embedding_agent> which_embedding_agent(std::string inmedia_fname,
+                                                                std::string outmedia_fname) {
+  std::unique_ptr<Abstract_embedding_agent> embedder;
+
+  File_type type = file_type_of(inmedia_fname);
+
+  if (type == File_type::BMP) {
+    embedder =
+      std::make_unique<BMP_embedding_agent>(inmedia_fname, outmedia_fname);
+  } else {
+    embedder =
+      std::make_unique<WAV_embedding_agent>(inmedia_fname, outmedia_fname);
+  }
+  return embedder;
 }

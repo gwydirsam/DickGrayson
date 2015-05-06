@@ -36,10 +36,3 @@ TEST(Bmp, PixelUnsetMask) {
   bmp.pixel_unset_mask(0, 0, 0xFFFFFF);
   EXPECT_EQ(0x0u, bmp.get_pixel(0, 0));
 }
-
-TEST(Bmp, MaxPixelValue) {
-  dgbmp bmp("../../test/dgimg/blackrectangle.bmp");
-  dgbmp bmp2("../../test/dgimg/test_24bit_max_xFFFFFF.bmp");
-  EXPECT_EQ(0x0u, bmp.max_pixel_value());
-  EXPECT_EQ(0xFFFFFFu, bmp2.max_pixel_value());
-}

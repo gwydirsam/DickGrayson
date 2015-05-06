@@ -39,5 +39,5 @@ std::vector<unsigned> WAV_embedding_agent::message_to_masks(const std::string& m
 bool WAV_embedding_agent::check_msg_media_capacity(const std::string& msg) {
   unsigned num_bits = msg.length() * 8;
   unsigned num_samples = inwav.get_num_samples();
-  return num_bits < num_samples;
+  return num_bits <= num_samples;
 }

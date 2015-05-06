@@ -356,9 +356,12 @@ clean-force clean-build-dirs::
 	-rm -rf $(DEBUG_DIR) $(BUILD_DIR)
 
 cppcheck::
-	cppcheck -j4 --enable=all lib/ bin/
+	cppcheck --enable=all lib/ bin/
 
-clang-format::
+# clang-format::
+# 	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `git ls-files -m | egrep '(cc|hh|h|cpp)$'`
+
+clang-format-all::
 	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) lib -name '*.hh'`
 	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) lib -name '*.cc'`
 	$(shell which clang-format) -style="{BasedOnStyle: Google, Standard: Cpp11}" -i `$(FIND) bin -name '*.cc'`
@@ -392,6 +395,11 @@ valgrind-all::
 	@echo ======================================
 	@echo Finished Running Valgrind
 	@echo ======================================
+
+install::
+	$(MAKE) install-deps
+	$(MAKE) install-openssl
+	$(MAKE) release
 
 help help-all::
 	$(info )
@@ -467,10 +475,12 @@ help help-all::
 	$(info ===========)
 	$(info make update                  - stash, then pull from upstream and build)
 	$(info make install-deps            - install cmake and GNU MP library)
+	$(info make install-ccache          - install ccache (highly reccomended))
+	$(info make install-better-defaults - install bash and git configurations)
 help-all::
 	$(info make install-cmake           - install cmake)
 	$(info make install-gmp             - install GNU MP library)
-	$(info make install-better-defaults - install bash and git configurations)
-	$(info make install-ccache          - install ccache (highly reccomended))
+	$(info make install-libsndfile      - install libsndfile)
+	$(info make install-openssl         - install openssl)
 help help-all::
 	@echo ""

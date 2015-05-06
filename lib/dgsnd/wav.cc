@@ -24,7 +24,6 @@ void WAV::write(const std::string& fname) const {
   SF_INFO temp_info = wav_info;
   SNDFILE* temp = sf_open(fname.c_str(), SFM_WRITE, &temp_info);
   sf_write_short(temp, &samples[0], samples.size());
-  //sf_write_sync(temp);
   sf_close(temp);
 }
 

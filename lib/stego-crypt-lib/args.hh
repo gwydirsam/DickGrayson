@@ -15,7 +15,6 @@ struct Arguments {
 enum class Error_code {
   UNKNOWN_ARG,
   UNKNOWN_TYPE,
-  UNSPECIFIED_TYPE,
   MISSING_ARG,
   MISSING_INPUT,
   MISSING_OUTPUT,

@@ -13,12 +13,12 @@ Error_code read_args(int argc, char* argv[], Arguments* args) {int c;
       {"help", no_argument, NULL, 'h'},
       {"extract", no_argument, NULL, 'e'}, {"input", required_argument, NULL, 'i'},
       {"output", required_argument, NULL, 'o'},
-      {"message", required_argument, NULL, 'm'},
+      {"file", required_argument, NULL, 'f'},
       {0, 0, 0, 0}
     };
 
     int option_index = 0;
-    c = getopt_long (argc, argv, "evhi:o:m:",
+    c = getopt_long (argc, argv, "evhi:o:f:",
                      long_options, &option_index);
     if (c == -1) {
       break;
@@ -73,7 +73,7 @@ void process_error_code(Error_code err_code) {
   case Error_code::MISSING_OUTPUT:
     std::cerr << "error: must specify an output file.\n"
               << "(Note the output is a media file when embedding, "
-              << "but a file containing a message when extracting)\n";
+              << "but the location to save the message when extracting)\n";
     break;
   case Error_code::INACCESSIBLE_FILE:
     std::cerr << "error: could not open file for reading.\n";
@@ -96,25 +96,25 @@ void process_error_code(Error_code err_code) {
 void print_help() {
   print_usage(true);
   std::cout << "-- Munchkinsteg help\n\n"
-            << "Munchkinsteg is a BMP and WAV file steganography utility.\n"
-            << "It can embed message files into music and image files as well as\n"
-            << "extract messages that may be embedded in a music or image file and\n"
-            << "store that message in a file.\n";
+               "Munchkinsteg is a BMP and WAV file steganography utility.\n"
+               "It can embed message files into music and image files as well as\n"
+               "extract messages that may be embedded in a music or image file and\n"
+               "store that message in a file.\n";
   std::cout << std::endl;
   std::cout << "Media types supported:\n  - Windows BMP\n  - PCM 16-bit WAV\n";
   std::cout << std::endl
             << "Long       short  desc\n"
-            << "--extract  -e     extract a message instead of embedding\n"
-            << "--help     -h     show this screen\n"
-            << "--input    -i     location of input bmp/wav file to embed in or extract from\n"
-            << "--message  -m     location of file containing the message to embed\n"
-            << "--output   -o     location of output stego file or extracted message file\n"
-            << "--verbose  -v     verbosely describe stego process\n\n";
+               "--extract  -e     extract a message instead of embedding\n"
+               "--help     -h     show this screen\n"
+               "--input    -i     location of input bmp/wav file to embed in or extract from\n"
+               "--file     -f     location of file containing the message to embed\n"
+               "--output   -o     location to output stego file or extract message file\n"
+               "--verbose  -v     verbosely describe stego process\n\n";
 }
 
 void print_usage(bool help) {
-  std::cout << "usage: munchkinsteg [hv] [-i <wav|bmp file> -o <wav|bmp file> -m <message file>]\n"
-            << "                    ~OR~ [-e -i <wav|bmp file> -o <message file>]\n\n";
+  std::cout << "usage: munchkinsteg [-i <wav|bmp file> -o <wav|bmp file> -f <message file>]\n"
+               "               ~OR~ [-e -i <wav|bmp file> -o <message file>]\n\n";
   if (!help) {
     std::cout << "NOTE: The supported media types are:\n  - Windows BMP\n  - PCM 16-bit WAV\n";
   }

@@ -8,6 +8,20 @@
 namespace DG {
 namespace Crypto {
 
+mpz_class mod(mpz_class num, mpz_class modulo){
+  // -- Function: void mpz_mod (mpz_t R, const mpz_t N, const mpz_t D)
+
+  // C++ mod arithmetic not suitable if d is negative
+  // http://stackoverflow.com/a/12089637
+  mpz_class bounded = num % modulo;
+
+  if(bounded < 0) {
+    bounded = bounded + modulo;
+  }
+
+  return bounded;
+}
+
 //// member operators
 // postfix++
 Integer& Integer::operator++() {

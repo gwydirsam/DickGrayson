@@ -127,7 +127,7 @@ mpz_class RandomPrime::generate_prime(mp_bitcnt_t k) {
 
   // intitialize to first non prime number so while loop executes
   mpz_class value = 4;
-  
+
   while (!is_prime(value)) {
     value = rand_engine.get_z_bits(k);
   }

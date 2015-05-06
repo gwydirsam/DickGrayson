@@ -13,22 +13,15 @@ namespace rsatk {
   pair<mpz_class, mpz_class> find_prime_factors(mpz_class n) {
 
     ifstream prime_file;
-    prime_file.exceptions(ifstream::failbit | ifstream::badbit);
-    try {
-      // assumption that we run the executable inside of top directory
-      prime_file.open(relative_path + "prime_list_1000000", ios::in);
-    } catch (const ifstream::failure& e) {
-      cerr << "Caught ios_base::failure: " << __PRETTY_FUNCTION__ << "\n";
-      cerr << "Exception: " << e.what() << "\n";
-      return pair<mpz_class, mpz_class>(-1, -1);
-    }
+    prime_file.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
+    int num = 0;
 
     // trial division method...
     mpz_class prime_candidate = 0;
 
     // ignore 0 and 1, since they're not valid factors
     while ((prime_candidate * prime_candidate) <= n) {
-      prime_candidate = get_next_prime(prime_file);
+      prime_candidate = get_next_prime(prime_candidate);
 
       if ((n % prime_candidate) == 0) {  // then it's a factor
         mpz_class first_factor = prime_candidate;
@@ -43,15 +36,9 @@ namespace rsatk {
     return pair<mpz_class, mpz_class>(0, 0);
   }
 
-  mpz_class get_next_prime(ifstream& prime_file) {
-    mpz_class num = -1;
-    try {
-      prime_file.exceptions(ifstream::failbit | ifstream::badbit);
-      prime_file >> num;
-    } catch (const ios_base::failure& e) {
-      cerr << "Caught ios_base::failure: " << __PRETTY_FUNCTION__ << "\n";
-      cerr << "Exception: " << e.what() << "\n";
-    }
+  mpz_class get_next_prime(mpz_class pr) {
+    mpz_class num = 0;
+    mpz_nextprime(num.get_mpz_t(), pr.get_mpz_t());
     return num;
   }
 
@@ -97,16 +84,22 @@ namespace rsatk {
     mpz_class d = extended_euclidean(totient, e)[1];
     // make sure d is in our bounds
 
-    mpz_class bounded_d = d % totient;
+    mpz_class bounded_d = mod(d, totient);
+    return bounded_d;
+  }
+
+  mpz_class mod(mpz_class num, mpz_class modulo){
     // -- Function: void mpz_mod (mpz_t R, const mpz_t N, const mpz_t D)
 
     // C++ mod arithmetic not suitable if d is negative
     // http://stackoverflow.com/a/12089637
-    if (bounded_d < 0) {
-      bounded_d = bounded_d + totient;
+    mpz_class bounded = num % modulo;
+
+    if(bounded < 0) {
+      bounded = bounded + modulo;
     }
 
-    return bounded_d;
+    return bounded;
   }
 
   // extended_euclidean(a, b) returns three values:
@@ -143,6 +136,21 @@ namespace rsatk {
     return "not implemented";
   }
   RSA_data parse_rsa_file(std::fstream& fname){
-    return RSA_data();
+    RSA_data d = RSA_data();
+    std::string line = "";
+    getline(fname, line);
+    d.n = mpz_class(line);
+    getline(fname, line);
+    d.e = mpz_class(line);
+    return d;
+  }
+  std::string read_cipher_text(std::fstream& fname){
+    std::string line = "";
+    std::string total_txt = "";
+    while(getline(fname, line)){
+      total_txt += line;
+    }
+    cout << "txt is " << total_txt << endl;
+    return total_txt;
   }
 }

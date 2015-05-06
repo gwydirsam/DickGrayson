@@ -1,5 +1,6 @@
 #pragma once
 
+#include "base64.h"
 #include <gmpxx.h>
 #include <tuple>  // std::tuple
 #include <iostream>
@@ -34,13 +35,13 @@ class RsaKeys {
   }
 
   // generates exponent (e) where 1 < e < theta_n and theta_n and e are coprime
-  const mpz_class compute_e(mpz_class totient);
+  unsigned int compute_e(mpz_class totient);
 
   // get gcd
   const mpz_class get_gcd(mpz_class p, mpz_class q) const;
 
   //encrypts message
-  std::string encrypt(std::string message, mpz_class d, mpz_class n);
+  std::string encrypt(std::string message, unsigned int e, mpz_class n);
 
   //decrypts message using key
   std::string decrypt(std::string cryptText, mpz_class d, mpz_class n);

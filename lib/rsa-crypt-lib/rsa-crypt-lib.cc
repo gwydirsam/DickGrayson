@@ -1,3 +1,4 @@
+#include "base64.h"
 #include "rsa-crypt-lib.hh"
 #include "../rsa-attack-lib/rsa-attack-lib.hh"
 
@@ -12,6 +13,10 @@
 #include <bitset>
 
 #include <dgcrypto/dgcrypto.hh>
+
+
+//temp until we get linking in order
+
 
 // to use 'random' is there more specific header?
 // I meant #include <random> for std::random_device
@@ -60,13 +65,13 @@ std::string RsaKeys::num_to_string(mpz_class num){
 mpz_class RsaKeys::string_to_num(std::string message){
   std::string num_str = "";
   for (std::size_t i = 0; i < message.size(); ++i)
-  {
-    std::string msg_int = std::to_string((int)message[i]);
-    while(msg_int.size() < 3){//all nums should be three bit width
-      msg_int = "0" + msg_int;
+    {
+      std::string msg_int = std::to_string((int)message[i]);
+      while(msg_int.size() < 3){//all nums should be three bit width
+        msg_int = "0" + msg_int;
+      }
+      num_str.insert(0, msg_int); //will need to be reversed
     }
-    num_str.insert(0, msg_int); //will need to be reversed
-  }
 
   std::string rev = num_str;
   rev = "1" + rev; //first num is to protect our padding
@@ -87,11 +92,14 @@ std::string RsaKeys::encrypt_message(std::string message) {
     split_msg = message.substr(i, 100);
     full_msg += '-' + encrypt(split_msg, e_, n_);
   }
-  return full_msg;
+  //may lose a char to the null char size increase?
+  std::string b64_msg = base64_encode(full_msg.c_str(), full_msg.size());
+  return b64_msg;
 }
 
 std::string RsaKeys::decrypt_message(std::string message){
-  std::stringstream ss(message);
+  std::string b10_msg = base64_decode(message);
+  std::stringstream ss(b10_msg);
   std::string split_msg = "";
   std::string full_msg = "";
   while(getline(ss, split_msg, '-')){
@@ -104,11 +112,11 @@ std::string RsaKeys::decrypt_message(std::string message){
 
 
 //encodes message
-std::string RsaKeys::encrypt(std::string message, unsigned_int e, mpz_class n) {
+std::string RsaKeys::encrypt(std::string message, unsigned int e, mpz_class n) {
   mpz_class m = string_to_num(message);
   mpz_class encrypted_msg;
   mpz_pow_ui(encrypted_msg.get_mpz_t(), m.get_mpz_t(), e);
-  rsatk::mod(encrypted, n);
+  encrypted_msg = dgcrypto::mod(encrypted_msg, n);
   //return num_to_string(encrypted_msg);
   return(mpz_get_str(NULL, 10, encrypted_msg.get_mpz_t()));
 }
@@ -117,9 +125,9 @@ std::string RsaKeys::encrypt(std::string message, unsigned_int e, mpz_class n) {
 std::string RsaKeys::decrypt(std::string cryptText, mpz_class d, mpz_class n){
   mpz_class m(cryptText, 10);
   mpz_class decrypted_msg;
-  //mpz_powm_sec(decrypted_msg.get_mpz_t(), m.get_mpz_t(), d.get_mpz_t(), n.get_mpz_t());
-  mpz_pow_ui(decrypted_msg.get_mpz_t(), m.get_mpz_t(), d);
-  rsatk::mod(decrypted, n);
+  //TODO: this is deprecated. We need to somehow cast d to an ui...
+  mpz_powm_sec(decrypted_msg.get_mpz_t(), m.get_mpz_t(), d.get_mpz_t(), n.get_mpz_t());
+  //rsatk::mod(decrypted_msg, n);
 
   return num_to_string(decrypted_msg);
 }
@@ -194,7 +202,7 @@ inline bool RsaKeys::is_coprime(mpz_class p, mpz_class q) const {
 
 
 
-const mpz_class RsaKeys::compute_e(mpz_class totient) {
+unsigned int RsaKeys::compute_e(mpz_class totient) {
   // why not use dgrandominteger...this is what it's for
   dgrandprime e(bits_);
   if (bits_ > 17) {
@@ -202,7 +210,7 @@ const mpz_class RsaKeys::compute_e(mpz_class totient) {
   } else {
     for (int i = 0; i < 9; ++i) {
       if (is_coprime(e.get_mpz_class(), totient)) {
-        return e.get_mpz_class();
+        return mpz_get_ui(e.get_mpz_class().get_mpz_t());
       } else {
         e.reroll();
       }

@@ -84,31 +84,36 @@ std::string encode(std::string){return "just a stub";}
 
 
 std::string RsaKeys::encrypt_message(std::string message) {
+  return encrypt_message(message, e_, n_);
+}
+std::string RsaKeys::encrypt_message(std::string message, unsigned int e, mpz_class n){
   std::string split_msg = "";
-  std::string full_msg = encrypt(message.substr(0, 100), e_, n_);
+  std::string full_msg = encrypt(message.substr(0, 100), e, n);
   //if the message is longer than 100, we'll delimit it with '-'s
 
   for(std::size_t i = 100; i < message.size(); i+=100){
     split_msg = message.substr(i, 100);
-    full_msg += '-' + encrypt(split_msg, e_, n_);
+    full_msg += '-' + encrypt(split_msg, e, n);
   }
   //may lose a char to the null char size increase?
   std::string b64_msg = base64_encode(full_msg.c_str(), full_msg.size());
   return b64_msg;
 }
 
-std::string RsaKeys::decrypt_message(std::string message){
+std::string RsaKeys::decrypt_message(std::string message, mpz_class d, mpz_class n){
   std::string b10_msg = base64_decode(message);
   std::stringstream ss(b10_msg);
   std::string split_msg = "";
   std::string full_msg = "";
   while(getline(ss, split_msg, '-')){
-    full_msg += decrypt(split_msg, d_, n_);
+    full_msg += decrypt(split_msg, d, n);
   }
 
   return full_msg;
 }
-//{return decrypt(message, d_, n_); }
+std::string RsaKeys::decrypt_message(std::string message){
+  return decrypt_message(message, d_, n_);
+}
 
 
 //encodes message
@@ -121,13 +126,12 @@ std::string RsaKeys::encrypt(std::string message, unsigned int e, mpz_class n) {
   return(mpz_get_str(NULL, 10, encrypted_msg.get_mpz_t()));
 }
 
-//makes a vector of partitions
+
 std::string RsaKeys::decrypt(std::string cryptText, mpz_class d, mpz_class n){
   mpz_class m(cryptText, 10);
   mpz_class decrypted_msg;
   //TODO: this is deprecated. We need to somehow cast d to an ui...
   mpz_powm_sec(decrypted_msg.get_mpz_t(), m.get_mpz_t(), d.get_mpz_t(), n.get_mpz_t());
-  //rsatk::mod(decrypted_msg, n);
 
   return num_to_string(decrypted_msg);
 }

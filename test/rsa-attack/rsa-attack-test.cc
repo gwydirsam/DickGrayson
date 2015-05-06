@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 
+#include <rsa-crypt-lib/rsa-crypt-lib.hh>
 #include <rsa-attack-lib/rsa-attack-lib.hh>
 #include <rsa-attack-lib/low_exponent.hh>
 
@@ -129,12 +130,12 @@ TEST_F(HarderCrackingRSATest, calculateD) {
 
 TEST_F(HarderCrackingRSATest, applyPrivateKey) {
   //string encrypted_message = encrypt_message(p, q, "attack at dawn");
-  string encrypted_message = "attack at dawn";
+  string encrypted_message = RsaKeys::encrypt_message("attack at dawn", mpz_get_ui(e.get_mpz_t()), n);
 
   mpz_class totient = rsatk::calculate_totient(p, q);
   mpz_class d = rsatk::calculate_d(totient, e);
 
-  string decrypted_message = rsatk::decrypt_message(encrypted_message, n, d);
+  string decrypted_message = RsaKeys::decrypt_message(encrypted_message, d, n);
 
   EXPECT_EQ(m, decrypted_message);
 }

@@ -19,6 +19,8 @@ class RsaKeys {
   mp_bitcnt_t bits() { return bits_; }
   std::string encrypt_message(std::string message);
   std::string decrypt_message(std::string message);
+  static std::string encrypt_message(std::string message, unsigned int e, mpz_class n);
+  static std::string decrypt_message(std::string message, mpz_class d, mpz_class n);
 
   // generates two random primes and checks coprimality
   // mpz_class generate_key() const;
@@ -41,10 +43,10 @@ class RsaKeys {
   const mpz_class get_gcd(mpz_class p, mpz_class q) const;
 
   //encrypts message
-  std::string encrypt(std::string message, unsigned int e, mpz_class n);
+  static std::string encrypt(std::string message, unsigned int e, mpz_class n);
 
   //decrypts message using key
-  std::string decrypt(std::string cryptText, mpz_class d, mpz_class n);
+  static std::string decrypt(std::string cryptText, mpz_class d, mpz_class n);
 
   static std::string num_to_string(mpz_class num);
   static mpz_class string_to_num(std::string message);

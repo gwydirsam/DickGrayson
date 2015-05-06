@@ -15,7 +15,7 @@
 namespace rsatk {
 
   struct RSA_data {
-    mpz_class C = -1;        // cipher text
+    std::string C = "";        // cipher text
     mpz_class n = -1;        // p*q
     mpz_class e = -1;        // exponent of pub key
     mpz_class p = -1;        // prime factor
@@ -23,13 +23,13 @@ namespace rsatk {
     mpz_class totient = -1;  // (p - 1) * (q - 1)
   };
 
-  static const std::string relative_path = "../../lib/rsa-attack-lib/";
+  static const std::string relative_path = "lib/rsa-attack-lib/";
 
   std::pair<mpz_class, mpz_class> find_prime_factors(mpz_class n);
   void generate_n_primes(mpz_class n);
 
   // this function uses pre-cached prime_lists
-  mpz_class get_next_prime(std::ifstream& prime_file);
+  mpz_class get_next_prime(mpz_class pr);
 
   mpz_class calculate_totient(mpz_class p, mpz_class q);
 

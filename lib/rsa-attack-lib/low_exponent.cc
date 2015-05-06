@@ -16,9 +16,9 @@ namespace lowexp {
     //for an in depth discussion of these eqs..http://crypto.stackexchange.com/a/6715
     cout << rsatk::extended_euclidean(m_2.n * m_3.n, m_1.n)[0] << endl;
 
-    mpz_class t_1 = m_1.C * (m_2.n * m_3.n) * rsatk::extended_euclidean(m_2.n * m_3.n, m_1.n)[0];
-    mpz_class t_2 = m_2.C * (m_1.n * m_3.n) * rsatk::extended_euclidean(m_1.n * m_3.n, m_2.n)[0];
-    mpz_class t_3 = m_3.C * (m_2.n * m_1.n) * rsatk::extended_euclidean(m_2.n * m_1.n, m_3.n)[0];
+    mpz_class t_1 = mpz_class(m_1.C) * (m_2.n * m_3.n) * rsatk::extended_euclidean(m_2.n * m_3.n, m_1.n)[0];
+    mpz_class t_2 = mpz_class(m_2.C) * (m_1.n * m_3.n) * rsatk::extended_euclidean(m_1.n * m_3.n, m_2.n)[0];
+    mpz_class t_3 = mpz_class(m_3.C) * (m_2.n * m_1.n) * rsatk::extended_euclidean(m_2.n * m_1.n, m_3.n)[0];
 
     mpz_class c = rsatk::mod((t_1 + t_2 + t_3), (m_1.n * m_2.n * m_3.n));
 

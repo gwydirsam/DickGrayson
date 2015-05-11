@@ -102,8 +102,17 @@ terminates once a null byte is reached.
 ** =stego-attack=
 - Detection
 * Conclusion
+We've shown RSA and Stegonography, and we've demonstrated attacks on both. We learned 
+the difficulties and fun of encryption, and how exploits often rely on corner cases because 
+general purpose exploits are typically slow.
+
 - Problems
-- Sucesses
+We had some difficulties using GMP and other helper libraries. As always, research was
+crucial in our success. 
+
+- Future work
+In the future, we'd like to make our solutions more robust--full base 64 
+encoding/decoding, writing to .pem/.priv formats, etc. 
 * References
 ** Links
 - GCC 4.9.2 :: https://gcc.gnu.org

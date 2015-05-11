@@ -39,7 +39,7 @@ Error_code read_args(int argc, char* argv[], Arguments* args) {int c;
     case 'o':
       args->output_fname = optarg;
       break;
-    case 'm':	
+    case 'f':	
       args->message_fname = optarg;
       break;
     case ':':

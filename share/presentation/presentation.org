@@ -60,7 +60,8 @@ messages using the RSA encryption algorithm and embed and extract messages
 ** Implementation Decisions (cont.)
 *** Steganography
 *** Steganography Attacks
-
+- Attack using md5 and extract from Munchkinsteg BMP and WAV
+- Attack using LSB scramble for BMP and WAV
 * Demonstration
 ** Build System & Tools
 - Travis
@@ -70,9 +71,16 @@ messages using the RSA encryption algorithm and embed and extract messages
 - generate public and private keys
 - encrypt and decrypt example messages
 ** =rsa-attack=
-- factorization
-- common modulus
-- low exponent
+*** factorization
+Trial division method brute forces factorization only trying primes. 
+Will break any RSA key no matter how big!*
+*given enough time
+*** common modulus
+Common modulus takes advantage of a shared n between two separate key/crypttext. 
+Through some clever exponenetiation, we can obtain the original message.
+*** low exponent
+Low exponent attack works wherever you have e identical messages with different parties. 
+Clearly, this is most effective and practical when e = 3.
 ** =stego-crypt=
 *** How it works
 Our tool munchkinsteg supports image and audio least significant bit (LSB)

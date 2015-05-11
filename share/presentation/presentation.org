@@ -55,6 +55,9 @@ messages using the RSA encryption algorithm and embed and extract messages
 - Show proofs of Test-Driven Development (screenshots of failing / passing
   tests, GitHub revision history, running test code in the demo, etc) 
 *** RSA Attacks
+-Attacked using one general purpose attack, which would work on any rsa key, 
+ then created two more specific attacks that are efficient in some cases.
+
 *** Steganography
 *** Steganography Attacks
 

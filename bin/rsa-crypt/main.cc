@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
   std::cin>>bits;
 
   if(!isdigit(bits)){
-    std::cout<<"Did not enter a valid number"
+    std::cout<<"Did not enter a valid number";
     return 0;
   } 
   

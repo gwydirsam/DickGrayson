@@ -164,10 +164,10 @@ support for WAV steganography to work.
 - Contribution :: 20%
 ** Christopher Findeisen
 - Responsibilities :: RSA Attacks
-- Contribution :: 20%
+- Contribution :: 22%
 ** Rafael Moreno
 - Responsibilities :: RSA Encryption/Decryption and key generation
-- Contribution :: 20%
+- Contribution :: 18%
 ** Kyle Wilson
 - Responsibilities :: Steganography Attacks
 - Contribution :: 20%

@@ -1,0 +1,6 @@
+--Should return "Super secret message"
+./build/bin/stego-attack -m test/stego-attack/test-stego.bmp -o test/stego-attack/test.bmp
+--Scramble test-stego.bmp
+./build/bin/stego-attack -s test/stego-attack/test-stego.bmp
+--Should return some random chars
+./build/bin/stego-attack -m test/stego-attack/test-stego.bmp -o test/stego-attack/test.bmp

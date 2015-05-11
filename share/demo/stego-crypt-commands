@@ -1,0 +1,2 @@
+./stego-crypt -i test.bmp -o test-stego.bmp -f message
+./stego-crypt -e -i test-stego.bmp -o ext-message

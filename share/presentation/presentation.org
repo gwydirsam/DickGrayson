@@ -57,6 +57,7 @@ messages using the RSA encryption algorithm and embed and extract messages
 - Attacked using one general purpose attack, which would work on any rsa key, 
   then created two more specific attacks that are efficient in some cases.
 
+** Implementation Decisions (cont.)
 *** Steganography
 *** Steganography Attacks
 
@@ -73,9 +74,20 @@ messages using the RSA encryption algorithm and embed and extract messages
 - common modulus
 - low exponent
 ** =stego-crypt=
-- How it works
-- Embedding message
-- Extracting message
+*** How it works
+Our tool munchkinsteg supports image and audio least significant bit (LSB)
+steganography. The formats supported are Windows 8-bit BMP and PCM 16-bit WAV.
+*** Embedding message
+The data is broken up into bits and each bit is stored consecutively in the LSB
+of the individual pixels and samples of the bmp and wav file respectively. A
+null byte is stored using 8 additional pixels/samples to be used during
+extraction as a termination symbol.
+** =stego-crypt= (cont.)
+*** Extracting message
+The LSB of the individual pixels and samples of the bmp and wav file
+respectively are extracted and concatenated into a string. This process
+terminates once a null byte is reached.
+
 ** =stego-attack=
 - Detection
 * Conclusion

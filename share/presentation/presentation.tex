@@ -1,4 +1,4 @@
-% Created 2015-05-11 Mon 10:51
+% Created 2015-05-11 Mon 10:56
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -94,7 +94,9 @@ tests, GitHub revision history, running test code in the demo, etc)
 then created two more specific attacks that are efficient in some cases.
 \end{itemize}
 \end{block}
+\end{frame}
 
+\begin{frame}[label=sec-2-3]{Implementation Decisions (cont.)}
 \begin{block}{Steganography}
 \end{block}
 \begin{block}{Steganography Attacks}
@@ -124,13 +126,26 @@ then created two more specific attacks that are efficient in some cases.
 \end{itemize}
 \end{frame}
 \begin{frame}[fragile,label=sec-3-4]{\texttt{stego-crypt}}
- \begin{itemize}
-\item How it works
-\item Embedding message
-\item Extracting message
-\end{itemize}
+ \begin{block}{How it works}
+Our tool munchkinsteg supports image and audio least significant bit (LSB)
+steganography. The formats supported are Windows 8-bit BMP and PCM 16-bit WAV.
+\end{block}
+\begin{block}{Embedding message}
+The data is broken up into bits and each bit is stored consecutively in the LSB
+of the individual pixels and samples of the bmp and wav file respectively. A
+null byte is stored using 8 additional pixels/samples to be used during
+extraction as a termination symbol.
+\end{block}
 \end{frame}
-\begin{frame}[fragile,label=sec-3-5]{\texttt{stego-attack}}
+\begin{frame}[fragile,label=sec-3-5]{\texttt{stego-crypt} (cont.)}
+ \begin{block}{Extracting message}
+The LSB of the individual pixels and samples of the bmp and wav file
+respectively are extracted and concatenated into a string. This process
+terminates once a null byte is reached.
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-3-6]{\texttt{stego-attack}}
  \begin{itemize}
 \item Detection
 \end{itemize}

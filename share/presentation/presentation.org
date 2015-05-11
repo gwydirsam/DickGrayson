@@ -59,7 +59,10 @@ messages using the RSA encryption algorithm and embed and extract messages
 
 ** Implementation Decisions (cont.)
 *** Steganography
+- Use null byte to signify end of message
+- Use a unified tool for both wav and bmp steganography
 *** Steganography Attacks
+
 - Attack using md5 and extract from Munchkinsteg BMP and WAV
 - Attack using LSB scramble for BMP and WAV
 * Demonstration

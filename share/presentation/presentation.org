@@ -60,7 +60,8 @@ messages using the RSA encryption algorithm and embed and extract messages
 ** Implementation Decisions (cont.)
 *** Steganography
 *** Steganography Attacks
-
+- Attack using md5 and extract from Munchkinsteg BMP and WAV
+- Attack using LSB scramble for BMP and WAV
 * Demonstration
 ** Build System & Tools
 - Travis

@@ -1,0 +1,93 @@
+#+TITLE: CSCE315 Final Project Presentation
+#+DATE: <2015-05-10 Sun>
+#+AUTHOR: Sam Gwydir \and Chris Findeisen \and Martin Fracker \\ Rafael Moreno \and Kyle Wilson 
+#+OPTIONS: ':nil *:t -:t ::t <:t H:2 \n:nil ^:nil arch:headline author:t c:nil
+#+OPTIONS: creator:comment d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t
+#+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:t
+#+OPTIONS: todo:t |:t
+#+CREATOR: Emacs 24.5.1 (Org mode 8.2.10)
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation]
+#+BEAMER_THEME: Antibes
+#+BEAMER_COLOR_THEME: seagull
+#+COLUMNS: %45ITEM %10BEAMER_ENV(Env) %10BEAMER_ACT(Act) %4BEAMER_COL(Col) %8BEAMER_OPT(Opt)
+
+* DickGrayson
+#+BEGIN_ABSTRACT
+In the final project students were tasked with creating a collection of tools
+that allow a user to encrypt and decrypt messages using the RSA encryption
+algorithm and embed and extract messages (either plaintext or ciphertext) from
+BMP images and WAV audio files.
+#+END_ABSTRACT
+
+** DickGrayson
+*** Introduction
+/DickGrayson/ is a collection of tools that allow a user to encrypt and decrypt
+messages using the RSA encryption algorithm and embed and extract messages
+(either plaintext or ciphertext) from BMP images and WAV audio files.
+
+*** Tools
+- =munchkincrypt= :: (aka =rsa-crypt=) RSA Encryption
+- =dorothy= :: (aka =rsa-attack=) RSA Attacks
+- =munchkinsteg= :: (aka =stego-crypt=) Steganography
+- =toto= :: (aka =stego-attack=) Steganography Attacks
+
+* Design
+** Design Decisions
+*** DickGrayson
+- Target OS :: Linux =x86_64= (=build.tamu.edu=)
+- Compiler :: [[https://gcc.gnu.org/][GCC 4.9.2]]
+- Language :: C++14
+- Build System :: [[https://cmake.org][CMake]]
+- Numerics :: [[https://gmplib.org][GNU Multiple Precision Library]]
+- Unit Testing :: [[https://code.google.com/p/googletest/][Google Test]]
+- Continuous Integration :: [[http://travis-ci.org][travis-ci]]
+- Code Coverage :: [[http://coveralls.io][coveralls]]
+** Implementation Decisions
+*** RSA Encryption
+- Especially, explain what attacks you chose to make for both RSA and stego, and
+  how your two stego schemes work 
+- Show proofs of Test-Driven Development (screenshots of failing / passing
+  tests, GitHub revision history, running test code in the demo, etc) 
+*** RSA Attacks
+*** Steganography
+*** Steganography Attacks
+
+* Demonstration
+** RSA:
+*** generate primes
+*** generate public and private keys
+*** encrypt and decrypt example messages
+*** verify with openssl
+** RSA attacks
+*** factorization (any rsa key..given unlimited time)
+*** common modulus (n_1 = n_2, where gcd(e_1, e_2) = 1
+*** low exponent (e =  3) 
+** LSB:
+*** Embedding message
+*** Extracting message
+** Attack on LSB (at least 2)
+** ANS:
+*** Very brief recap of how it works
+*** Embedding message
+*** Extracting message
+** Attack on ANS:
+*** Detection of stego'ed objects
+*** Disruption / destruction of hidden message
+* Conclusions
+* Future research directions (how your program could be improved or extended)
+* References
+** Links
+- GCC 4.9.2 :: https://gcc.gnu.org
+- GNU Multiple Precision Library :: https://gmplib.org
+- Google Test :: https://code.google.com/p/googletest/
+- travis-ci :: https://travis-ci.org
+- coveralls :: https://coveralls.io
+
+
+

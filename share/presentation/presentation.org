@@ -1,11 +1,10 @@
 #+TITLE: CSCE315 Final Project Presentation
 #+DATE: <2015-05-10 Sun>
-#+AUTHOR: Sam Gwydir \and Chris Findeisen \and Martin Fracker \\ Rafael Moreno \and Kyle Wilson 
+#+AUTHOR: Sam Gwydir Chris Findeisen Martin Fracker Rafael Moreno Kyle Wilson 
 #+OPTIONS: ':nil *:t -:t ::t <:t H:2 \n:nil ^:nil arch:headline author:t c:nil
-#+OPTIONS: creator:comment d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t
+#+OPTIONS: creator:nil d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t
 #+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:t
 #+OPTIONS: todo:t |:t
-#+CREATOR: Emacs 24.5.1 (Org mode 8.2.10)
 #+DESCRIPTION:
 #+EXCLUDE_TAGS: noexport
 #+KEYWORDS:
@@ -55,30 +54,33 @@ messages using the RSA encryption algorithm and embed and extract messages
 - Show proofs of Test-Driven Development (screenshots of failing / passing
   tests, GitHub revision history, running test code in the demo, etc) 
 *** RSA Attacks
--Attacked using one general purpose attack, which would work on any rsa key, 
- then created two more specific attacks that are efficient in some cases.
+- Attacked using one general purpose attack, which would work on any rsa key, 
+  then created two more specific attacks that are efficient in some cases.
 
 *** Steganography
 *** Steganography Attacks
 
 * Demonstration
+** Build System & Tools
+- Travis
+- Coveralls
 ** =rsa-crypt=
-*** generate primes
-*** generate public and private keys
-*** encrypt and decrypt example messages
+- generate primes
+- generate public and private keys
+- encrypt and decrypt example messages
 ** =rsa-attack=
-*** factorization
-*** common modulus
-*** low exponent
+- factorization
+- common modulus
+- low exponent
 ** =stego-crypt=
-*** How it works
-*** Embedding message
-*** Extracting message
+- How it works
+- Embedding message
+- Extracting message
 ** =stego-attack=
-*** Detection
+- Detection
 * Conclusion
-** Problems
-** Sucesses
+- Problems
+- Sucesses
 * References
 ** Links
 - GCC 4.9.2 :: https://gcc.gnu.org
@@ -86,6 +88,3 @@ messages using the RSA encryption algorithm and embed and extract messages
 - Google Test :: https://code.google.com/p/googletest/
 - travis-ci :: https://travis-ci.org
 - coveralls :: https://coveralls.io
-
-
-

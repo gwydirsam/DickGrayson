@@ -1,4 +1,4 @@
-% Created 2015-05-11 Mon 09:18
+% Created 2015-05-11 Mon 10:51
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -14,17 +14,21 @@
 \usepackage{marvosym}
 \usepackage{wasysym}
 \usepackage{amssymb}
+\usepackage{capt-of}
 \usepackage{hyperref}
 \tolerance=1000
 \usetheme{Antibes}
 \usecolortheme{seagull}
-\author{Sam Gwydir \and Chris Findeisen \and Martin Fracker \\ Rafael Moreno \and Kyle Wilson}
+\author{Sam Gwydir Chris Findeisen Martin Fracker Rafael Moreno Kyle Wilson}
 \date{\textit{<2015-05-10 Sun>}}
 \title{CSCE315 Final Project Presentation}
 \hypersetup{
-  pdfkeywords={},
-  pdfsubject={},
-  pdfcreator={Emacs 24.5.1 (Org mode 8.2.10)}}
+ pdfauthor={Sam Gwydir Chris Findeisen Martin Fracker Rafael Moreno Kyle Wilson},
+ pdftitle={CSCE315 Final Project Presentation},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 24.5.1 (Org mode 8.3beta)}, 
+ pdflang={English}}
 \begin{document}
 
 \maketitle
@@ -34,13 +38,13 @@
 
 
 \section{DickGrayson}
-\label{sec-1}
-\begin{abstract}
+\label{sec:orgheadline1}
+\begin{ABSTRACT}
 In the final project students were tasked with creating a collection of tools
 that allow a user to encrypt and decrypt messages using the RSA encryption
 algorithm and embed and extract messages (either plaintext or ciphertext) from
 BMP images and WAV audio files.
-\end{abstract}
+\end{ABSTRACT}
 
 \begin{frame}[fragile,label=sec-1-1]{DickGrayson}
  \begin{block}{Introduction}
@@ -60,7 +64,7 @@ messages using the RSA encryption algorithm and embed and extract messages
 \end{frame}
 
 \section{Design}
-\label{sec-2}
+\label{sec:orgheadline1}
 \begin{frame}[fragile,label=sec-2-1]{Design Decisions}
  \begin{block}{DickGrayson}
 \begin{description}
@@ -85,7 +89,12 @@ tests, GitHub revision history, running test code in the demo, etc)
 \end{itemize}
 \end{block}
 \begin{block}{RSA Attacks}
+\begin{itemize}
+\item Attacked using one general purpose attack, which would work on any rsa key, 
+then created two more specific attacks that are efficient in some cases.
+\end{itemize}
 \end{block}
+
 \begin{block}{Steganography}
 \end{block}
 \begin{block}{Steganography Attacks}
@@ -93,48 +102,48 @@ tests, GitHub revision history, running test code in the demo, etc)
 \end{frame}
 
 \section{Demonstration}
-\label{sec-3}
-\begin{frame}[label=sec-3-1]{RSA:}
-\begin{block}{generate primes}
-\end{block}
-\begin{block}{generate public and private keys}
-\end{block}
-\begin{block}{encrypt and decrypt example messages}
-\end{block}
-\begin{block}{verify with openssl}
-\end{block}
+\label{sec:orgheadline1}
+\begin{frame}[label=sec-3-1]{Build System \& Tools}
+\begin{itemize}
+\item Travis
+\item Coveralls
+\end{itemize}
 \end{frame}
-\begin{frame}[label=sec-3-2]{RSA attacks}
+\begin{frame}[fragile,label=sec-3-2]{\texttt{rsa-crypt}}
+ \begin{itemize}
+\item generate primes
+\item generate public and private keys
+\item encrypt and decrypt example messages
+\end{itemize}
 \end{frame}
-\begin{frame}[label=sec-3-3]{LSB:}
-\begin{block}{Embedding message}
-\end{block}
-\begin{block}{Extracting message}
-\end{block}
+\begin{frame}[fragile,label=sec-3-3]{\texttt{rsa-attack}}
+ \begin{itemize}
+\item factorization
+\item common modulus
+\item low exponent
+\end{itemize}
 \end{frame}
-\begin{frame}[label=sec-3-4]{Attack on LSB (at least 2)}
+\begin{frame}[fragile,label=sec-3-4]{\texttt{stego-crypt}}
+ \begin{itemize}
+\item How it works
+\item Embedding message
+\item Extracting message
+\end{itemize}
 \end{frame}
-\begin{frame}[label=sec-3-5]{ANS:}
-\begin{block}{Very brief recap of how it works}
-\end{block}
-\begin{block}{Embedding message}
-\end{block}
-\begin{block}{Extracting message}
-\end{block}
+\begin{frame}[fragile,label=sec-3-5]{\texttt{stego-attack}}
+ \begin{itemize}
+\item Detection
+\end{itemize}
 \end{frame}
-\begin{frame}[label=sec-3-6]{Attack on ANS:}
-\begin{block}{Detection of stego'ed objects}
-\end{block}
-\begin{block}{Disruption / destruction of hidden message}
-\end{block}
-\end{frame}
-\section{Conclusions}
-\label{sec-4}
-\section{Future research directions (how your program could be improved or extended)}
-\label{sec-5}
+\section{Conclusion}
+\label{sec:orgheadline1}
+\begin{itemize}
+\item Problems
+\item Sucesses
+\end{itemize}
 \section{References}
-\label{sec-6}
-\begin{frame}[label=sec-6-1]{Links}
+\label{sec:orgheadline1}
+\begin{frame}[label=sec-5-1]{Links}
 \begin{description}
 \item[{GCC 4.9.2}] \url{https://gcc.gnu.org}
 \item[{GNU Multiple Precision Library}] \url{https://gmplib.org}
@@ -143,5 +152,4 @@ tests, GitHub revision history, running test code in the demo, etc)
 \item[{coveralls}] \url{https://coveralls.io}
 \end{description}
 \end{frame}
-% Emacs 24.5.1 (Org mode 8.2.10)
 \end{document}

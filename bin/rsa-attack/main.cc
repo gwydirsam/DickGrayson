@@ -12,7 +12,99 @@
 #include <rsa-attack-lib/rsa-attack-lib.hh> // rsatk namespace
 
 
-const std::vector<std::string> attack_types = {"factoring", "common_modulus", "other"};
+const std::vector<std::string> attack_types = {"factoring", "common_modulus", "low_exponent"};
+
+bool is_whole_number(std::string s)
+{
+  for(int i = 0; i < s.size(); ++i){
+    if(!(int(s[i]) >= 48 && (int)s[i] <= 57)){
+      return false;
+    }
+  }
+  return true;
+}
+
+mpz_class get_whole_number(){
+  int attempts = 0;
+  mpz_class n = 0;
+  std::string n_str = "";
+  while(attempts < 5){
+    std::cout << "(Please enter a whole number):\n";
+    try {
+      std::cin >> n_str;
+
+      if (!is_whole_number(n_str) || std::cin.fail()){
+        throw "Sorry, I don't think that's a whole number?\n";
+      }
+      if (n < 0){
+        throw "Sorry, no negative numbers. Try something else? \n";
+      }
+      //std::cin.clear();
+      n = mpz_class(n_str);
+      return n;
+    }
+    catch (const char* error) {
+      std::cout << error;
+      attempts++;
+    }
+  }
+  return -1;
+}
+
+void run_factoring(){
+  rsatk::RSA_data r_1;
+
+  std::cout << "What is the n value? \n";
+  r_1.n = get_whole_number();
+  std::cout << "What is the e value? \n";
+  r_1.e = get_whole_number();
+  std::cout << "Starting decryption..." << r_1.n << r_1.e;
+  factoratk::factorization_attack(r_1);
+}
+
+
+void run_comodulus(){
+  rsatk::RSA_data r_1;
+  rsatk::RSA_data r_2;
+
+  std::cout << "What is the common n value? \n";
+  r_1.n  = r_2.n = get_whole_number();
+
+  std::cout << "What is the first message's e value? ";
+  r_1.e = get_whole_number();
+  std::cout << "What is the second message's e value? ";
+  r_2.e = get_whole_number();
+  std::cout << "Provide the first encrypted message:\n";
+  std::cin >> r_1.C;
+  std::cout << "Provide the second encrypted message:\n";
+  std::cin >> r_2.C;
+  std::cout << "Starting decryption...";
+  comodulus::common_modulus_attack(r_1, r_2);
+}
+
+void run_low_exp(){
+  rsatk::RSA_data r_1;
+  rsatk::RSA_data r_2;
+  rsatk::RSA_data r_3;
+
+  std::cout << "What is the common e value? ";
+  r_1.e = r_2.e = r_3.e = get_whole_number();
+  std::cout << "What is the first n value? ";
+  r_1.n = get_whole_number();
+  std::cout << "What is the second n value? ";
+  r_2.n = get_whole_number();
+  std::cout << "What is the third n value? ";
+  r_3.n = get_whole_number();
+  std::cout << "Provide the first encrypted message:  \n";
+  std::cin >> r_1.C;
+  std::cout << "Provide the second encrypted message:  \n";
+  std::cin >> r_2.C;
+  std::cout << "Provide the third encrypted message:  \n";
+  std::cin >> r_3.C;
+  std::cout << "Starting decryption...";
+  lowexp::low_exponent_attack(r_1, r_2, r_3);
+}
+
 
 void what_attack_types() {
   std::cerr << "\nType can be ";
@@ -23,119 +115,30 @@ void what_attack_types() {
 }
 
 void usage() {
-  std::cerr << "Usage is --attack [type] --pubkey1 [filename] (--pubkey2 [filename] --pubkey3 [filename] --ciphertext [filename])" << std::endl;
+  std::cerr << "Usage is --attack [type] " << std::endl;
 }
 
-bool is_everything_correct(int file_count, int aflag, bool ioerror) {
-  if (ioerror) {
-    std::cerr
-        << "File i/o error. Check that file exists and has correct permissions."
-        << std::endl;
-    return false;
-  }
-  if (aflag == -1) {
-    std::cerr << "missing argument --attack [type]" << std::endl;
-    what_attack_types();
-    return false;
-  }
-  if(aflag == 1 && file_count < 2){
-    std::cerr << "needs two filenames for the " << attack_types[aflag] << "attack" << std::endl;
-    return false;
-  }
-  if(aflag == 2 && file_count < 4){
-    std::cerr << "needs three public keys, and one ciphertext";
-  }
-  else if (file_count == 0) {
-    std::cerr << "missing argument --pubkey1 [file_to_crack]" << std::endl;
-    return false;
-  }
-  return true;
-}
 
 int main(int argc, char* argv[]) {
   /* options descriptor */
   static struct option longopts[] = {{"attack", required_argument, NULL, 'a'},
-                                     {"ciphertext", required_argument, NULL, 'b'},
-                                     {"ciphertext2", required_argument, NULL, 'c'},
-                                     {"pubkey1", required_argument, NULL, 'x'},
-                                     {"pubkey2", required_argument, NULL, 'y'},
-                                     {"pubkey3", required_argument, NULL, 'z'},
                                      {"help", no_argument, NULL, 'h'},
                                      {NULL, 0, NULL, 0}};
 
   bool ioerror = false;
   int option_index = 0;
   int file_count = 0, aflag = -1, ch = 0;
-  std::fstream f_1;
-  std::fstream f_2;
-  std::fstream f_3;
-  std::fstream cipher_file, cipher_file2;
-  while ((ch = getopt_long(argc, argv, "a:b:c:x:y:z:h", longopts, &option_index)) !=
+  while ((ch = getopt_long(argc, argv, "a:h", longopts, &option_index)) !=
          -1) {
     switch (ch) {
-      case 'a': {
-        for(size_t i = 0; i < attack_types.size(); ++i){
-          if(attack_types[i] == optarg) {
-            aflag = i;
-          }
+    case 'a': {
+      for(size_t i = 0; i < attack_types.size(); ++i){
+        if(attack_types[i] == optarg) {
+          aflag = i;
         }
-        if(aflag == -1) {
-          what_attack_types();
-        }
-        break;
       }
-    case 'x': {
-      file_count += 1;
-      std::string fname = std::string(optarg);
-      f_1.open(fname, std::ios::in);
-      if (!f_1.is_open()) {
-        ioerror = true;
-        std::cout << fname << " : error." << std::endl;
-      }
-
-      break;
-    }
-    case 'y': {
-      file_count += 1;
-
-      std::string fname = std::string(optarg);
-      f_2.open(fname, std::ios::in);
-      if (!f_2.is_open()) {
-        ioerror = true;
-        std::cout << fname << " : error." << std::endl;
-      }
-      break;
-    }
-    case 'z': {
-      file_count += 1;
-
-      std::string fname = std::string(optarg);
-      f_3.open(fname, std::ios::in);
-      if (!f_3.is_open()) {
-        ioerror = true;
-        std::cout << fname << " : error." << std::endl;
-      }
-      break;
-    }
-    case 'b': {
-      file_count += 1;
-
-      std::string fname = std::string(optarg);
-      cipher_file.open(fname, std::ios::in);
-      if (!cipher_file.is_open()) {
-        ioerror = true;
-        std::cout << fname << " : error." << std::endl;
-      }
-      break;
-    }
-    case 'c': {
-      file_count += 1;
-
-      std::string fname = std::string(optarg);
-      cipher_file2.open(fname, std::ios::in);
-      if (!cipher_file2.is_open()) {
-        std::cout << fname << " : error." << std::endl;
-        ioerror = true;
+      if(aflag == -1) {
+        what_attack_types();
       }
       break;
     }
@@ -149,35 +152,42 @@ int main(int argc, char* argv[]) {
       std::exit(EXIT_FAILURE);
     }
     }
+    argc -= optind;
+    argv += optind;
+
+  }
+  if(aflag == -1){
+    usage();
+    what_attack_types();
+    std::exit(EXIT_FAILURE);
   }
 
-  bool good = is_everything_correct(file_count, aflag, ioerror);
-
-  if(good){
-    std::cout << "Starting decryption..." << std::endl;
-    rsatk::RSA_data r_1 = rsatk::parse_rsa_file(f_1);
-    if(aflag == 0) {
-      factoratk::factorization_attack(r_1);
-    }
-    else if (aflag == 1) {
-      rsatk::RSA_data r_2 = rsatk::parse_rsa_file(f_2);
-      r_1.C = base64_decode(rsatk::read_cipher_text(cipher_file));
-      r_2.C = base64_decode(rsatk::read_cipher_text(cipher_file2));
-
-      comodulus::common_modulus_attack(r_1, r_2);
-    }
-    else if (aflag == 2) {
-      rsatk::RSA_data r_2 = rsatk::parse_rsa_file(f_2);
-      rsatk::RSA_data r_3 = rsatk::parse_rsa_file(f_3);
-      std::string c = base64_decode(rsatk::read_cipher_text(cipher_file));
-      r_1.C = r_2.C = r_3.C = c;
-      lowexp::low_exponent_attack(r_1, r_2, r_3);
-    }
+  if(aflag == 0) {
+    run_factoring();
   }
-
-  argc -= optind;
-  argv += optind;
-
+  if(aflag == 1) {
+    run_comodulus();
+  }
+  if(aflag == 2) {
+    run_low_exp();
+  }
 
   std::exit(EXIT_SUCCESS);
 }
+
+//rsatk::RSA_data r_1 = rsatk::parse_rsa_file(f_1);
+//else if (aflag == 1) {
+//rsatk::RSA_data r_2 = rsatk::parse_rsa_file(f_2);
+//r_1.C = base64_decode(rsatk::read_cipher_text(cipher_file));
+//r_2.C = base64_decode(rsatk::read_cipher_text(cipher_file2));
+//
+//comodulus::common_modulus_attack(r_1, r_2);
+//}
+//else if (aflag == 2) {
+//rsatk::RSA_data r_2 = rsatk::parse_rsa_file(f_2);
+//rsatk::RSA_data r_3 = rsatk::parse_rsa_file(f_3);
+//std::string c = base64_decode(rsatk::read_cipher_text(cipher_file));
+//r_1.C = r_2.C = r_3.C = c;
+//lowexp::low_exponent_attack(r_1, r_2, r_3);
+//}
+//}

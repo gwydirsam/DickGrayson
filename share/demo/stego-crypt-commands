@@ -1,2 +1,4 @@
 ./stego-crypt -i test.bmp -o test-stego.bmp -f message
-./stego-crypt -e -i test-stego.bmp -o ext-message
+./stego-crypt -e -i test-stego.bmp -o ext-bmp-message
+./stego-crypt -i test.wav -o test-stego.wav -f message
+./stego-crypt -e -i test-stego.bmp -o ext-wav-message

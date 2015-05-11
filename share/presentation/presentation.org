@@ -65,6 +65,9 @@ messages using the RSA encryption algorithm and embed and extract messages
 *** encrypt and decrypt example messages
 *** verify with openssl
 ** RSA attacks
+*** factorization (any rsa key..given unlimited time)
+*** common modulus (n_1 = n_2, where gcd(e_1, e_2) = 1
+*** low exponent (e =  3) 
 ** LSB:
 *** Embedding message
 *** Extracting message

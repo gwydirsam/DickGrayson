@@ -1,0 +1,147 @@
+% Created 2015-05-11 Mon 09:18
+\documentclass[presentation]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usetheme{Antibes}
+\usecolortheme{seagull}
+\author{Sam Gwydir \and Chris Findeisen \and Martin Fracker \\ Rafael Moreno \and Kyle Wilson}
+\date{\textit{<2015-05-10 Sun>}}
+\title{CSCE315 Final Project Presentation}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.5.1 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+
+
+\section{DickGrayson}
+\label{sec-1}
+\begin{abstract}
+In the final project students were tasked with creating a collection of tools
+that allow a user to encrypt and decrypt messages using the RSA encryption
+algorithm and embed and extract messages (either plaintext or ciphertext) from
+BMP images and WAV audio files.
+\end{abstract}
+
+\begin{frame}[fragile,label=sec-1-1]{DickGrayson}
+ \begin{block}{Introduction}
+\emph{DickGrayson} is a collection of tools that allow a user to encrypt and decrypt
+messages using the RSA encryption algorithm and embed and extract messages
+(either plaintext or ciphertext) from BMP images and WAV audio files.
+\end{block}
+
+\begin{block}{Tools}
+\begin{description}
+\item[{\texttt{munchkincrypt}}] (aka \texttt{rsa-crypt}) RSA Encryption
+\item[{\texttt{dorothy}}] (aka \texttt{rsa-attack}) RSA Attacks
+\item[{\texttt{munchkinsteg}}] (aka \texttt{stego-crypt}) Steganography
+\item[{\texttt{toto}}] (aka \texttt{stego-attack}) Steganography Attacks
+\end{description}
+\end{block}
+\end{frame}
+
+\section{Design}
+\label{sec-2}
+\begin{frame}[fragile,label=sec-2-1]{Design Decisions}
+ \begin{block}{DickGrayson}
+\begin{description}
+\item[{Target OS}] Linux \texttt{x86\_64} (\texttt{build.tamu.edu})
+\item[{Compiler}] \href{https://gcc.gnu.org/}{GCC 4.9.2}
+\item[{Language}] C++14
+\item[{Build System}] \href{https://cmake.org}{CMake}
+\item[{Numerics}] \href{https://gmplib.org}{GNU Multiple Precision Library}
+\item[{Unit Testing}] \href{https://code.google.com/p/googletest/}{Google Test}
+\item[{Continuous Integration}] \href{http://travis-ci.org}{travis-ci}
+\item[{Code Coverage}] \href{http://coveralls.io}{coveralls}
+\end{description}
+\end{block}
+\end{frame}
+\begin{frame}[label=sec-2-2]{Implementation Decisions}
+\begin{block}{RSA Encryption}
+\begin{itemize}
+\item Especially, explain what attacks you chose to make for both RSA and stego, and
+how your two stego schemes work
+\item Show proofs of Test-Driven Development (screenshots of failing / passing
+tests, GitHub revision history, running test code in the demo, etc)
+\end{itemize}
+\end{block}
+\begin{block}{RSA Attacks}
+\end{block}
+\begin{block}{Steganography}
+\end{block}
+\begin{block}{Steganography Attacks}
+\end{block}
+\end{frame}
+
+\section{Demonstration}
+\label{sec-3}
+\begin{frame}[label=sec-3-1]{RSA:}
+\begin{block}{generate primes}
+\end{block}
+\begin{block}{generate public and private keys}
+\end{block}
+\begin{block}{encrypt and decrypt example messages}
+\end{block}
+\begin{block}{verify with openssl}
+\end{block}
+\end{frame}
+\begin{frame}[label=sec-3-2]{RSA attacks}
+\end{frame}
+\begin{frame}[label=sec-3-3]{LSB:}
+\begin{block}{Embedding message}
+\end{block}
+\begin{block}{Extracting message}
+\end{block}
+\end{frame}
+\begin{frame}[label=sec-3-4]{Attack on LSB (at least 2)}
+\end{frame}
+\begin{frame}[label=sec-3-5]{ANS:}
+\begin{block}{Very brief recap of how it works}
+\end{block}
+\begin{block}{Embedding message}
+\end{block}
+\begin{block}{Extracting message}
+\end{block}
+\end{frame}
+\begin{frame}[label=sec-3-6]{Attack on ANS:}
+\begin{block}{Detection of stego'ed objects}
+\end{block}
+\begin{block}{Disruption / destruction of hidden message}
+\end{block}
+\end{frame}
+\section{Conclusions}
+\label{sec-4}
+\section{Future research directions (how your program could be improved or extended)}
+\label{sec-5}
+\section{References}
+\label{sec-6}
+\begin{frame}[label=sec-6-1]{Links}
+\begin{description}
+\item[{GCC 4.9.2}] \url{https://gcc.gnu.org}
+\item[{GNU Multiple Precision Library}] \url{https://gmplib.org}
+\item[{Google Test}] \url{https://code.google.com/p/googletest/}
+\item[{travis-ci}] \url{https://travis-ci.org}
+\item[{coveralls}] \url{https://coveralls.io}
+\end{description}
+\end{frame}
+% Emacs 24.5.1 (Org mode 8.2.10)
+\end{document}

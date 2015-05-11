@@ -316,7 +316,7 @@ run-all:: debug
 	@echo ======================================
 
 run-all run-debug-rsa-crypt:: debug
-	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-crypt
+	# @$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-crypt
 run-all run-debug-rsa-attack:: debug
 	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-attack --attack chinese_rt
 	@$(CMAKE) -E chdir $(DEBUG_DIR)/bin $(DEBUG_DIR)/bin/rsa-attack --attack factoring

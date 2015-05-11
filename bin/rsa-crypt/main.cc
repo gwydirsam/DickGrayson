@@ -13,8 +13,8 @@ int main(int argc, char *argv[]) {
   std::cout<<"What size bit numbers do you want to generate the RSA Key with? (up to 1024)"<<std::endl;
   std::cin>>bits;
 
-  if(!isDigit(bits)){
-    cout<<"Did not enter a valid number"
+  if(!isdigit(bits)){
+    std::cout<<"Did not enter a valid number"
     return 0;
   } 
   
@@ -28,7 +28,9 @@ int main(int argc, char *argv[]) {
   std::string decrypted_message = r1.decrypt_message(encrypted_message);
   std::cout<<"Decrypted Message : "<<decrypted_message<<std::endl;
 
-  /*int opt;
+  
+
+ /* int opt;
   ostream f1; 
   while((opt = getopt(argc, argv, "n:t:")) != -1) {
     switch(opt) {
@@ -46,3 +48,4 @@ int main(int argc, char *argv[]) {
 
    
   }*/
+}

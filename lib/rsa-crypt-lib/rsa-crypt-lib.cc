@@ -41,15 +41,6 @@ RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k}  {
   // public key
   // private key
   // std::cerr<<"Public key is : "<<p<<q<<d_<<std::endl;
-  std::string message;
-  std::cout<<"what message do you want to encrypt?";
-  std::cin>>message;
-  std::string encrypted_message = encrypt_message(message);
-  std::cout<<"Encrypted Message : "<<encrypted_message;
-  
-  std::string decrypted_message = decrypt_message(encrypted_message);
-  std::cout<<"Decrypted Message : "<<decrypted_message;
- 
   std::ofstream key_file;
   key_file.open("keys.txt"); 
   key_file<<"Public key : "<<p<<q<<d_<<std::endl;

@@ -24,15 +24,18 @@ using namespace std;
   mpz_class M_e1;
   mpz_class M_e2;
   mpz_class M;
-  // mpz_pow_ui(M_e1.get_mpz_t(), E.get_mpz_t(), li_x);
-  // mpz_pow_ui(M_e2.get_mpz_t(), F.get_mpz_t(), li_y);
-  mpz_pow_ui(M_e1.get_mpz_t(), E.get_mpz_t(), mpz_get_si(x.get_mpz_t()));
-  mpz_pow_ui(M_e2.get_mpz_t(), F.get_mpz_t(), mpz_get_si(y.get_mpz_t()));
+
+
+  mpz_powm(M_e1.get_mpz_t(), E.get_mpz_t(), x.get_mpz_t(), m_1.n.get_mpz_t());
+  mpz_powm(M_e2.get_mpz_t(), F.get_mpz_t(), y.get_mpz_t(), m_1.n.get_mpz_t());
+
   mpz_class product_M_e12 = (M_e1 * M_e2);
-  mpz_powm_ui(M.get_mpz_t(), product_M_e12.get_mpz_t(), 1,
-              m_1.n.get_mpz_t());  // mods by n and assigns to M
+
+  // mods by n and assigns to M
+  M = rsatk::mod(product_M_e12, m_1.n);
 
   // M is now the original message
+  cout << "Decrypted message is: " << M << endl;
   return M;
 }
 

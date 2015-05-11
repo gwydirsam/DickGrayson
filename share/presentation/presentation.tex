@@ -1,4 +1,4 @@
-% Created 2015-05-11 Mon 10:58
+% Created 2015-05-11 Mon 11:19
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -98,11 +98,18 @@ then created two more specific attacks that are efficient in some cases.
 
 \begin{frame}[label=sec-2-3]{Implementation Decisions (cont.)}
 \begin{block}{Steganography}
+\begin{itemize}
+\item Use null byte to signify end of message
+\item Use a unified tool for both wav and bmp steganography
+\end{itemize}
 \end{block}
 \begin{block}{Steganography Attacks}
+\begin{itemize}
+\item Attack using md5 and extract from Munchkinsteg BMP and WAV
+\item Attack using LSB scramble for BMP and WAV
+\end{itemize}
 \end{block}
 \end{frame}
-
 \section{Demonstration}
 \label{sec:orgheadline1}
 \begin{frame}[label=sec-3-1]{Build System \& Tools}
@@ -119,11 +126,19 @@ then created two more specific attacks that are efficient in some cases.
 \end{itemize}
 \end{frame}
 \begin{frame}[fragile,label=sec-3-3]{\texttt{rsa-attack}}
- \begin{itemize}
-\item factorization
-\item common modulus
-\item low exponent
-\end{itemize}
+ \begin{block}{factorization}
+Trial division method brute forces factorization only trying primes. 
+Will break any RSA key no matter how big!*
+*given enough time
+\end{block}
+\begin{block}{common modulus}
+Common modulus takes advantage of a shared n between two separate key/crypttext. 
+Through some clever exponenetiation, we can obtain the original message.
+\end{block}
+\begin{block}{low exponent}
+Low exponent attack works wherever you have e identical messages with different parties. 
+Clearly, this is most effective and practical when e = 3.
+\end{block}
 \end{frame}
 \begin{frame}[fragile,label=sec-3-4]{\texttt{stego-crypt}}
  \begin{block}{How it works}
@@ -145,17 +160,24 @@ terminates once a null byte is reached.
 \end{block}
 \end{frame}
 
-\begin{frame}[fragile,label=sec-3-6]{\texttt{stego-attack}}
- \begin{itemize}
-\item Detection
-\end{itemize}
-\end{frame}
 \section{Conclusion}
 \label{sec:orgheadline1}
-\begin{itemize}
-\item Problems
-\item Sucesses
-\end{itemize}
+\begin{frame}[label=sec-4-1]{Conclusion}
+We've shown RSA and Stegonography, and we've demonstrated attacks on both. We learned 
+the difficulties and fun of encryption, and how exploits often rely on corner cases because 
+general purpose exploits are typically slow.
+\end{frame}
+\begin{frame}[label=sec-4-2]{Discussion}
+\begin{block}{Problems}
+We had some difficulties using GMP and other helper libraries. As always, research was
+crucial in our success. 
+\end{block}
+
+\begin{block}{Future work}
+In the future, we'd like to make our solutions more robust--full base 64
+encoding/decoding, writing to .pem/.priv formats, etc.
+\end{block}
+\end{frame}
 \section{References}
 \label{sec:orgheadline1}
 \begin{frame}[label=sec-5-1]{Links}

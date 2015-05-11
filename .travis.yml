@@ -2,7 +2,7 @@
 language: cpp
 compiler:
   - gcc
-# cache apt packages, ccache and installed libraries
+# cache apt packages, ccache and installed libraries.
 cache:
   apt: true
   bundler: true

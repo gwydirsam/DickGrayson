@@ -1,10 +1,10 @@
-#+TITLE: Project Report: DickGrayson
-#+AUTHOR: Sam Gwydir & Martin Fracker & Christopher Findeisen \\ Rafael Moreno & Kyle Wilson
+#+TITLE: Project Report DickGrayson
+#+AUTHOR: Sam Gwydir Martin Fracker Christopher Findeisen Rafael Moreno Kyle Wilson
 #+DATE: <2015-05-03 Sun>
-#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t c:nil
+#+OPTIONS: ':t *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t c:nil
 #+OPTIONS: creator:comment d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t
 #+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:t
-#+OPTIONS: todo:t |:t
+#+OPTIONS: todo:nil |:t
 #+CREATOR: Emacs 24.5.1 (Org mode 8.2.10)
 #+DESCRIPTION:
 #+EXCLUDE_TAGS: noexport
@@ -154,6 +154,30 @@ to write an interface to EasyBMP. When we decided to implement the WAV format, w
 moved straight to the idea of writing an interface to libsndfile. At first, we didn't
 realize that only PCM 16-bit WAV would work. Once we did, we had no problem getting
 support for WAV steganography to work.
+
+* Steganography Attacks
+Our stego attack tool, Toto, implements two attacks for BMP Image files and two
+attacks for WAV Audio files. The format restrictions of Munchkinsteg also apply
+to Toto.
+** MD5/Extraction Attack (BMP/WAV)
+For each type of file, we have a function isEmbedded() which takes the original
+and altered image as parameters, comparing the md5 hashes to determine the
+likelyhood of a hidden message existing. If the function returns true, we
+extract the message using the functions already implemented in Munchkinsteg.
+isEmbedded() and extraction work for both BMP and WAV files.
+** Scrambler (BMP/WAV)
+We developed an LSB scrambler for each type of file, which takes only the
+altered image as an argument and destroys any message if it is present by
+inserting a random string of maximum size for the given file. The only real
+difference between the BMP and WAV specific branches of the scrambler is the way
+that the max number of chars are calculated, using prexisting library functions
+discussed in Munchkinsteg.
+** Problems Encountered
+Most of the problems encountered involved integrating libraries. For the md5
+function, we needed access to openssl which is not normally installed on the
+build server. For the scrambler and extraction portion of the first attack, we
+needed to integrate Munchkinsteg's library. Both of these proved to take more
+time than we anticipated.
 * Division of Labor
 ** Sam Gwydir 
 - Responsibilities :: Build Tools, Travis-CI, Coveralls, Report, Presentation,

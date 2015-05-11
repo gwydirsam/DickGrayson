@@ -7,28 +7,25 @@
 
 int main(int argc, char *argv[]) {
   std::cout << "CSCE315 Project 4" << std::endl;
- /* int bits;
+  int bits;
   std::string message;
 
   std::cout<<"What size bit numbers do you want to generate the RSA Key with? (up to 1024)"<<std::endl;
   std::cin>>bits;
 
-  if(!isdigit(bits)){
-    std::cout<<"Did not enter a valid number";
-    return 0;
-  } 
   
   std::cout<<"What message do you want to encode?"<<std::endl;
   std::cin>>message;
 
+  std::string mess = "Hello world my name is rafa";
   RsaKeys r1(bits);
   std::string encrypted_message = r1.encrypt_message(message); 
-  std::cout<<"Encrypted Message : "<<encrypted_message;
+  std::cout<<"Encrypted Message : "<<encrypted_message<<std::endl;
 
   std::string decrypted_message = r1.decrypt_message(encrypted_message);
   std::cout<<"Decrypted Message : "<<decrypted_message<<std::endl;
- */
-  RsaKeys r1(512);
+ 
+ /* RsaKeys r1(512);
   int opt;
   std::ofstream of1; 
   std::ofstream of2;
@@ -69,4 +66,5 @@ int main(int argc, char *argv[]) {
   if(of2.is_open()){
     of2<<r1.decrypt_message(encrypted_message);
   } 
+  */
 }

@@ -62,28 +62,23 @@ messages using the RSA encryption algorithm and embed and extract messages
 *** Steganography Attacks
 
 * Demonstration
-** RSA:
+** =rsa-crypt=
 *** generate primes
 *** generate public and private keys
 *** encrypt and decrypt example messages
-*** verify with openssl
-** RSA attacks
-*** factorization (any rsa key..given unlimited time)
-*** common modulus (n_1 = n_2, where gcd(e_1, e_2) = 1
-*** low exponent (e =  3) 
-** LSB:
+** =rsa-attack=
+*** factorization
+*** common modulus
+*** low exponent
+** =stego-crypt=
+*** How it works
 *** Embedding message
 *** Extracting message
-** Attack on LSB (at least 2)
-** ANS:
-*** Very brief recap of how it works
-*** Embedding message
-*** Extracting message
-** Attack on ANS:
-*** Detection of stego'ed objects
-*** Disruption / destruction of hidden message
-* Conclusions
-* Future research directions (how your program could be improved or extended)
+** =stego-attack=
+*** Detection
+* Conclusion
+** Problems
+** Sucesses
 * References
 ** Links
 - GCC 4.9.2 :: https://gcc.gnu.org

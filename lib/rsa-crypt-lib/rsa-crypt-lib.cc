@@ -24,7 +24,7 @@
 // sam: don't need this if we use dgrandprime
 
 // generates two random primes and checks coprimality
-RsaKeys::RsaKeys(mp_bitcnt_t k) : bits_{k} {
+RsaKeys::RsaKeys(mp_bitcnt_t k, std::string message) : bits_{k} {
   // generate p and q
   std::tuple<mpz_class, mpz_class> keys = generate_keys();
   mpz_class q = std::get<0>(keys);

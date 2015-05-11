@@ -9,7 +9,7 @@
 class RsaKeys {
  public:
   RsaKeys() : RsaKeys{512} {}
-  RsaKeys(mp_bitcnt_t k);
+  RsaKeys(mp_bitcnt_t k, std::string message);
 
   // accessors
   mpz_class n() { return n_; }

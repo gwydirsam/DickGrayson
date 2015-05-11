@@ -1,11 +1,10 @@
 #+TITLE: CSCE315 Final Project Presentation
 #+DATE: <2015-05-10 Sun>
-#+AUTHOR: Sam Gwydir \and Chris Findeisen \and Martin Fracker \\ Rafael Moreno \and Kyle Wilson 
+#+AUTHOR: Sam Gwydir Chris Findeisen Martin Fracker Rafael Moreno Kyle Wilson 
 #+OPTIONS: ':nil *:t -:t ::t <:t H:2 \n:nil ^:nil arch:headline author:t c:nil
-#+OPTIONS: creator:comment d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t
+#+OPTIONS: creator:nil d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t
 #+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:t
 #+OPTIONS: todo:t |:t
-#+CREATOR: Emacs 24.5.1 (Org mode 8.2.10)
 #+DESCRIPTION:
 #+EXCLUDE_TAGS: noexport
 #+KEYWORDS:
@@ -55,38 +54,53 @@ messages using the RSA encryption algorithm and embed and extract messages
 - Show proofs of Test-Driven Development (screenshots of failing / passing
   tests, GitHub revision history, running test code in the demo, etc) 
 *** RSA Attacks
--Attacked using one general purpose attack, which would work on any rsa key, 
- then created two more specific attacks that are efficient in some cases.
+- Attacked using one general purpose attack, which would work on any rsa key, 
+  then created two more specific attacks that are efficient in some cases.
 
+** Implementation Decisions (cont.)
 *** Steganography
 *** Steganography Attacks
-
+- Attack using md5 and extract from Munchkinsteg BMP and WAV
+- Attack using LSB scramble for BMP and WAV
 * Demonstration
+** Build System & Tools
+- Travis
+- Coveralls
 ** =rsa-crypt=
-*** generate primes
-*** generate public and private keys
-*** encrypt and decrypt example messages
+- generate primes
+- generate public and private keys
+- encrypt and decrypt example messages
 ** =rsa-attack=
 *** factorization
+Trial division method brute forces factorization only trying primes. 
+Will break any RSA key no matter how big!*
+*given enough time
 *** common modulus
+Common modulus takes advantage of a shared n between two separate key/crypttext. 
+Through some clever exponenetiation, we can obtain the original message.
 *** low exponent
+Low exponent attack works wherever you have e identical messages with different parties. 
+Clearly, this is most effective and practical when e = 3.
 ** =stego-crypt=
 *** How it works
-Our tool munchkinsteg supports image and audio least significant bit (LSB) steganography.
-The formats supported are Windows 8-bit BMP and PCM 16-bit WAV.  
+Our tool munchkinsteg supports image and audio least significant bit (LSB)
+steganography. The formats supported are Windows 8-bit BMP and PCM 16-bit WAV.
 *** Embedding message
-The data is broken up into bits and each bit is stored consecutively in the LSB of the
-individual pixels and samples of the bmp and wav file respectively.  A null byte is 
-stored using 8 additional pixels/samples to be used during extraction as a termination symbol.
+The data is broken up into bits and each bit is stored consecutively in the LSB
+of the individual pixels and samples of the bmp and wav file respectively. A
+null byte is stored using 8 additional pixels/samples to be used during
+extraction as a termination symbol.
+** =stego-crypt= (cont.)
 *** Extracting message
-The LSB of the individual pixels and samples of the bmp and wav file respectively are extracted
-and concatenated into a string.  This process terminates once a null byte is reached.
+The LSB of the individual pixels and samples of the bmp and wav file
+respectively are extracted and concatenated into a string. This process
+terminates once a null byte is reached.
 
 ** =stego-attack=
-*** Detection
+- Detection
 * Conclusion
-** Problems
-** Sucesses
+- Problems
+- Sucesses
 * References
 ** Links
 - GCC 4.9.2 :: https://gcc.gnu.org
@@ -94,6 +108,3 @@ and concatenated into a string.  This process terminates once a null byte is rea
 - Google Test :: https://code.google.com/p/googletest/
 - travis-ci :: https://travis-ci.org
 - coveralls :: https://coveralls.io
-
-
-

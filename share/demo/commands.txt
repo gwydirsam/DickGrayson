@@ -1,0 +1,4 @@
+cat share/demo/factoring_demo.txt
+./build/bin/rsa-attack --attack factoring  < share/demo/factoring_demo.txt
+./build/bin/rsa-attack --attack low_exponent < share/demo/lowexp_demo.txt
+./build/bin/rsa-attack --attack common_modulus < share/demo/comod_demo.txt

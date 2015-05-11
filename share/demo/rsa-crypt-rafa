@@ -1,4 +1,4 @@
 This is rafa's
 
-./rsa-crypt -i hello-world-my-name-is-rafa
-./rsa-crypt -i hello
+./rsa-crypt -i hello-world-my-name-is-rafa 512
+./rsa-crypt -i hello 512

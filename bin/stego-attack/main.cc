@@ -26,7 +26,6 @@ struct AttackArgs {
 };
 
 int main(int argc, char *argv[]) {
-  std::cout << "CSCE315 Project 4" << std::endl;
   AttackArgs attack_args;
   int c;
   bool found_error = false;
